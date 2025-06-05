@@ -1,10 +1,11 @@
 <script>
   import Sidebar from "../lib/Sidebar.svelte";
+  import Greeting from "../lib/Greeting.svelte";
 </script>
 
 <main>
-    <Sidebar currentPage="/leaderboard" /> <!-- Add sidebar to the leaderboard page -->
-    <h1>Leaderboard</h1>
+    <Sidebar currentPage="/"/> <!-- Add home to the leaderboard page -->
+    <Greeting firstName="Ewan" /> <!--Dynamically greet user -->
 </main>
 
 <style>
