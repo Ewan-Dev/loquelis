@@ -1,7 +1,13 @@
 <script lang="ts">
-  import Greeting from './lib/Greeting.svelte'
+  import Leaderboard from './routes/Leaderboard.svelte';
+  import Router from 'svelte-spa-router';
+
+  const routes = {
+    '/app/leaderboard': Leaderboard
+  };
 </script>
 
 <main>
-<Greeting firstName="Ewn" />
+  <Router {routes} />
+
 </main>
