@@ -5,6 +5,7 @@
         sidebarVisible = !sidebarVisible // Toggle the visibility of the sidebar for hamburger menu on mobile
     } 
 </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:wght@400&icon_names=favorite,home,search,settings,trophy" rel="stylesheet" />
 
 <button class="open-sidebar-icon icon" onclick={toggleSidebar}>≡</button> <!-- Open hamburger button for the sidebar, only visible on small screens -->
 <aside class="sidebar" class:show={sidebarVisible}>
@@ -13,10 +14,12 @@
         <button class="close-sidebar-icon icon" onclick={toggleSidebar}>X</button> <!-- Close button for the sidebar -->
     </div>
     <nav class="sidebar-nav">
-        <a href="/" class:selected={currentPage === '/'}> <!-- 'selected' is set to true if 'currentPage' is equal to set path -->
+        <a href="/" class:selected={currentPage === '/'}> <!-- 'selected' is set to true if 'currentPage' is equal to set path -->      
+        <span class="material-symbols-rounded">home</span>
             Home
         </a>
         <a href="/#/app/leaderboard" class:selected={currentPage === '/leaderboard'} >
+            <span class="material-symbols-rounded">trophy</span>
             Leaderboard
         </a>
     </nav>
@@ -31,7 +34,10 @@
         color: #000;
         font-style: normal;
         text-decoration: none;
-        display: inline-block;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        gap: 0.2em;
         transition: background-color 0.2s, border-color 0.2s;
     }
     a.selected {
@@ -43,6 +49,9 @@
     }
     a.selected:hover {
         background-color: #B8D0FF;
+    }
+    .material-symbols-rounded{
+        font-size: 1.15em;
     }
     .sidebar{
         height: 100vh;
