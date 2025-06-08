@@ -1,4 +1,7 @@
 <script lang="ts">
+     import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
+
      let { type = "info", message = "Information" } = $props();
      let icons = {
          info: "info",
@@ -6,12 +9,20 @@
          success: "check_circle",
          warn: "warning"
      };
+    let visible = $state(true);
+    onMount(()=> {
+        setTimeout(() => {
+            visible = false;
+        }, 5000); // Hide status after 3 seconds
+        })
 </script>
-
-<section role="status" class={type}>
-<span class={`${type} material-symbols-rounded`}>{icons[type]}</span>
-<p class={type}>{ message }</p>
-</section>
+{#if visible}
+<section role="status" class={type} transition:fade={{ duration: 250}}>
+    <span class={`${type} material-symbols-rounded`}>{icons[type]}</span>
+    <p class={type}>{ message }</p>
+    </section>
+    
+{/if}
 
 <style>
     p {
