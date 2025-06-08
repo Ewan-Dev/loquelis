@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",
+    "canvas-confetti": "^1.9.3",
     "svelte-spa-router": "^4.0.1"
   }
 }
