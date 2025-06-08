@@ -13,7 +13,11 @@
 
 </script>
 
-<main> 
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:wght@400" rel="stylesheet" />
+</head>
+
+<main>
   <!-- Import router component to allow for routing -->
   <Router {routes} /> 
 </main>

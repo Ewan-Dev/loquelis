@@ -1,5 +1,6 @@
 <script>
-import { supabase } from "../lib/supabaseClient.js"
+import { supabase } from "../lib/supabaseClient.js" // Importing supabase client for authentication
+import InlineStatus from "../lib/InlineStatus.svelte" // For inline status messages
 import confetti from 'canvas-confetti' // For confetti effect
 
     let email = "", password = "", error = "" , result = ""
@@ -33,10 +34,10 @@ import confetti from 'canvas-confetti' // For confetti effect
     <input class="password" bind:value={password} type="password" > 
     <button class="sign-up" type="submit">Sign up</button>
     {#if error}
-        <p style="color: red;">{error}</p>
+        <InlineStatus type="error" message={error} />
     {/if}
     {#if result && !error}
-        <p style="color: green;">Signup successful! Check your email to confirm.</p>
+        <InlineStatus type="success" message="Signup successful! Check your email to confirm." />
     {/if}
 
     </form>

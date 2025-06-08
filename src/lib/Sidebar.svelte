@@ -5,7 +5,6 @@
         sidebarVisible = !sidebarVisible // Toggle the visibility of the sidebar for hamburger menu on mobile
     } 
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:wght@400&icon_names=favorite,home,search,settings,trophy" rel="stylesheet" />
 
 <button class="open-sidebar-icon icon" onclick={toggleSidebar}>≡</button> <!-- Open hamburger button for the sidebar, only visible on small screens -->
 <aside class="sidebar" class:show={sidebarVisible}>
