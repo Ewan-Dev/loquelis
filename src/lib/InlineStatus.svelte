@@ -17,7 +17,7 @@
         })
 </script>
 {#if visible}
-<section role="status" class={type} transition:fade={{ duration: 250}}>
+<section role="status" class={type} transition:fade={{ duration:400}}>
     <span class={`${type} material-symbols-rounded`}>{icons[type]}</span>
     <p class={type}>{ message }</p>
     </section>

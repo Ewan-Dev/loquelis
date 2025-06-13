@@ -1,5 +1,6 @@
 <script>
   import Sidebar from "../lib/Sidebar.svelte";
+    import MediaBox from "../lib/MediaBox.svelte"; 
 </script>
 
 <main>
