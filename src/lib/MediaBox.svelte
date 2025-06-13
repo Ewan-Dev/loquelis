@@ -1,4 +1,5 @@
 <script lang="ts">
+    import MediaTag from "./MediaTag.svelte";
     // Example values
     let name = '99 Luftballons';
     let artist = 'Nena';
@@ -7,6 +8,10 @@
 
 <div>
     <img src={cover} alt="Album cover">
+    <span>
+        <MediaTag type="level" message="A1"/>
+        <MediaTag type="rating" message="79%" symbol="thumb_up"/>
+    </span>
     <p><b>{ name }</b></p>
     <p>{ artist }</p>
 </div>
@@ -30,5 +35,8 @@
         margin: 0.05em;
         font-size: 1.25em;
     }
-
+    span {
+        display: flex;
+        gap: 0.2em;
+    }
 </style>
