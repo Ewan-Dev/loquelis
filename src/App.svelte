@@ -5,6 +5,7 @@
   import Login from './routes/Login.svelte'
   import Music from './routes/Music.svelte'
   import Router from 'svelte-spa-router'
+
   
   // Setting the routes
   const routes = {

@@ -23,11 +23,13 @@
 
 </script>
 
-<main>
+<main class="route">
     <Sidebar currentPage="/music"/> 
-        <h1>Music</h1>
-
-    <!-- For each song, create a MediaBox component -->
+    <section class="main-page">
+    <h1 class="page-header">Music</h1>
+        <!-- Main content section for styles to be applied -->
+    <section class="main-content">
+        <!-- For each song, create a MediaBox component -->
     {#each songs as song} 
     <MediaBox 
         name={song.name} 
@@ -36,6 +38,8 @@
         level={song.level} 
         rating={song.rating} />
     {/each}
+    </section>
+    </section>
 </main>
 
 <style>

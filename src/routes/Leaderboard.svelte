@@ -2,9 +2,14 @@
   import Sidebar from "../lib/Sidebar.svelte";
 </script>
 
-<main>
-    <Sidebar currentPage="/leaderboard" /> <!-- Add sidebar to the leaderboard page -->
-    <h1>Leaderboard</h1>
+<main class="route">
+    <Sidebar currentPage="/leaderboard"/> 
+    <section class="main-page">
+    <h1 class="page-header">Leaderboard</h1>
+        <!-- Main content section for styles to be applied -->
+    <section class="main-content">
+    </section>
+    </section>
 </main>
 
 <style>

@@ -23,22 +23,26 @@
     }
 </script>
     
-    <main>
-        <h1>Login</h1>
-        <form onsubmit={event => { event.preventDefault(); handleSignin(); }} >
-        <label for="email">Email:</label>
-        <input class="email" bind:value={email} type="email" >
-        <label for="password">Password:</label>
-        <input class="password" bind:value={password} type="password" > 
-        <button class="log-in" type="submit">Sign in</button>
-        {#if error}
-            <InlineStatus type="error" message={error} />
-        {/if}   
-        {#if data }
-            <InlineStatus type="success" message="Login successful!" />
-        {/if}
-    
-        </form>
+    <main class="route">
+        <section class="main-page">
+            <h1 class="page-header">Login</h1>
+            <!-- Main content section for styles to be applied -->
+            <section class="main-content">
+                <form onsubmit={event => { event.preventDefault(); handleSignin(); }} >
+                <label for="email">Email:</label>
+                <input class="email" bind:value={email} type="email" >
+                <label for="password">Password:</label>
+                <input class="password" bind:value={password} type="password" > 
+                <button class="log-in" type="submit">Sign in</button>
+                {#if error}
+                    <InlineStatus type="error" message={error} />
+                {/if}   
+                {#if data }
+                    <InlineStatus type="success" message="Login successful!" />
+                {/if}
+                </form>
+                </section>
+        </section>
     </main>
     
     <style>

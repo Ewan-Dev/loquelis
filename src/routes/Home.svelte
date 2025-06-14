@@ -3,9 +3,15 @@
   import Greeting from "../lib/Greeting.svelte";
 </script>
 
-<main>
-    <Sidebar currentPage="/"/> <!-- Add home to the leaderboard page -->
-    <Greeting firstName="Ewan" /> <!--Dynamically greet user -->
+<main class="route">
+    <Sidebar currentPage="/"/> 
+    <section class="main-page">
+    <h1 class="page-header">Home</h1>
+        <!-- Main content section for styles to be applied -->
+    <section class="main-content">
+        <Greeting firstName="Ewan" /> <!--Dynamically greet user -->
+    </section>
+    </section>
 </main>
 
 <style>
