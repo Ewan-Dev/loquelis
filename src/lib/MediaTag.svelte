@@ -11,7 +11,8 @@
 
 <style>
     .material-symbols-rounded{
-        font-size: 1.15em;
+        font-size: 1em;
+        font-weight: bold;
     }
     .media-tag {
         border-radius: 0.45em;
@@ -19,7 +20,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0.15em;
+        padding: 0.2em 0.2em;
         font-size: 0.9em;
 
     }

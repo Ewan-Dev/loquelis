@@ -21,6 +21,10 @@
             <span class="material-symbols-rounded">trophy</span>
             Leaderboard
         </a>
+        <a href="/#/app/music" class:selected={currentPage === '/music'} >
+            <span class="material-symbols-rounded">music_note</span>
+            Music
+        </a>
     </nav>
 </aside>
 

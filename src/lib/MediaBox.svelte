@@ -1,16 +1,19 @@
 <script lang="ts">
     import MediaTag from "./MediaTag.svelte";
+    import { supabase } from "./supabaseClient.js";
     // Example values
-    let name = '99 Luftballons';
-    let artist = 'Nena';
-    let cover = 'https://upload.wikimedia.org/wikipedia/en/4/40/99_Luftballons_single_cover.jpg';
+    export let name = null;
+    export let artist = null;
+    export let cover = null;
+    export let level = null;
+    export let rating = null;
 </script>
 
 <div>
     <img src={cover} alt="Album cover">
     <span>
-        <MediaTag type="level" message="A1"/>
-        <MediaTag type="rating" message="79%" symbol="thumb_up"/>
+        <MediaTag type="level" message={level}/>
+        <MediaTag type="rating" message={rating} symbol="thumb_up"/>
     </span>
     <p><b>{ name }</b></p>
     <p>{ artist }</p>
@@ -19,7 +22,7 @@
 <style>
     div {
         height: fit-content;
-        width: fit-content;
+        width: 10em;
         background-color: #F5F5F5;
         border: #DBDBDB 0.2em solid;
         padding: 0.3em;
@@ -30,6 +33,7 @@
         height: 10em;
         border-radius: 0.5em;
         margin: 0;
+        object-fit: cover;
     }
     p {
         margin: 0.05em;
