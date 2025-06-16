@@ -1,7 +1,7 @@
 <script>
-    import { supabase } from "../lib/supabaseClient.js"
-    import Sidebar from "../lib/Sidebar.svelte"; 
-    import MediaBox from "../lib/MediaBox.svelte";
+    import { supabase } from "../../lib/supabaseClient.js"
+    import Sidebar from "../../lib/Sidebar.svelte"; 
+    import MediaBox from "../../lib/MediaBox.svelte";
 
     let language = 'german'; // Default language for music for now until user selection function is implemented
     let songs = [] // List to store fetched music data
@@ -36,7 +36,8 @@
         artist={song.artist} 
         cover={song.cover} 
         level={song.level} 
-        rating={song.rating} />
+        rating={song.rating}
+        link={`music/${song.id}`} />
     {/each}
     </section>
     </section>

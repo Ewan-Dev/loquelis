@@ -12,6 +12,8 @@
         <Greeting firstName="Ewan" /> <!--Dynamically greet user -->
     </section>
     </section>
+    <a href="/song/song-1">Go to Song 1</a>
+    <a href="/song/song-2">Go to Song 2</a>
 </main>
 
 <style>

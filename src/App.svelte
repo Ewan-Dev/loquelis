@@ -3,18 +3,20 @@
   import Home from './routes/Home.svelte'
   import Signup from './routes/Signup.svelte'
   import Login from './routes/Login.svelte'
-  import Music from './routes/Music.svelte'
+  import Music from './routes/music/+page.svelte'
+  import MusicSlug from './routes/music/[slug].svelte'
   import Router from 'svelte-spa-router'
 
-  
   // Setting the routes
   const routes = {
+    '/app/music/:slug' : MusicSlug,
     '/app/music' : Music,
     '/app/login' : Login,
     '/app/signup' : Signup,
     '/app/leaderboard': Leaderboard,
     '/': Home
   }
+
 
 </script>
 

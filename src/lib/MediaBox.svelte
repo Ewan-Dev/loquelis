@@ -7,6 +7,7 @@
     export let cover = null;
     export let level = null;
     export let rating = null;
+    export let link = null;
 </script>
 
 <div>
@@ -15,8 +16,8 @@
         <MediaTag type="level" message={level}/>
         <MediaTag type="rating" message={rating} symbol="thumb_up"/>
     </span>
-    <p><b>{ name }</b></p>
-    <p>{ artist }</p>
+    <a href={ link }><b>{ name }</b></a>
+    <a>{ artist }</a>
 </div>
 
 <style>
@@ -35,9 +36,14 @@
         margin: 0;
         object-fit: cover;
     }
-    p {
+    a {
+        height: auto;
+        overflow: hidden;
+        color: #000;
         margin: 0.05em;
         font-size: 1.25em;
+        text-decoration: none;
+        display: block;
     }
     span {
         display: flex;
