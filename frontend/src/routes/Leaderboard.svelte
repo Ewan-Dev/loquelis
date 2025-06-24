@@ -1,5 +1,5 @@
 <script>
-  import Sidebar from "../lib/Sidebar.svelte";
+  import Sidebar from "../../lib/Sidebar.svelte";
 </script>
 
 <main class="route">

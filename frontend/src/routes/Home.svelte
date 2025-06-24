@@ -1,6 +1,6 @@
 <script>
-  import Sidebar from "../lib/Sidebar.svelte";
-  import Greeting from "../lib/Greeting.svelte";
+  import Sidebar from "../../lib/Sidebar.svelte";
+  import Greeting from "../../lib/Greeting.svelte";
 </script>
 
 <main class="route">

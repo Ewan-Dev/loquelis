@@ -1,8 +1,8 @@
 <script>
-  import {supabase} from "../../lib/supabaseClient.js";
+  import {supabase} from "../../../lib/supabaseClient.js";
 
-  import Sidebar from "../../lib/Sidebar.svelte";
-  import MediaHeader from "../../lib/MediaHeader.svelte";
+  import Sidebar from "../../../lib/Sidebar.svelte";
+  import MediaHeader from "../../../lib/MediaHeader.svelte";
 
   import { location } from 'svelte-spa-router'
 

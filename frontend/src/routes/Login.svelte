@@ -1,6 +1,6 @@
 <script>
-    import { supabase } from "../lib/supabaseClient.js" // Importing supabase client for authentication
-    import InlineStatus from "../lib/InlineStatus.svelte" // For inline status messages
+    import { supabase } from "../../lib/supabaseClient.js" // Importing supabase client for authentication
+    import InlineStatus from "../../lib/InlineStatus.svelte" // For inline status messages
     import confetti from 'canvas-confetti' // For confetti effect
 
     let email = "", password = "", error = "", data = ""
