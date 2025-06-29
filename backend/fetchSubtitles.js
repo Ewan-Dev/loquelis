@@ -3,6 +3,7 @@ import { execa } from "execa" // Allows executing terminal commands but safe
 import fs from "fs"
 import path from "path"
 const currentPath = "../backend"
+const languages = []
 
 
 main() // Call the function to start listening for broadcasts
@@ -41,6 +42,8 @@ async function listenAndDownloadSubtitles() {
     const url = broadcast.payload.url // Get URL
     console.log(`Language: ${lang}`) // Print language
     console.log(`URL: ${url}`)  // Print URL
+    
+    if(languages.includes(lang) && url.startsWith("https://youtube.com")){
     // Execute yt-dlp command to fetch subtitles
     try {
         const { stdout } = await execa("yt-dlp", [
@@ -57,6 +60,13 @@ async function listenAndDownloadSubtitles() {
     catch (error) {
         console.error(error)
     }
+    }
+    else if (!languages.includes(lang)) {
+        console.error(`Language ${lang} is not available.`) // Print error if language is not available
+    }
+    else if (!url.startsWith("https://youtube.com")) {
+        console.error(`${url} is not a valid youtube.com URL.`) // Print error if URL is not valid
+    }
 })
     const { error } = await channel.subscribe() // Subscribe to the channel and if anything is returned it is stored as error
     if (error) {
@@ -64,21 +74,23 @@ async function listenAndDownloadSubtitles() {
     } else {
         console.log("Listening...") // Print message while channel is being listened to
     }
-    
+
 }
-
-
-
 
 async function availableLanguages(){
     const channel = supabase.channel("languages") // Create a channel named "languages"
-    // Listen for broadcasts from channel "languages"
+    // Listen for broadcasts from channel "languages" and only updates languages array when broadcast is received
     channel.on("broadcast", { event: "update-languages" }, async (broadcast) => {
         const { data, error } = await supabase
             .from("languages") // Languages table
             .select("short")  // Short column (language codes e.g "en", "fr", "es")
         if (!error) {
             console.log("Available languages:", data) // Print available languages
+            // Add each language to languages 
+            data.forEach((language)=> {
+                languages.push(language.short) 
+            })
+            console.log("Languages array:", languages) // Print languages array
         }
         else{
             console.error("Error fetching languages:", error) 
