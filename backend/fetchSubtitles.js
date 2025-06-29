@@ -1,9 +1,7 @@
 import { supabase } from "../lib/supabaseClient.js";
 import { execa } from "execa" // Allows executing terminal commands but safe
-import fs from "fs"
-import path from "path"
 const currentPath = "../backend"
-let languages = []
+let languages = ["ru"]
 
 
 main() // Call the function to start listening for broadcasts
@@ -16,27 +14,9 @@ async function main() {
     process.stdin.resume() // Keep the process listening
 }
 
-// Delete all .json3 files (the lyric files)
-function deleteAllJson3Files(){
-    try {
-        const files = fs.readdirSync(currentPath) // Read all files in the directory
-        // Loop through each file
-        files.forEach(file => { 
-            // If the file ends with .json3, delete it
-            if (file.endsWith(".json3")){
-                const filePath = path.join(currentPath, file) // Full path of the file
-                fs.unlinkSync(filePath) // Delete the file
-            }
-        })
-    }
-    catch (error) {
-        console.error("Error deleting files:", error) // Print error if file deletion fails
-    }
-}
 
 async function listenAndDownloadSubtitles() {
     const channel = supabase.channel("subtitles") // Create a channel named "subtitles"
-    deleteAllJson3Files() // Delete previous subtitle files
     // Listen for broadcasts from channel "subtitles"
     channel.on("broadcast", { event: "subtitle-update" }, async (broadcast) => {
     console.log("Received subtitles:", broadcast) // Print the broadcast
@@ -54,12 +34,13 @@ async function listenAndDownloadSubtitles() {
             "--write-sub", // Get manually set subtitles
             "--sub-lang", lang, // Language of the subtitles
             "--sub-format", "json3", // Format of the subtitles
+            "--print-json", // Print the subtitles in JSON format
             url // Vid URL
         ], {
             cwd: currentPath // Where to run command 
         });
         console.log(`Success: ${stdout}`) // Print success message
-        uploadSubtitles(id, lang, stdout) // Upload subtitles to the database
+        uploadSubtitles(id, stdout) // Upload subtitles to the database
     }
     catch (error) {
         console.error(error)
@@ -111,8 +92,12 @@ async function availableLanguages(){
 
 }
 
-async function uploadSubtitles(id, name, sub){
+async function uploadSubtitles(id, sub){
+    const currentDate = new Date();
     const { error } = await supabase
         .from('subtitles')
-        .insert({ id: id, name: name, subtitles: sub }) 
+        .insert({ id: id, content: sub}) 
+    if (error) {
+        console.error("Error uploading subtitles:", error) // Print error if upload fails
+    }
 }
