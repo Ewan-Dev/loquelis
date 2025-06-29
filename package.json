@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.2",
+    "execa": "^9.6.0",
+    "supabase": "^2.26.9",
+    "yt-dlp-wrap": "^2.3.12"
+  }
+}
