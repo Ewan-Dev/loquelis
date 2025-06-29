@@ -2,7 +2,7 @@ import { supabase } from "../lib/supabaseClient.js"
 
 // Example data to send
 const id = 77
-const url = "https://www.youtube.co.um/watch?v=uyzeP77LZ90"
+const url = "https://www.youtube.com/watch?v=uyzeP77LZ90"
 const lang = "ru"
 
 async function requestSubtitles(){
