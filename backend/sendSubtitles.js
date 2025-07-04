@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabaseClient.js"
+import { supabase } from "./lib/supabaseClient.js"
 
 // Example data to send
 const id = 77

@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabaseClient.js";
+import { supabase } from "./lib/supabaseClient.js";
 import { execa } from "execa" // Allows executing terminal commands but safe
 const currentPath = "../backend"
 let languages = ["ru"]

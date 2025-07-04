@@ -1,9 +1,9 @@
 <script>
-  import {supabase} from "../../../../lib/supabaseClient";
+  import {supabase} from "../../../lib/supabaseClient";
 
   import Sidebar from "../../../lib/Sidebar.svelte";
   import MediaHeader from "../../../lib/MediaHeader.svelte";
-
+c
   import { location } from 'svelte-spa-router'
 
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug

@@ -1,6 +1,6 @@
 <script lang="ts">
     import MediaTag from "./MediaTag.svelte";
-    import { supabase } from "../../lib/supabaseClient"
+
     // Example values
     export let name = null;
     export let artist = null;

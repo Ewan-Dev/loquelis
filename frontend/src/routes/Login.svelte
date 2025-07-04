@@ -1,5 +1,5 @@
 <script>
-    import {supabase} from "../../../../lib/supabaseClient"; // Importing supabase client for authentication
+    import { supabase } from "../../lib/supabaseClient"; // Importing supabase client for authentication
     import InlineStatus from "../../lib/InlineStatus.svelte" // For inline status messages
     import confetti from 'canvas-confetti' // For confetti effect
 
