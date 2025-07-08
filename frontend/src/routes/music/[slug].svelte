@@ -1,9 +1,7 @@
 <script>
-  import {supabase} from "../../../lib/supabaseClient";
-
+  import { supabase } from "../../../lib/supabaseClient"
   import Sidebar from "../../../lib/Sidebar.svelte";
   import MediaHeader from "../../../lib/MediaHeader.svelte";
-c
   import { location } from 'svelte-spa-router'
 
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
@@ -26,7 +24,7 @@ c
 })
   async function loadSong (){
     const {data, error} = await supabase
-    .from('music') // From music table
+    .from('media') // From music table
     .select('*') // All
     .eq('id', slug) // Select song with same ID as slug
     .single() // Specifies that only 1 row is expected to be returned
@@ -39,7 +37,7 @@ c
       cover = song.cover 
       level = song.level 
       rating = song.rating 
-      link = song.link 
+      link = song.embed_link 
     }
     else {
       // Error/ invalid slug

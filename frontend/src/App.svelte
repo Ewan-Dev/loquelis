@@ -5,10 +5,12 @@
   import Login from './routes/Login.svelte'
   import Music from './routes/music/+page.svelte'
   import MusicSlug from './routes/music/[slug].svelte'
+  import Upload from './routes/Upload.svelte'
   import Router from 'svelte-spa-router'
 
   // Setting the routes
   const routes = {
+    '/app/upload': Upload,
     '/app/music/:slug' : MusicSlug,
     '/app/music' : Music,
     '/app/login' : Login,

@@ -1,7 +1,7 @@
 import { supabase } from "./lib/supabaseClient.js";
 import { execa } from "execa" // Allows executing terminal commands but safe
 const currentPath = "../backend"
-let languages = ["ru"]
+let languages = ["en"]
 
 
 main() // Call the function to start listening for broadcasts
@@ -23,6 +23,7 @@ async function listenAndDownloadSubtitles() {
     const lang = broadcast.payload.lang // Get language
     const url = broadcast.payload.url // Get URL
     const id = broadcast.payload.id // Get ID
+    const type = broadcast.payload.type // Get type
     console.log(`Language: ${lang}`) // Print language
     console.log(`URL: ${url}`)  // Print URL
     console.log(languages.includes(lang))
@@ -40,7 +41,14 @@ async function listenAndDownloadSubtitles() {
             cwd: currentPath // Where to run command 
         });
         console.log(`Success: ${stdout}`) // Print success message
-        uploadSubtitles(id, stdout) // Upload subtitles to the database
+        const videoData = JSON.parse(stdout) // Parse the JSON output
+        const title = videoData.title
+        const channel = videoData.channel
+        const videoID = videoData.id
+        const cover = `https://i.ytimg.com/vi/${videoID}/sddefault.jpg`
+        const embedLink = `https://www.youtube.com/embed/${videoID}`
+        const videoLink = `https://www.youtube.com/watch?v=${videoID}`
+        uploadMedia(id, title, channel, cover, stdout, embedLink, videoLink, type) // Upload subtitles to the database
     }
     catch (error) {
         console.error(error)
@@ -92,12 +100,14 @@ async function availableLanguages(){
 
 }
 
-async function uploadSubtitles(id, sub){
+async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink, type) {
     const currentDate = new Date();
+    console.log(type, sub, id)
     const { error } = await supabase
-        .from('subtitles')
-        .insert({ id: id, content: sub}) 
+        .from("media")
+        .insert({ name: title, artist: channel, cover: cover, content: sub, media_type: type, embed_link: embedLink, video_link: videoLink }) // Update the content, media_type and updated_at columns
     if (error) {
         console.error("Error uploading subtitles:", error) // Print error if upload fails
     }
 }
+

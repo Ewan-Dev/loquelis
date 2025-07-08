@@ -1,5 +1,5 @@
 <script>
-    import { supabase } from "../../../lib/supabaseClient"
+    import { supabase } from "../../../lib/supabaseClient";
     import Sidebar from "../../../lib/Sidebar.svelte"; 
     import MediaBox from "../../../lib/MediaBox.svelte";
 
@@ -9,9 +9,10 @@
     // Fetch music data from Supabase
     async function fetchMusic() {
         const { data, error } = await supabase
-            .from('music') // From the 'music' table
+            .from('media') // From the 'media' table
             .select('*') // Select all columns
-            .eq('language', language); // Filter by language
+            .eq('language', language) // Filter by language
+            .eq('media_type', 'music'); // Filter by media type
         if (!error) {
             songs = data || []; // If data is returned, assign it to songs
         } else {
