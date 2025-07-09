@@ -38,7 +38,7 @@
         cover={song.cover} 
         level={song.level} 
         rating={song.rating}
-        link={`music/${song.id}`} />
+        link={`#/app/music/${song.id}`} />
     {/each}
     </section>
     </section>

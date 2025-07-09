@@ -95,8 +95,8 @@
             <span>
                 <label for="media">Select media type:</label>
                 <select class="media" bind:value={mediumType}>
-                    <option value="video">YT Video</option>
-                    <option value="music">Music</option>
+                    <option value="video">📺 YT Video</option>
+                    <option value="music">🎧 Music</option>
                 </select>
             </span>
            <span>

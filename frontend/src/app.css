@@ -53,3 +53,15 @@ button{
   border-radius: 0.45em;
   padding: 0.25em 0.5em;
 }
+select,
+::picker(select) {
+  appearance: base-select;
+  background-color: #fff;
+  border: #c8c8c8 1.5px solid;
+  border-radius: 0.5em;
+  text-align: left ;
+}
+option{
+  padding: 0.25em;
+  text-align: left;
+}
