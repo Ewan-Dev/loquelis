@@ -1,52 +1,55 @@
 <script>
     import { supabase } from "../../lib/supabaseClient.js";
     import Sidebar from "../../lib/Sidebar.svelte";
+    import InlineStatus from "../../lib/InlineStatus.svelte";
     import confetti from "canvas-confetti";
-    
-    let mediumType = "", mediumURL = "";
 
-    // Confetti effect
+    // Initialize with empty error
+    let error = $state({name: "", type: ""});
+    let mediumType = "";
+    let mediumURL = "";
+
     function launchConfetti() {
         confetti({
             particleCount: 600,
             spread: 100,
-            origin: { y: 0}
-        })
-        console.log(mediumURL, mediumType)
+            origin: { y: 0 }
+        });
     }
 
     async function handleUpload(mediumType, mediumURL) {
-        await isAlreadyUploaded(mediumURL)
-            .then(isUploaded => {
-                if (isUploaded) {
-                    console.error("This medium has already been uploaded.");
-                    return;
-                }
-                if (mediumType === "video" || mediumType === "music") {
-                    requestSubtitles(mediumURL, "en", mediumType)
-                    console.log("Your upload will be ready soon!");
-                } else {
-                    console.error("Invalid medium type. Please select 'video' or 'music'.")
-                }
-            })
-            .catch(error => {
-                console.error("Error checking upload status:", error);
-            });
-
-     }
-    async function requestSubtitles( url, lang, type){
-        const channel = supabase.channel("subtitles") // Create a channel named "subtitles"
-        await channel.subscribe() // Subscribe to the channel
-        // Send a broadcast message
-        const result = await channel.send({
-            type: "broadcast", // Specify it's a broadcast
-            event: "subtitle-update", // Name of the broadcast event
-            payload: {id: 1, url: url, lang: lang, type: type} // Data to send
-        })
-        
-        console.log("Result:", result) // Print result of broadcast
-        process.exit() 
+        try {
+            const isUploaded = await isAlreadyUploaded(mediumURL);
+            
+            if (isUploaded) {
+                error = { type: "warn", name: "This has already been uploaded to Loquela" };
+                return;
+            }
+            
+            if (mediumType === "video" || mediumType === "music") {
+                await requestSubtitles(mediumURL, "en", mediumType);
+                error = { type: "success", name: "Beginning upload..." };
+                launchConfetti();
+            } else {
+                error = { type: "error", name: "Error in link validation" };
+            }
+        } catch (err) {
+            console.error("Upload error:", err);
+            error = { type: "error", name: "Error in upload process" };
+        }
     }
+
+    async function requestSubtitles(url, lang, type) {
+        const channel = supabase.channel("subtitles");
+        await channel.subscribe();
+        const result = await channel.send({
+            type: "broadcast",
+            event: "subtitle-update",
+            payload: {id: 1, url, lang, type}
+        });
+        console.log("Broadcast result:", result);
+    }
+
     async function isAlreadyUploaded(mediumURL) {
         const { data, error } = await supabase
             .from('media')
@@ -54,13 +57,33 @@
             .eq('video_link', mediumURL)
             .single();
 
-        if (error) { 
-            console.error("Error checking upload status:", error);
-            return false
+        if (error) {
+            if (error.details && error.details.includes("0 rows")) {
+                return false;
+            }
+            console.error("Database error:", error);
         }
-        return true
+        return !!data;
     }
 
+    async function videoExists(mediumURL, mediumType) {
+        error = {name:"", type:""}
+        try {
+            const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(mediumURL)}&format=json`);
+            
+            if (!response.ok) {
+                error = { type: "error", name: "Invalid YouTube URL" };
+                return false;
+            }
+            
+            await handleUpload(mediumType, mediumURL);
+            return true;
+        } catch (err) {
+            console.error("Validation error:", err);
+            error = { type: "error", name: "Error validating URL" };
+            return false;
+        }
+    }
 </script>
 
 <main class="route">
@@ -68,7 +91,7 @@
     <section class="main-page">
     <h1 class="page-header">Upload</h1>
     <section class="main-content">
-        <form onsubmit={event => {event.preventDefault(); launchConfetti(); handleUpload(mediumType, mediumURL);}}>
+        <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType); }}>
             <span>
                 <label for="media">Select media type:</label>
                 <select class="media" bind:value={mediumType}>
@@ -78,9 +101,12 @@
             </span>
            <span>
                 <label for="url">Link to medium:</label>
-                <input class="url"   bind:value={mediumURL} type="url" placeholder="Enter media URL">
+                <input class="url" bind:value={mediumURL} type="url" placeholder="Enter media URL">
            </span>
             <button type="submit">Upload</button>
+            {#if error.name}
+                <InlineStatus type={error.type} message={error.name} />
+            {/if}
         </form>
     </section>
     </section>
