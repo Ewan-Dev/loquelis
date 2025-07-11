@@ -8,6 +8,9 @@
     let error = $state({name: "", type: ""});
     let mediumType = "";
     let mediumURL = "";
+    let mediumLang = "";
+    let mediumLevel = "";
+    let availableLanguages = $state([]);
 
     function launchConfetti() {
         confetti({
@@ -17,7 +20,22 @@
         });
     }
 
-    async function handleUpload(mediumType, mediumURL) {
+    async function fetchLanguages(){
+        const {data, error} = await supabase
+            .from("languages")
+            .select("*")
+        if(data){
+            availableLanguages = data
+            console.log(availableLanguages)
+            return data
+        }
+        if (error){
+            throw error
+    }
+}
+fetchLanguages()
+
+    async function handleUpload(mediumType, mediumURL, mediumLang, mediumLevel) {
         try {
             const isUploaded = await isAlreadyUploaded(mediumURL);
             
@@ -27,7 +45,7 @@
             }
             
             if (mediumType === "video" || mediumType === "music") {
-                await requestSubtitles(mediumURL, "en", mediumType);
+                await requestSubtitles(mediumURL, mediumLang, mediumType, mediumLevel);
                 error = { type: "success", name: "Beginning upload..." };
                 launchConfetti();
             } else {
@@ -39,13 +57,13 @@
         }
     }
 
-    async function requestSubtitles(url, lang, type) {
+    async function requestSubtitles(url, lang, type, level) {
         const channel = supabase.channel("subtitles");
         await channel.subscribe();
         const result = await channel.send({
             type: "broadcast",
             event: "subtitle-update",
-            payload: {id: 1, url, lang, type}
+            payload: {id: 1, url: url, lang: lang, type: type, level: level}
         });
         console.log("Broadcast result:", result);
     }
@@ -66,7 +84,7 @@
         return !!data;
     }
 
-    async function videoExists(mediumURL, mediumType) {
+    async function videoExists(mediumURL, mediumType, mediumLang, mediumLevel) {
         error = {name:"", type:""}
         try {
             const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(mediumURL)}&format=json`);
@@ -76,7 +94,7 @@
                 return false;
             }
             
-            await handleUpload(mediumType, mediumURL);
+            await handleUpload(mediumType, mediumURL, mediumLang, mediumLevel);
             return true;
         } catch (err) {
             console.error("Validation error:", err);
@@ -91,18 +109,44 @@
     <section class="main-page">
     <h1 class="page-header">Upload</h1>
     <section class="main-content">
-        <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType); }}>
+        <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLang, mediumLevel); }}>
+            <div class="vertical-container">
             <span>
-                <label for="media">Select media type:</label>
-                <select class="media" bind:value={mediumType}>
+                <label for="media">* Select media type:</label>
+                <select class="media" bind:value={mediumType} required>
+                    <option value="">--Pick the medium category--</option>
                     <option value="video">📺 YT Video</option>
                     <option value="music">🎧 Music</option>
                 </select>
             </span>
-           <span>
+            <span>          
+            <label for="language">Select language of content:</label>
+            <select class="language" bind:value={mediumLang}>
+                <option value="">--Select language--</option>
+                {#each availableLanguages as language}                 
+                    <option value={language.short}>{language.emoji} {language.name}</option>
+                {/each}
+            </select>
+            </span>
+            <span>          
+            <label for="level">Select level of content:</label>
+            <select class="level" bind:value={mediumLevel}> 
+                <option value="">--Select a level--</option>           
+                <option value="A1">🐣 A1</option>
+                <option value="A2">🐥 A2</option>
+                <option value="B1">🦉 B1</option>
+                <option value="B2">🦅 B2</option>
+                <option value="C1">🦜 C1</option>
+                <option value="C2">🦚 C2</option>
+            </select>
+            </span>
+        </div>
+        
+
+            <span>
                 <label for="url">Link to medium:</label>
                 <input class="url" bind:value={mediumURL} type="url" placeholder="Enter media URL">
-           </span>
+            </span>
             <button type="submit">Upload</button>
             {#if error.name}
                 <InlineStatus type={error.type} message={error.name} />
@@ -149,6 +193,11 @@
         width: 95%;
         font-size: 1.25em;
     }
+
+    option{
+        height: fit-content ;
+        width: 100%;
+    }
     button{
         background-color: #4364ea;
         color: #F4F4F4;
@@ -165,7 +214,7 @@
         align-items: center;
         justify-content: center;
         gap: 0.5em;
-        width: 100%;
+        width: fit-content;
     }
     button:hover{
         background-color: #1e379b;
@@ -178,9 +227,20 @@
         justify-content: center;
         gap: 1em;
     }
-    .media{
+    .media,
+    .language,
+    .level{
         width: 10em;
         height: 2em;
         border: #c8c8c8 2px solid;
+    }
+
+    .vertical-container{
+        width: 100%;
+        gap:0.5em;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
     }
 </style>

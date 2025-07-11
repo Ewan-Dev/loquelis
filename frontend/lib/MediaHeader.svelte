@@ -13,7 +13,7 @@
     margin: 0;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items:flex-start;
     gap: 0.15em;
 }
     .song{

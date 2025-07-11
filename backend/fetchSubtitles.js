@@ -1,5 +1,7 @@
 import { supabase } from "./lib/supabaseClient.js";
 import { execa } from "execa" // Allows executing terminal commands but safe
+import fs from "fs/promises" // Alows reading file contents for subtitiles
+
 const currentPath = "../backend"
 let languages = ["en"]
 
@@ -24,6 +26,7 @@ async function listenAndDownloadSubtitles() {
     const url = broadcast.payload.url // Get URL
     const id = broadcast.payload.id // Get ID
     const type = broadcast.payload.type // Get type
+    const level = broadcast.payload.level // Get level
     console.log(`Language: ${lang}`) // Print language
     console.log(`URL: ${url}`)  // Print URL
     console.log(languages.includes(lang))
@@ -35,12 +38,13 @@ async function listenAndDownloadSubtitles() {
             "--write-sub", // Get manually set subtitles
             "--sub-lang", lang, // Language of the subtitles
             "--sub-format", "json3", // Format of the subtitles
+            "-o", "subtitles",
             "--print-json", // Print the subtitles in JSON format
             url // Vid URL
         ], {
             cwd: currentPath // Where to run command 
-        });
-        console.log(`Success: ${stdout}`) // Print success message
+        })
+        console.log("Success!") // Print success message
         const videoData = JSON.parse(stdout) // Parse the JSON output
         const title = videoData.title
         const channel = videoData.channel
@@ -48,7 +52,11 @@ async function listenAndDownloadSubtitles() {
         const cover = `https://i.ytimg.com/vi/${videoID}/sddefault.jpg`
         const embedLink = `https://www.youtube.com/embed/${videoID}`
         const videoLink = `https://www.youtube.com/watch?v=${videoID}`
-        uploadMedia(id, title, channel, cover, stdout, embedLink, videoLink, type) // Upload subtitles to the database
+        const rawSubtitles = await fs.readFile(`subtitles.${lang}.json3`)
+        const subtitlesText = rawSubtitles.toString("utf-8")
+        const subtitlesJSON = JSON.parse(subtitlesText)
+        console.log(subtitlesJSON)
+        uploadMedia(id, title, channel, cover, subtitlesJSON, embedLink, videoLink, type, lang, level) // Upload subtitles to the database
     }
     catch (error) {
         console.error(error)
@@ -100,14 +108,13 @@ async function availableLanguages(){
 
 }
 
-async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink, type) {
+async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink, type, lang, level) {
     const currentDate = new Date();
-    console.log(type, sub, id)
+    console.log(level)
     const { error } = await supabase
         .from("media")
-        .insert({ name: title, artist: channel, cover: cover, content: sub, media_type: type, embed_link: embedLink, video_link: videoLink }) // Update the content, media_type and updated_at columns
+        .insert({ name: title, artist: channel, cover: cover, content: sub, media_type: type, embed_link: embedLink, video_link: videoLink, language: lang, level: level}) // Update the content, media_type and updated_at columns
     if (error) {
         console.error("Error uploading subtitles:", error) // Print error if upload fails
     }
 }
-

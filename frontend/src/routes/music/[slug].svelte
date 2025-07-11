@@ -2,17 +2,22 @@
   import { supabase } from "../../../lib/supabaseClient"
   import Sidebar from "../../../lib/Sidebar.svelte";
   import MediaHeader from "../../../lib/MediaHeader.svelte";
+  import Subtitles from "../../../lib/Subtitles.svelte"
   import { location } from 'svelte-spa-router'
-
+  import YTDlpWrap from "yt-dlp-wrap";
+  import { onMount } from "svelte";
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
-  
+  let player
+
   // Metadata for song and takes 'Loading...' until data is fetched and can be updated to Unknown or song data
   let name = $state("Loading...")
   let artist = $state("Loading...")
   let cover = $state("https://img.youtube.com/vi/loquela/maxresdefault.jpg") // Fallback cover image
   let level = $state("Unknown Level")
   let rating = $state("No Rating")
+  let subtitles = $state()
   let link = $state("https://youtu.be/zabswqP6xEM")
+  let currentTime = $state("")
 
   // Whenever page reloads this runs
   $effect(() => {
@@ -38,6 +43,9 @@
       level = song.level 
       rating = song.rating 
       link = song.embed_link 
+      subtitles = song.content.events
+      console.log(subtitles)
+      console.log(`${link}?enablejsapi=1`)
     }
     else {
       // Error/ invalid slug
@@ -47,12 +55,41 @@
       level = "Unknown Level"
       rating = "No Rating"
       link = "https://youtu.be/zabswqP6xEM"
+      
     }
-  
-}
+  }
+
+  // Use onMount so the function works in svelte components/routes
+  onMount(() => {
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player("player", { // "player" id
+        events: {
+          onReady: () => {
+            setInterval(() => {
+              const time = player.getCurrentTime() 
+              console.log(time)
+            }, 100) // Every tenth second
+          }
+        }
+      })
+      
+    }
+    if (window.YT){
+      onYouTubeIframeAPIReady()
+    }
+    else {
+      window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady
+    }
+
+  })
+     
+    
+
 
 </script>
-
+<svelte:head>
+  <script src="https://www.youtube.com/iframe_api"></script> <!-- For getting the current time on YT iframe embed -->
+</svelte:head>
 <main class="route">
   <Sidebar currentPage="/music"/> 
   <section class="main-page">
@@ -63,7 +100,15 @@
               song={name}
               artist={artist}
           />
-          <iframe width="560" height="315" src={ link } title={ name } allowfullscreen></iframe>
+          <iframe id="player" width="560" height="315" src={`${link}?enablejsapi=1`} title={ name } allowfullscreen></iframe>
+          {#each subtitles as line}
+            <Subtitles
+              currentLine={line.segs ? line.segs.map(seg => seg.utf8).join("") : ""}
+              nextLine="Hello"
+            />
+          {/each}
+          
+          
       </section>
   </section>
 </main>
