@@ -60,12 +60,13 @@
   }
 
     function updateSubtitlesLive(time) {
-      let i = 0
-      subtitles.forEach((subtitle) => {
-        if(time > subtitle.tStartMs && time < subtitles[i+1].tStartMs){
-          subtitle.segs.forEach((seg) => {
-            if(currentLine !== seg.utf8){
-              currentLine = seg.utf8
+      let i = 0 // Counter so script knows what item of list the iteration is on
+      subtitles.forEach((subtitle) => { // For every timestamp
+        if(time > subtitle.tStartMs && time < subtitles[i+1].tStartMs){ // As the time will not always exactly match up to the timestamps of subtitles
+          subtitle.segs.forEach((seg) => { // Every line
+            // So it only updates once subtitles change
+            if(currentLine !== seg.utf8){ 
+              currentLine = seg.utf8 // Current line is set 
             }
 
           })
