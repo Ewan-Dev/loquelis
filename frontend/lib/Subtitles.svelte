@@ -1,11 +1,9 @@
 <script lang="ts">
     export let currentLine = "Loading..."
-    export let nextLine = ""
 </script>
 
 <span>
     <p class="current-line">{currentLine}</p>
-    <p class="next-line">{nextLine}</p>
 </span>
 
 <style>
@@ -20,9 +18,5 @@
         gap: 0;
         flex-direction: column;
         margin: 0.5em 0;
-    }
-    .next-line{
-        font-weight: normal;
-        color: #dfdfdf;
     }
 </style>

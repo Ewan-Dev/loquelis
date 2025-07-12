@@ -4,7 +4,6 @@
   import MediaHeader from "../../../lib/MediaHeader.svelte";
   import Subtitles from "../../../lib/Subtitles.svelte"
   import { location } from 'svelte-spa-router'
-  import YTDlpWrap from "yt-dlp-wrap";
   import { onMount } from "svelte";
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
   let player
@@ -15,7 +14,8 @@
   let cover = $state("https://img.youtube.com/vi/loquela/maxresdefault.jpg") // Fallback cover image
   let level = $state("Unknown Level")
   let rating = $state("No Rating")
-  let subtitles = $state()
+  let subtitles = $state([])
+  let currentLine = $state()
   let link = $state("https://youtu.be/zabswqP6xEM")
   let currentTime = $state("")
 
@@ -59,6 +59,27 @@
     }
   }
 
+    function updateSubtitlesLive(time) {
+      let i = 0
+      subtitles.forEach((subtitle) => {
+        if(time > subtitle.tStartMs && time < subtitles[i+1].tStartMs){
+          subtitle.segs.forEach((seg) => {
+            if(currentLine !== seg.utf8){
+              currentLine = seg.utf8
+            }
+
+          })
+        }
+        i++
+      })
+      }
+
+
+       
+      
+      
+  
+
   // Use onMount so the function works in svelte components/routes
   onMount(() => {
     function onYouTubeIframeAPIReady() {
@@ -66,9 +87,10 @@
         events: {
           onReady: () => {
             setInterval(() => {
-              const time = player.getCurrentTime() 
-              console.log(time)
-            }, 100) // Every tenth second
+              const time = player.getCurrentTime()
+              const milliseconds = Math.round(time * 1000)
+              updateSubtitlesLive(milliseconds) 
+            }, 1) // Every millisecond
           }
         }
       })
@@ -100,13 +122,10 @@
               song={name}
               artist={artist}
           />
-          <iframe id="player" width="560" height="315" src={`${link}?enablejsapi=1`} title={ name } allowfullscreen></iframe>
-          {#each subtitles as line}
+          <iframe id="player" width="560" height="315" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
             <Subtitles
-              currentLine={line.segs ? line.segs.map(seg => seg.utf8).join("") : ""}
-              nextLine="Hello"
+              currentLine={currentLine}
             />
-          {/each}
           
           
       </section>
