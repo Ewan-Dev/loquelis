@@ -14,6 +14,7 @@
   let cover = $state("https://img.youtube.com/vi/loquela/maxresdefault.jpg") // Fallback cover image
   let level = $state("Unknown Level")
   let rating = $state("No Rating")
+  let language = $state("")
   let subtitles = $state([])
   let currentLine = $state()
   let link = $state("https://youtu.be/zabswqP6xEM")
@@ -42,6 +43,7 @@
       cover = song.cover 
       level = song.level 
       rating = song.rating 
+      language = song.lang 
       link = song.embed_link 
       subtitles = song.content.events
       console.log(subtitles)
@@ -126,6 +128,7 @@
           <iframe id="player" width="560" height="315" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
             <Subtitles
               currentLine={currentLine}
+              targetLanguage={language}
             />
           
           
