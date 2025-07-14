@@ -10,13 +10,12 @@
 <style>
     section{
         height: fit-content;
-        width: 15em;
+        width: 12.5em;
         background-color: #fff ;
         border: #DBDBDB solid 2.5px ;
         padding: 0.35em 0.5em;
         border-radius: 1em;
-        position: absolute;
-        top:40%;
+;
         z-index: 1;
     }
 

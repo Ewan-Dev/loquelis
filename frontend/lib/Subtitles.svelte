@@ -46,6 +46,7 @@
         gap: 0;
         margin: 0.5em 0;
         position: relative;
+        width: 100%;
     }
     p:hover{
         background-color: #d2d2d2;

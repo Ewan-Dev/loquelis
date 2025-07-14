@@ -1,7 +1,8 @@
 <script>
   import { supabase } from "../../../lib/supabaseClient"
-  import Sidebar from "../../../lib/Sidebar.svelte";
-  import MediaHeader from "../../../lib/MediaHeader.svelte";
+  import Sidebar from "../../../lib/Sidebar.svelte"
+  import MediaHeader from "../../../lib/MediaHeader.svelte"
+  import Definition from "../../../lib/Definition.svelte"
   import Subtitles from "../../../lib/Subtitles.svelte"
   import { location } from 'svelte-spa-router'
   import { onMount } from "svelte";
@@ -125,8 +126,8 @@
               song={name}
               artist={artist}
           />
-          <iframe id="player" width="560" height="315" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
-            <Subtitles
+          <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
+          <Subtitles
               currentLine={currentLine}
               targetLanguage={language}
             />
@@ -143,13 +144,15 @@
   iframe {
       border-radius: 0.5em;
       margin: 0;
+    aspect-ratio: 16 / 9;
+    width: 70% !important;
   }
   h1{
       margin-bottom: 0;
   }
   section {
       display: flex;
-      flex-direction: column;
+     flex-wrap: wrap;
       gap: 0.75em;
       margin-top: 0;
       padding: 0.25em 1em;
@@ -158,6 +161,11 @@
       display: flex;
       gap: 1em;
       align-items: flex-start;
+  }
+  @media (max-width: 1200px){
+    iframe{
+      width: 100% !important;
+    }
   }
 
 </style>
