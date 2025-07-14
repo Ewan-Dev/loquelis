@@ -2,7 +2,7 @@
     import Definition from "./Definition.svelte";
 
     const { currentLine = "Loading...", targetLanguage = "", nativeLanguage = "en"  } = $props()
-    let {term, definition} = $state("")
+    let {term, definition, partOfSpeech} = $state("")
     let subtitlesArray = $state([])
 
     $effect(() => {
@@ -10,16 +10,17 @@
     })
     async function fetchDefinition(word, contextArray) {
         const contextString = contextArray.join(" ")
-        const prompt = `you are being used as an AI to give a definition of a word based of context for a language learning software the language of the word and context is ${targetLanguage} and the user's native language is ${nativeLanguage} the word is ${word} and the context is ${contextString} so give your definition in that language return as raw json as your respone will be directly parsed into json respond with attributes word and definition`
+        const prompt = `you are being used as an AI to give a definition of a word based of context for a language learning software the language of the word and context is ${targetLanguage} and the user's native language is ${nativeLanguage} the word is ${word} and the context is ${contextString} so give your definition in that language return as raw json as your respone will be directly parsed into json respond with attributes word, partOfSpeech and definition`
         const response = await fetch(`https://text.pollinations.ai/${prompt}`)
         const responseJSON = await response.json()
         console.log(responseJSON)
         term = responseJSON.word
         definition = responseJSON.definition
+        partOfSpeech = responseJSON.partOfSpeech
     }
 
 </script>
-<Definition word={term} definition={definition} />
+<Definition word={term} definition={definition} partOfSpeech={partOfSpeech} />
 <span>
 
     {#each subtitlesArray as subtitle}

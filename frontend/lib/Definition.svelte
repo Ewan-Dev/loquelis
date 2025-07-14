@@ -1,9 +1,10 @@
 <script>
-    const {definition, word} = $props()
+    const {definition, word, partOfSpeech} = $props()
 </script>
 
 <section>
     <h1>{word}</h1>
+    <p class="part-of-speech">{partOfSpeech}</p>
     <p>{definition}</p>
 </section>
 
@@ -26,5 +27,13 @@
 
     h1{
         font-size: 2em;
+    }
+    .part-of-speech{
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #2c67fa;
+        width: fit-content;
+        padding: 0.15em 0.2em;
+        border-radius: 0.4em;
     }
 </style>
