@@ -2,12 +2,13 @@
     const {definition, word, partOfSpeech} = $props()
 </script>
 
-<section>
-    <h1>{word}</h1>
-    <p class="part-of-speech">{partOfSpeech}</p>
-    <p>{definition}</p>
-</section>
-
+{#if word}
+    <section>
+        <h1>{word}</h1>
+        <p class="part-of-speech">{partOfSpeech}</p>
+        <p>{definition}</p>
+    </section>
+{/if}
 <style>
     section{
         height: fit-content;
