@@ -29,6 +29,10 @@
             <span class="material-symbols-rounded">upload</span>
             Upload
         </a>
+        <a href="/#/app/flashcards" class:selected={currentPage === '/flashcards'} >
+            <span class="material-symbols-rounded">cards_star</span>
+            Flashcards
+        </a>
     </nav>
 </aside>
 
