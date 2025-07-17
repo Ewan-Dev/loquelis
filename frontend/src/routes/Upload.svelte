@@ -85,7 +85,6 @@ fetchLanguages()
     }
 
     async function videoExists(mediumURL, mediumType, mediumLang, mediumLevel) {
-        error = {name:"", type:""}
         try {
             const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(mediumURL)}&format=json`);
             
@@ -149,7 +148,7 @@ fetchLanguages()
             </span>
             <button type="submit">Upload</button>
             {#if error.name}
-                <InlineStatus type={error.type} message={error.name} />
+                <InlineStatus type={error.type} message={error.name} width="16em" />
             {/if}
         </form>
     </section>

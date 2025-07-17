@@ -1,8 +1,10 @@
 <script>
-  import { onMount } from "svelte";
+   import { onMount } from "svelte";
     import { supabase } from "./supabaseClient"
-    const {definition, word, partOfSpeech} = $props() // Pass 
+    import InlineStatus from "./InlineStatus.svelte";
+    let {definition, word, partOfSpeech} = $props() // Pass 
     const username = "samwu" // Example username before I add auth
+    let definitionStatus = $state({message: "", type: ""})
     let currentDeckID = ""
     let flashcardDecks = []
     // Fetch current flashcards in deck
@@ -13,6 +15,7 @@
             .eq("id", id)
             
         if (error) {
+            definitionStatus = {type: "error", message: error.message}
             return[]
         }
         return data[0].content // The content
@@ -28,8 +31,10 @@
             .update({ content: flashcards })
             .eq("id", id)
         if(error){
+            definitionStatus = {type: "error", message: error.message}
             return error
         }
+        definitionStatus = {type: "success", message: "Added!"}
     }
 
     async function fetchUserFlashcardDecks(user) {
@@ -39,6 +44,7 @@
             .eq("author", user)
         if (error) {
             console.error(error)
+            definitionStatus = {type: "error", message: error.message}
             return error
         }
         return data
@@ -48,6 +54,7 @@
             console.log(flashcardDecks)
         })
 
+        $inspect(definitionStatus)
 </script>
 
 
@@ -66,7 +73,7 @@
             </select>
         </span>
         {/if}
-
+            <InlineStatus type={definitionStatus.type} message={definitionStatus.message}/>
     </section>
 {/if}
 
@@ -100,12 +107,14 @@
         border-radius: 0.4em;
     }
     select{
-        padding: 0.2em;
+        padding: 0 0.5em;
+        width: fit-content;
+        display: inline-block;
+        border-radius: 100em;
     }
     button,
     select{
         height: 1.5em;
-        border-radius: 50%;
     }
     button{
         width: 1.5em;
@@ -117,6 +126,7 @@
         border: #c5c5c5 1.75px solid;
         color: #545454;
         padding: 0.3em;
+        border-radius: 100%;
     }
     span{
         font-size: 1em;
@@ -134,7 +144,14 @@
         border-radius: 500em;
         display: flex;
     }
+
     .material-symbols-rounded{
         font-size: 0.95em;
+    }
+
+    button:hover{
+        background-color: #558cea;
+        color: #ffffff;
+        border-color: #3b69e8;
     }
 </style>

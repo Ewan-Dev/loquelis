@@ -38,7 +38,7 @@
                     <InlineStatus type="error" message={error} />
                 {/if}   
                 {#if data }
-                    <InlineStatus type="success" message="Login successful!" />
+                    <InlineStatus type="success" message="Login successful!" width="15em"/>
                 {/if}
                 </form>
                 </section>
