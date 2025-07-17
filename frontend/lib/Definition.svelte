@@ -83,9 +83,8 @@
         width: 12.5em;
         background-color: #fff ;
         border: #DBDBDB solid 2.5px ;
-        padding: 0.5em;
+        padding: 0.5em 0.5em 0;
         border-radius: 1em;
-;
         z-index: 1;
     }
 
@@ -138,7 +137,7 @@
     .flashcard-upload{
         height: fit-content;
         width: fit-content;
-        margin-top: 0.5em;
+        margin: 0.5em 0;
         background-color: #eee;
         padding: 0.2em;
         border-radius: 500em;

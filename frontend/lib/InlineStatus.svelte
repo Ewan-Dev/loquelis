@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
 
-     let { type = "info", message = "Information", width = "fit-content" } = $props();
+     let { type = "info", message = "Information", width = "100%" } = $props();
      let icons = {
          info: "info",
          error: "error",
@@ -12,6 +12,7 @@
     let timeoutID;
     let visible = $state(true);
     $effect(()=> {
+        visible = false
         if(message){
             visible = true
             clearTimeout(timeoutID)
@@ -20,6 +21,7 @@
             }, 5000) // Hide status after 3 seconds
         }
         return () => {
+            visible = false
             clearTimeout(timeoutID)
         } 
         })
@@ -39,8 +41,11 @@
     }
     section{
         height: 3em;
-        padding: 0.15em 0.5em;
+        margin: 0.5em;
+        margin-left: 0;
+        padding: 0.15em;
         border-radius: 0.5em;
+        box-sizing: border-box;
         overflow: hidden;
         display: flex;
         align-items: center;
