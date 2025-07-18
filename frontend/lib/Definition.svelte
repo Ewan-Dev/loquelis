@@ -2,7 +2,7 @@
    import { onMount } from "svelte";
     import { supabase } from "./supabaseClient"
     import InlineStatus from "./InlineStatus.svelte";
-    let {definition, word, partOfSpeech} = $props() // Pass 
+    let {definition, word, partOfSpeech, romanisation} = $props() // Pass 
     const username = "samwu" // Example username before I add auth
     let definitionStatus = $state({message: "", type: ""})
     let currentDeckID = ""
@@ -61,6 +61,9 @@
 {#if word} 
     <section>
         <h1>{word}</h1>
+        {#if romanisation}
+             <p class="romanisation">{romanisation}</p>
+        {/if}
         <p class="part-of-speech">{partOfSpeech}</p>
         <p>{definition}</p>
         {#if flashcardDecks}

@@ -2,7 +2,7 @@
     import Definition from "./Definition.svelte";
 
     const { currentLine = "Loading...", targetLanguage = "", nativeLanguage = "en"  } = $props()
-    let {term, definition, partOfSpeech, original, translated} = $state("")
+    let {term, definition, partOfSpeech, original, translated, romanisation} = $state("")
     let fullTranslationVisibility = true
     let subtitlesArray = $state([])
 
@@ -12,13 +12,14 @@
     })
     async function fetchDefinition(word, contextArray) {
         const contextString = contextArray.join(" ")
-        const prompt = `you are being used as an AI to give a definition of a word based of context for a language learning software the language of the word and context is ${targetLanguage} and the user's native language is ${nativeLanguage} the word is ${word} and the context is ${contextString} so give your definition in that language return as raw json as your respone will be directly parsed into json respond with attributes word, partOfSpeech and definition`
+        const prompt = `you are being used as an AI to give a definition of a word based of context for a language learning software the language of the word and context is ${targetLanguage} and the user's native language is ${nativeLanguage} the word is ${word} and the context is ${contextString} so give your definition in that language return as raw json with no backtick MD markers as your respone will be directly parsed into json respond with attributes word, partOfSpeech, romanisation and definition but do NOT return romanisation wheer it is not necessary`
         const response = await fetch(`https://text.pollinations.ai/${prompt}`)
         const responseJSON = await response.json()
         console.log(responseJSON)
         term = responseJSON.word
         definition = responseJSON.definition
         partOfSpeech = responseJSON.partOfSpeech
+        romanisation = responseJSON.romanisation
     }
 
     async function fetchSentenceTranslation(sentence) {
@@ -53,7 +54,7 @@
         }
 
 </script>
-<Definition word={term} definition={definition} partOfSpeech={partOfSpeech} />
+<Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation} />
 <span>
 <span class="main-subtitles">
     {#each subtitlesArray as subtitle}
