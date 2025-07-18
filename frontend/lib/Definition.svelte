@@ -62,7 +62,7 @@
     <section>
         <h1>{word}</h1>
         {#if romanisation}
-             <p class="romanisation">{romanisation}</p>
+            <i><p class="romanisation">{romanisation}</p></i>     
         {/if}
         <p class="part-of-speech">{partOfSpeech}</p>
         <p>{definition}</p>
@@ -92,13 +92,13 @@
     }
 
 
-    h1,
     p{
-        margin: 0;
+        margin: 0.2em 0;
     }
 
     h1{
         font-size: 2em;
+        margin: 0;
     }
     .part-of-speech{
         font-weight: bold;

@@ -1,7 +1,7 @@
 <script >
     import Definition from "./Definition.svelte";
 
-    const { currentLine = "Loading...", targetLanguage = "", nativeLanguage = "en"  } = $props()
+    const { currentLine = "Loading...", targetLanguage = "", nativeLanguage = "en"} = $props()
     let {term, definition, partOfSpeech, original, translated, romanisation} = $state("")
     let fullTranslationVisibility = true
     let subtitlesArray = $state([])
@@ -12,7 +12,7 @@
     })
     async function fetchDefinition(word, contextArray) {
         const contextString = contextArray.join(" ")
-        const prompt = `you are being used as an AI to give a definition of a word based of context for a language learning software the language of the word and context is ${targetLanguage} and the user's native language is ${nativeLanguage} the word is ${word} and the context is ${contextString} so give your definition in that language return as raw json with no backtick MD markers as your respone will be directly parsed into json respond with attributes word, partOfSpeech, romanisation and definition but do NOT return romanisation wheer it is not necessary`
+        const prompt = `you are being used as an AI to give a definition of a word based of context for a language learning software the language of the word and context is ${targetLanguage} and the user's native language is ${nativeLanguage} the word is ${word} and the context is ${contextString} so give your definition in ${nativeLanguage} and as part of your just definition NOT the partOfSpeech add helpful notes such as if its plural and its singular or its case/tense and its infintive etc. but keep it simple and short return as raw json with no backtick MD markers as your respone will be directly parsed into json respond with attributes word, partOfSpeech, romanisation and definition but do NOT return romanisation where it is not necessary`
         const response = await fetch(`https://text.pollinations.ai/${prompt}`)
         const responseJSON = await response.json()
         console.log(responseJSON)
@@ -23,8 +23,9 @@
     }
 
     async function fetchSentenceTranslation(sentence) {
-        const prompt = `you are being used as an AI to give a translation of a sentence for a language learning software the language of the sentence is ISO 639-2 ${targetLanguage} and the user's native language is ${nativeLanguage} give your definition in that language the sentence is SENTENCESTART ${sentence} SENTENCEEND return as simply raw json as your response will be directly parsed into json and respond with attributes original and translated`
+        const prompt = `Translate from ISO 639-2 ${targetLanguage} to ${nativeLanguage}. Sentence: "${sentence}". Respond only with raw JSON: { "original": "...", "translated": "..." }. No comments, markdown, or extra text`
         const response = await fetch(`https://text.pollinations.ai/${prompt}`)
+        console.log(response)
         const responseJSON = await response.json()
         console.log(responseJSON)
         original = responseJSON.original
