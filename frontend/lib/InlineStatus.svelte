@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
-
      let { type = "info", message = "Information", width = "100%" } = $props();
      let icons = {
          info: "info",

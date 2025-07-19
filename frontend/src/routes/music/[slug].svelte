@@ -27,7 +27,15 @@
     if (currentSlug != slug){ // If slug if different to page to last before reload
       slug = currentSlug // Update slug
     }
-    loadSong() // Load new song from slug
+     // Load new song from slug
+    loadSong().then(() => {
+    if (window.YT){ // If iframe exists
+      onYouTubeIframeAPIReady()
+    }
+    else {
+      window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady // Once iframe loads onYouTubeIframeAPIReady() 
+    }
+    })
 })
   async function loadSong (){
     const {data, error} = await supabase
@@ -85,7 +93,6 @@
   
 
   // Use onMount so the function works in svelte components/routes
-  onMount(() => {
     function onYouTubeIframeAPIReady() {
       player = new YT.Player("player", { // "player" id
         events: {
@@ -100,14 +107,7 @@
       })
       
     }
-    if (window.YT){
-      onYouTubeIframeAPIReady()
-    }
-    else {
-      window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady
-    }
 
-  })
      
     
 
