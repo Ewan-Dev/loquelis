@@ -24,7 +24,7 @@
     // Append the new word to existing content and update database
     async function updateFlashcard(id) {
         const flashcards = await fetchFlashcardData(id) // Existing flashcards in deck
-        flashcards.push({word, definition, partOfSpeech}) // Push to array of existing flashcards
+        flashcards.push({word, definition, partOfSpeech, romanisation}) // Push to array of existing flashcards
        // Update newly changed array to database
         const { error } = await supabase
             .from("flashcards")

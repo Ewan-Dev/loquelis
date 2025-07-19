@@ -55,7 +55,7 @@
         }
 
 </script>
-<Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation} />
+<Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation}/>
 <span>
 <span class="main-subtitles">
     {#each subtitlesArray as subtitle}
