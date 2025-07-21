@@ -1,9 +1,11 @@
 <script>
-    let {name, author, link, terms, lang} = $props()
+    let {name, author, id, terms, lang} = $props()
 </script>
 <section>
     <span class="text-container">
-        <a href={link}><h1 class="name">{name}</h1></a>
+        <a href={`#/app/flashcards/${id}`}> <!-- Link to the flashcard slug page with id-->
+            <h1 class="name">{name}</h1>
+        </a>
         <p class="terms">Terms: {terms}</p>
         <p class="author">@{author}</p>
     </span>
@@ -33,6 +35,15 @@
         padding: 0;
         height: fit-content;
         font-size: 1.15em;
+    }
+    a {
+        height: auto;
+        overflow: hidden;
+        color: #000;
+        margin: 0.05em;
+        font-size: 1.25em;
+        text-decoration: none;
+        display: block;
     }
     .terms{
         background-color: #80a5ed;

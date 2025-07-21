@@ -40,7 +40,7 @@
         console.log(error)
         }
     
-
+        $inspect(flashcardDecks)
 </script>
 
 <main class="route">
@@ -52,7 +52,7 @@
         <button class="create-flashcard-deck" onclick={() => dialog.showModal()}>+ Create Flashcard Deck</button>
         <section class="flashcard-decks">
             {#each flashcardDecks as flashcardDeck}
-            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author} terms=6 lang={flashcardDeck.language}/>
+            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author} terms=6 lang={flashcardDeck.language} id={flashcardDeck.id}/>
         {/each}
         </section>
     </section>
