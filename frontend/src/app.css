@@ -76,3 +76,6 @@ option{
   padding: 0.25em;
   text-align: center;
 }
+.hidden{
+    display: none !important;
+}

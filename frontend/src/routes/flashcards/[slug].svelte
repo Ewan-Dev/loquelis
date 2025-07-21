@@ -2,7 +2,8 @@
     import { supabase } from "../../../lib/supabaseClient"
     import { location } from "svelte-spa-router";
     import Sidebar from "../../../lib/Sidebar.svelte"
-  import { onMount } from "svelte";
+    import FlashcardDeck from "../../../lib/FlashcardDeck.svelte";
+    import { onMount } from "svelte";
     let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
     let flashcardsContent = $state([]) // State to hold the flashcard content
     onMount(async () => {
@@ -36,16 +37,7 @@
     <section class="main-page">
     <h1 class="page-header">Flashcards</h1>
     <section class="main-content">
-        {#each flashcardsContent as flashcard}
-            <div class="flashcard">
-                <h1>{JSON.parse(flashcard).word}</h1>
-                {#if JSON.parse(flashcard).romanisation}
-                    <i><p class="romanisation">{JSON.parse(flashcard).romanisation}</p></i>
-                {/if}
-                <p>{JSON.parse(flashcard).definition}</p>
-                <p class="part-of-speech">{JSON.parse(flashcard).partOfSpeech}</p>
-            </div>
-        {/each}
+        <FlashcardDeck content={flashcardsContent} backContent={["part-of-speech", "definition"]}/>
     </section>
     </section>
 </main>
