@@ -1,8 +1,8 @@
 <script>
   import { onMount } from "svelte";
-    import Sidebar from "../../lib/Sidebar.svelte"
-    import { supabase } from "../../lib/supabaseClient";
-    import FlashcardMediaBox from "../../lib/FlashcardMediaBox.svelte";
+    import Sidebar from "../../../lib/Sidebar.svelte"
+    import { supabase } from "../../../lib/supabaseClient";
+    import FlashcardMediaBox from "../../../lib/FlashcardMediaBox.svelte";
     let dialog, flashCardName, flashCardLang
     let availableLanguages = $state([])
     let username = "samwu" // Example username until i add dynamic reading with auth
@@ -57,7 +57,6 @@
         </section>
     </section>
     </section>
-
 </main>
     
 
