@@ -62,7 +62,6 @@ button{
   border-radius: 0.45em;
   padding: 0.25em 0.5em;
 }
-
 select,
 ::picker(select) {
   appearance: base-select;
@@ -77,5 +76,5 @@ option{
   text-align: center;
 }
 .hidden{
-    display: none !important;
+  display: none !important;
 }

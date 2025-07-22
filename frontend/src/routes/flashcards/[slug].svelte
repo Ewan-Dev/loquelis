@@ -30,9 +30,8 @@
         }
         return data
         
+    
     }
-
-
 </script>
 
 <main class="route">
@@ -40,7 +39,7 @@
     <section class="main-page">
     <h1 class="page-header">Flashcards</h1>
     <section class="main-content">
-        <FlashcardDeck content={flashcardsContent} backContent={["part-of-speech", "definition"]}/>
+        <FlashcardDeck content={flashcardsContent}  backContent={["part-of-speech", "definition"]}/>
     </section>
     </section>
 </main>
