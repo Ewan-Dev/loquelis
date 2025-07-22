@@ -25,6 +25,10 @@
             <span class="material-symbols-rounded">music_note</span>
             Music
         </a>
+        <a href="/#/app/videos" class:selected={currentPage === '/videos'} >
+            <span class="material-symbols-rounded">movie</span>
+            Videos
+        </a>
         <a href="/#/app/upload" class:selected={currentPage === '/upload'} >
             <span class="material-symbols-rounded">upload</span>
             Upload

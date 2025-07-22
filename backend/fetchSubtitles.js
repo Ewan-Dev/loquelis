@@ -3,7 +3,7 @@ import { execa } from "execa" // Allows executing terminal commands but safe
 import fs from "fs/promises" // Alows reading file contents for subtitiles
 
 const currentPath = "../backend"
-let languages = ["en"]
+let languages = ["en", "ko"]
 
 
 main() // Call the function to start listening for broadcasts

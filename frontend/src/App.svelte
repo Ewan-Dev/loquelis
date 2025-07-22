@@ -7,11 +7,13 @@
   import MusicSlug from './routes/music/[slug].svelte'
   import Upload from './routes/Upload.svelte'
   import Router from 'svelte-spa-router'
-  import Flashcards from './routes/flashcards/+page.svelte';
-  import FlashcardsSlug from './routes/flashcards/[slug].svelte';
+  import Flashcards from './routes/flashcards/+page.svelte'
+  import FlashcardsSlug from './routes/flashcards/[slug].svelte'
+  import Video from './routes/videos/+page.svelte'
 
   // Setting the routes
   const routes = {
+    '/app/videos': Video,
     '/app/flashcards/:slug': FlashcardsSlug,
     '/app/flashcards': Flashcards,
     '/app/upload': Upload,
