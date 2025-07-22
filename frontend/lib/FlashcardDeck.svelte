@@ -3,8 +3,8 @@
 
     const { content, backContent = [] } = $props()
     let cardNumber = $state(0)
-    let unsure = $state(0)
-    let known = $state(0)
+    let unsure = $state([])
+    let known = $state([])
     let { word, definition, partOfSpeech, romanisation } = $state("")
     console.log(content)
     onMount(() => {
@@ -49,8 +49,8 @@
 </script>
 <main>
     <span class="card-count-container">
-        <span class="unsure-count card-count">{unsure}</span>
-        <span class="known-count card-count">{known}</span>
+        <span class="unsure-count card-count">{unsure.length}</span>
+        <span class="known-count card-count">{known.length}</span>
     </span>
     <div class="flashcard">
         <h1 class="word">{word}</h1>
@@ -63,9 +63,9 @@
         <p class="definition">{definition}</p>
     </div>
     <span class="buttons">
-         <button class="dont-know flashcard-button" onclick={() => {if (content[cardNumber]){unsure++;} cardNumber++}}><span class="material-symbols-rounded">do_not_disturb</span>Unsure</button>
+         <button class="dont-know flashcard-button" onclick={() => {if (content[cardNumber]){unsure.push(content[cardNumber])} cardNumber++}}><span class="material-symbols-rounded">do_not_disturb</span>Unsure</button>
         <button class="flip flashcard-button" onclick={showBack}><span class="material-symbols-rounded">autorenew</span>Flip</button>
-        <button class="know flashcard-button" onclick={() => {if (content[cardNumber]){known++;} cardNumber++}}><span class="material-symbols-rounded">check_circle</span>Know</button>
+        <button class="know flashcard-button" onclick={() => {if (content[cardNumber]){known.push(content[cardNumber])} cardNumber++}}><span class="material-symbols-rounded">check_circle</span>Know</button>
     </span>
 </main>
 <style>
