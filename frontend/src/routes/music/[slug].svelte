@@ -37,6 +37,11 @@
     }
     })
 })
+
+  onMount(() => {
+    fetchLanguages()
+  })
+
   async function loadSong (){
     const {data, error} = await supabase
     .from('media') // From music table
@@ -85,11 +90,6 @@
         i++
       })
       }
-
-
-       
-      
-      
   
 
   // Use onMount so the function works in svelte components/routes
@@ -107,9 +107,6 @@
       })
       
     }
-
-     
-    
 
 
 </script>

@@ -29,8 +29,6 @@
             return
         }
         return data
-        
-    
     }
 </script>
 
@@ -49,5 +47,11 @@
         display: flex;
         gap: 1em;
         align-items: flex-start;
+    }
+    .main-content {
+        flex: 1; /* Allow main content to take available space */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center the flashcard deck */
     }
 </style>
