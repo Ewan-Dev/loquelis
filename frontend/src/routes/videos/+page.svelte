@@ -41,7 +41,8 @@
         cover={video.cover} 
         level={video.level} 
         rating={video.rating}
-        link={`#/app/videos/${video.id}`} />
+        link={`#/app/videos/${video.id}`} 
+        type="video"/>
     {/each}
     </section>
     </section>

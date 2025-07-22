@@ -8,10 +8,11 @@
     export let level = null;
     export let rating = null;
     export let link = null;
+    export let type = null; // § Type of media, e.g., "video" or "music"
 </script>
 
-<div>
-    <img src={cover} alt="Album cover">
+<div class={type}>
+    <img src={cover} alt="Album cover" class={type}>
     <span>
         <MediaTag type="level" message={level}/>
         <MediaTag type="rating" message={rating} symbol="thumb_up"/>
@@ -28,6 +29,13 @@
         border: #DBDBDB 0.2em solid;
         padding: 0.3em;
         border-radius: 1em;
+    }
+    div.video{
+        width: 15em;
+    }
+    img.video {
+        height: 8em;
+        width: 15em;
     }
     img {
         width: 10em;
