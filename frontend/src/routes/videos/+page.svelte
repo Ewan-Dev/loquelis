@@ -3,11 +3,11 @@
     import Sidebar from "../../../lib/Sidebar.svelte"; 
     import MediaBox from "../../../lib/MediaBox.svelte";
   import { onMount } from "svelte";
-    let language = 'ko'; // Default language for music for now until user selection function is implemented
-    let videos = $state([]) // List to store fetched music data
+    let language = 'ko'; // Default language for video for now until user selection function is implemented
+    let videos = $state([]) // List to store fetched video data
 
-    // Fetch music data from Supabase
-    async function fetchMusic() {
+    // Fetch video data from Supabase
+    async function fetchVideos() {
         const { data, error } = await supabase
             .from('media') // From the 'media' table
             .select('*') // Select all columns
@@ -22,13 +22,13 @@
     }
 
     onMount(() => {
-        fetchMusic() // Fetch music data when the component mounts
+        fetchVideos() // Fetch video data when the component mounts
     })
 
 </script>
 
 <main class="route">
-    <Sidebar currentPage="/music"/> 
+    <Sidebar currentPage="/videos"/> 
     <section class="main-page">
     <h1 class="page-header">Videos</h1>
         <!-- Main content section for styles to be applied -->

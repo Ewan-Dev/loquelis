@@ -63,9 +63,9 @@
         <p class="definition">{definition}</p>
     </div>
     <span class="buttons">
-         <button class="dont-know flashcard-button" onclick={() => {unsure++; cardNumber++}}><span class="material-symbols-rounded">do_not_disturb</span>Unsure</button>
+         <button class="dont-know flashcard-button" onclick={() => {if (content[cardNumber]){unsure++;} cardNumber++}}><span class="material-symbols-rounded">do_not_disturb</span>Unsure</button>
         <button class="flip flashcard-button" onclick={showBack}><span class="material-symbols-rounded">autorenew</span>Flip</button>
-        <button class="know flashcard-button" onclick={() => {known++; cardNumber++}}><span class="material-symbols-rounded">check_circle</span>Know</button>
+        <button class="know flashcard-button" onclick={() => {if (content[cardNumber]){known++;} cardNumber++}}><span class="material-symbols-rounded">check_circle</span>Know</button>
     </span>
 </main>
 <style>

@@ -2,7 +2,7 @@
     import { supabase } from "../../../lib/supabaseClient";
     import Sidebar from "../../../lib/Sidebar.svelte"; 
     import MediaBox from "../../../lib/MediaBox.svelte";
-    let language = 'ru'; // Default language for music for now until user selection function is implemented
+    let language = 'zh'; // Default language for music for now until user selection function is implemented
     let songs = [] // List to store fetched music data
 
     // Fetch music data from Supabase
