@@ -2,11 +2,11 @@
    import { onMount } from "svelte";
     import { supabase } from "./supabaseClient"
     import InlineStatus from "./InlineStatus.svelte";
-    let {definition, word, partOfSpeech, romanisation} = $props() // Pass 
+    let {definition, word, partOfSpeech, romanisation, language} = $props() // Pass 
     const username = "samwu" // Example username before I add auth
     let definitionStatus = $state({message: "", type: ""})
-    let currentDeckID = ""
-    let flashcardDecks = []
+    let currentDeckID = $state()
+    let flashcardDecks = $state([])
     // Fetch current flashcards in deck
     async function fetchFlashcardData(id){
         const { data, error } = await supabase
@@ -42,6 +42,7 @@
             .from("flashcards")
             .select("*")
             .eq("author", user)
+            .eq("language", language)
         if (error) {
             console.error(error)
             definitionStatus = {type: "error", message: error.message}
@@ -53,9 +54,8 @@
             flashcardDecks = await fetchUserFlashcardDecks(username) 
             console.log(flashcardDecks)
         })
+        $inspect(language)
 
-       
-        $inspect(definitionStatus)
 </script>
 
 

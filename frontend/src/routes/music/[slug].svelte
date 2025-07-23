@@ -52,7 +52,7 @@
       cover = song.cover 
       level = song.level 
       rating = song.rating 
-      language = song.lang 
+      language = song.language
       link = song.embed_link 
       subtitles = song.content.events
       console.log(subtitles)
