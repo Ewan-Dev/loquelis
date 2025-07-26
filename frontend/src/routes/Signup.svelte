@@ -1,30 +1,50 @@
-<!--TODO: optimise error handling as user can be created in auth table but have an error w/ profiles table-->
 <script>
 import { supabase } from "../../lib/supabaseClient" // Importing supabase client for authentication
 import InlineStatus from "../../lib/InlineStatus.svelte" // For inline status messages
 import confetti from 'canvas-confetti' // For confetti effect
 
-    let email = "", password = "", username = "", result = ""
-    let statusError = $state("")
+    let email = "", password = "", username = ""
+    let  { statusError, result } = $state("")
     
-    async function handleSignup() {
+    function handleSignup(){
+        addUsertoTable(username, email)
+    }
+
+    async function handleAuth() {
         result = await supabase.auth.signUp({email, password}) 
     if (result.error) {
        statusError = result.error.message
        console.error(statusError)
     } else {
-        const authResult = result.data
-        const authUser = authResult.user
+        console.log("User signed up successfully", result)
+        const authUser = result.data.user
         const uid = authUser.id
-        console.log(authUser)
-        addUsertoTable(username, email, uid)
+        addUIDtoProfile(uid)
     }
  }
 
-    async function addUsertoTable(username, email, uid){
+
+    async function addUIDtoProfile(uid) { // This is done after the user is created in the auth table and auth due to registrtion order
         const { error } = await supabase
             .from("profiles")
-            .insert({username, email, uid})
+            .update({ uid: uid })
+            .eq("email", email)
+        if (error) {
+            console.error("Error updating profile with UID:", error.message)
+            statusError = error.message
+        } else {
+            result = "success"
+            statusError = ""
+            launchConfetti()
+        }
+        
+    }
+
+    async function addUsertoTable(username, email){
+        const { error } = await supabase
+            .from("profiles")
+            .insert({username, email})
+        if (error) {
         if( error.message.includes("duplicate") && error.message.includes("email")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
         {
             statusError = "Account with email already exists"
@@ -37,15 +57,16 @@ import confetti from 'canvas-confetti' // For confetti effect
             console.log(statusError)
             result = ""
         }
-        else if (error) {
+        else if (error.message) {
             result = ""
             statusError = error.message     
         }
-        else if (!error) {
-            result = "success"
-            launchConfetti()
-        }
      }
+        else if (!error) {
+                console.log("User added to profiles table")
+                handleAuth()
+            }
+    }
     
     function launchConfetti() {
         confetti({
