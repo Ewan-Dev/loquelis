@@ -1,20 +1,51 @@
+<!--TODO: optimise error handling as user can be created in auth table but have an error w/ profiles table-->
 <script>
 import { supabase } from "../../lib/supabaseClient" // Importing supabase client for authentication
 import InlineStatus from "../../lib/InlineStatus.svelte" // For inline status messages
 import confetti from 'canvas-confetti' // For confetti effect
 
-    let email = "", password = "", error = "" , result = ""
+    let email = "", password = "", username = "", result = ""
+    let statusError = $state("")
     
     async function handleSignup() {
         result = await supabase.auth.signUp({email, password}) 
     if (result.error) {
-       error = result.error.message
-       console.error(error)
+       statusError = result.error.message
+       console.error(statusError)
     } else {
-        console.log(result.data)
-        launchConfetti()
+        const authResult = result.data
+        const authUser = authResult.user
+        const uid = authUser.id
+        console.log(authUser)
+        addUsertoTable(username, email, uid)
     }
  }
+
+    async function addUsertoTable(username, email, uid){
+        const { error } = await supabase
+            .from("profiles")
+            .insert({username, email, uid})
+        if( error.message.includes("duplicate") && error.message.includes("email")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
+        {
+            statusError = "Account with email already exists"
+            console.log(statusError)
+            result = ""
+        }
+        else if( error.message.includes("duplicate") && error.message.includes("username")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
+        {
+            statusError = "Account with username already exists"
+            console.log(statusError)
+            result = ""
+        }
+        else if (error) {
+            result = ""
+            statusError = error.message     
+        }
+        else if (!error) {
+            result = "success"
+            launchConfetti()
+        }
+     }
     
     function launchConfetti() {
         confetti({
@@ -23,6 +54,8 @@ import confetti from 'canvas-confetti' // For confetti effect
             origin: { y: 0.6 }
         })
     }
+
+
 </script>
 
 <main>
@@ -32,11 +65,13 @@ import confetti from 'canvas-confetti' // For confetti effect
     <input class="email" bind:value={email} type="email" >
     <label for="password">Password:</label>
     <input class="password" bind:value={password} type="password" > 
+    <label for="username">Username:</label>
+    <input class="username" bind:value={username} type="username" >
     <button class="sign-up" type="submit">Sign up</button>
-    {#if error}
-        <InlineStatus type="error" message={error} />
+    {#if statusError}
+        <InlineStatus type="error" message={statusError} />
     {/if}
-    {#if result && !error}
+    {#if result && !statusError}
         <InlineStatus type="success" message="Signup successful! Check your email to confirm." />
     {/if}
 

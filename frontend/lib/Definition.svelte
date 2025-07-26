@@ -53,8 +53,6 @@
     } 
         $effect( async () => {
             flashcardDecks = await fetchUserFlashcardDecks(username) 
-            console.log(language)
-            console.log(flashcardDecks)
         })
 
 
