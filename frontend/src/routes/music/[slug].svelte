@@ -4,6 +4,7 @@
   import MediaHeader from "../../../lib/MediaHeader.svelte"
   import Definition from "../../../lib/Definition.svelte"
   import Subtitles from "../../../lib/Subtitles.svelte"
+  import AuthorTag from "../../../lib/AuthorTag.svelte"
   import { location } from 'svelte-spa-router'
   import { onMount } from "svelte";
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
@@ -12,6 +13,7 @@
   // Metadata for song and takes 'Loading...' until data is fetched and can be updated to Unknown or song data
   let name = $state("Loading...")
   let artist = $state("Loading...")
+  let author = $state("Loading...")
   let cover = $state("https://img.youtube.com/vi/loquela/maxresdefault.jpg") // Fallback cover image
   let level = $state("Unknown Level")
   let rating = $state("No Rating")
@@ -49,6 +51,7 @@
       const song = data
       name = song.name
       artist = song.artist 
+      author = song.author 
       cover = song.cover 
       level = song.level 
       rating = song.rating 
@@ -126,6 +129,9 @@
               song={name}
               artist={artist}
           />
+          {#if author}
+            <AuthorTag author={author} />
+          {/if}
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
           <Subtitles
               currentLine={currentLine}
