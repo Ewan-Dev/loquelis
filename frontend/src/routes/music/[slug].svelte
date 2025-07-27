@@ -125,13 +125,15 @@
       <h1 class="page-header">Music</h1>
       <!-- Main content section for styles to be applied -->
       <section class="main-content">
+        <span class="heading">
           <MediaHeader
-              song={name}
-              artist={artist}
+            song={name}
+            artist={artist}
           />
-          {#if author}
+          {#if author !== "Loading..."}
             <AuthorTag author={author} />
           {/if}
+        </span>
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
           <Subtitles
               currentLine={currentLine}
@@ -173,5 +175,9 @@
       width: 100% !important;
     }
   }
-
+  .heading {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+  }
 </style>
