@@ -11,14 +11,19 @@
              fetchUserSesson()
             fetchLanguages()
             dialog.close()
+        } 
+    ) 
+        $effect(async () => {
              const { data, error } = await supabase
                 .from("flashcards")
                 .select("*")
                 .eq("author", username)
-            flashcardDecks = data
-        } 
-    ) 
- 
+            if (error) {
+                // If error fetching flashcard decks
+                console.error('Error fetching flashcard decks:', error)
+            }
+            flashcardDecks = data || [] // Assign fetched data to flashcardDecks
+        })
     // Fetch user session, get UID, then fetch from profiles table to get the username
     async function fetchUserSesson() {
         const { data, error } = await supabase.auth.getSession()
