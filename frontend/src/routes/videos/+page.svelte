@@ -3,6 +3,7 @@
     import Sidebar from "../../../lib/Sidebar.svelte"; 
     import MediaBox from "../../../lib/MediaBox.svelte";
   import { onMount } from "svelte";
+  
     let language = 'ko'; // Default language for video for now until user selection function is implemented
     let videos = $state([]) // List to store fetched video data
     let availableLanguages = $state([]) // List to store fetched languages available
@@ -43,6 +44,7 @@
     $effect(() => {
         fetchVideos(currentLanguage) // Fetch video data when the component mounts
     })
+
 
 </script>
 

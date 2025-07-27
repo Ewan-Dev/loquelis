@@ -5,10 +5,10 @@
     import FlashcardMediaBox from "../../../lib/FlashcardMediaBox.svelte";
     let dialog, flashCardName, flashCardLang
     let availableLanguages = $state([])
-    let username = "samwu" // Example username until i add dynamic reading with auth
+    let username = $state("")
     let flashcardDecks = $state([])
-    onMount(() => {
-        (async () => {
+    onMount( async () => {
+             fetchUserSesson()
             fetchLanguages()
             dialog.close()
              const { data, error } = await supabase
@@ -16,10 +16,34 @@
                 .select("*")
                 .eq("author", username)
             flashcardDecks = data
-        })
-        ()
-           
-    })  
+        } 
+    ) 
+ 
+    // Fetch user session, get UID, then fetch from profiles table to get the username
+    async function fetchUserSesson() {
+        const { data, error } = await supabase.auth.getSession()
+        const sessionData = data // Store session data
+        if (error) { //Id error fetching user
+            console.error('Error fetching session:', error)
+        } 
+        else if(sessionData) { // If data exists
+            const uid = sessionData.session.user.id // Get UID from session
+            // Use the UID to fetch username
+            const { data, error} = await supabase
+                .from("profiles")
+                .select("username")
+                .eq("uid", uid)
+                .single()
+            if (data) {
+                username = data.username // Set username to username from profiles table
+        }
+            if (error) {
+                // If error fetching username
+                console.error('Error fetching username:', error)
+            }
+        }
+    }
+
      async function fetchLanguages(){
         const {data, error} = await supabase
             .from("languages")
