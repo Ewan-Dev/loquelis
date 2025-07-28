@@ -3,11 +3,19 @@
     import { supabase } from "./supabaseClient"
     import InlineStatus from "./InlineStatus.svelte";
     let {definition, word, partOfSpeech, romanisation, language} = $props() // Pass 
-    const username = "samwu" // Example username before I add auth
+    let username = $state("")
     let definitionStatus = $state({message: "", type: ""}) // Object to store status from ayncronous request
     let currentDeckID = $state() // Current dec ID
     let flashcardDecks = $state([]) // Stores flashcard decks
     let infoDialog = $state(HTMLObjectElement) // The dialog box with deck info
+
+    onMount( async () => {
+         fetchUserSesson()
+    })
+            $effect( async () => {
+            flashcardDecks = await fetchUserFlashcardDecks(username) 
+        })
+
     // Fetch current flashcards lin deck
     async function fetchFlashcardData(id){
         const { data, error } = await supabase
@@ -49,13 +57,34 @@
             definitionStatus = {type: "error", message: error.message}
             return error
         }
+        console.log(data)
         return data
     } 
-        $effect( async () => {
-            flashcardDecks = await fetchUserFlashcardDecks(username) 
-        })
-
-
+        
+        // Fetch user session, get UID, then fetch from profiles table to get the username
+    async function fetchUserSesson() {
+        const { data, error } = await supabase.auth.getSession()
+        const sessionData = data // Store session data
+        if (error) { //Id error fetching user
+            console.error('Error fetching session:', error)
+        } 
+        else if(sessionData) { // If data exists
+            const uid = sessionData.session.user.id // Get UID from session
+            // Use the UID to fetch username
+            const { data, error} = await supabase
+                .from("profiles")
+                .select("username")
+                .eq("uid", uid)
+                .single()
+            if (data) {
+                username = data.username // Set username to username from profiles table
+        }
+            if (error) {
+                // If error fetching username
+                console.error('Error fetching username:', error)
+            }
+        }
+    }
 </script>
 
 

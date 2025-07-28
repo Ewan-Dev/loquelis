@@ -52,7 +52,7 @@
       cover = video.cover
       level = video.level
       rating = video.rating
-      language = video.lang
+      language = video.language
       link = video.embed_link
       subtitles = video.content.events
       console.log(subtitles)

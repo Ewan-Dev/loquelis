@@ -5,7 +5,6 @@
     let {term, definition, partOfSpeech, original, translated, romanisation} = $state("")
     let fullTranslationVisibility = true
     let subtitlesArray = $state([])
-
     $effect(() => {
         subtitlesArray = currentLine.split(" ")
         fetchSentenceTranslation(currentLine)
