@@ -11,9 +11,12 @@
   import FlashcardsSlug from './routes/flashcards/[slug].svelte'
   import Video from './routes/videos/+page.svelte'
   import VideoSlug from './routes/videos/[slug].svelte'
-
+  import AIChat from './routes/ai-chat/+page.svelte'
+  import AIChatSlug from './routes/ai-chat/[slug].svelte'
   // Setting the routes
   const routes = {
+    '/app/ai-chat/:slug': AIChatSlug,
+    '/app/ai-chat': AIChat,
     '/app/videos/:slug': VideoSlug,
     '/app/videos': Video,
     '/app/flashcards/:slug': FlashcardsSlug,

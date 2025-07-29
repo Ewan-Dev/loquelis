@@ -37,6 +37,10 @@
             <span class="material-symbols-rounded">cards_star</span>
             Flashcards
         </a>
+        <a href="/#/app/ai-chat" class:selected={currentPage === '/ai-chat'} >
+            <span class="material-symbols-rounded">chat</span>
+            AI Chat
+        </a>
     </nav>
 </aside>
 
