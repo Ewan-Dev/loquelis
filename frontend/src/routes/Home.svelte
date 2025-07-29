@@ -1,6 +1,14 @@
 <script>
   import Sidebar from "../../lib/Sidebar.svelte";
   import Greeting from "../../lib/Greeting.svelte";
+    import { supabase } from "../../lib/supabaseClient";
+    import { onMount } from "svelte";
+
+    onMount(async () => {
+        const { data: { user } } = await supabase.auth.getUser()
+        console.log(user)
+    })
+
 </script>
 
 <main class="route">

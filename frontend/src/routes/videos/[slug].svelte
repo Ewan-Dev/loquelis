@@ -3,12 +3,14 @@
   import Sidebar from "../../../lib/Sidebar.svelte"
   import MediaHeader from "../../../lib/MediaHeader.svelte"
   import Subtitles from "../../../lib/Subtitles.svelte"
+  import AuthorTag from "../../../lib/AuthorTag.svelte"
   import { location } from 'svelte-spa-router'
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
   let player
 
   // Metadata for video and takes 'Loading...' until data is fetched and can be updated to Unknown or video data
   let name = $state("Loading...")
+  let author = $state("Loading...")
   let artist = $state("Loading...")
   let cover = $state("https://img.youtube.com/vi/loquela/maxresdefault.jpg") // Fallback cover image
   let level = $state("Unknown Level")
@@ -46,10 +48,11 @@
       const video = data
       name = video.name
       artist = video.artist
+      author = video.author
       cover = video.cover
       level = video.level
       rating = video.rating
-      language = video.lang
+      language = video.language
       link = video.embed_link
       subtitles = video.content.events
       console.log(subtitles)
@@ -115,10 +118,15 @@
       <h1 class="page-header">Videos</h1>
       <!-- Main content section for styles to be applied -->
       <section class="main-content">
+        <span class="heading">
           <MediaHeader
-              song={name}
-              artist={artist}
+            song={name}
+            artist={artist}
           />
+          {#if author !== "Loading..."}
+            <AuthorTag author={author} />
+          {/if}
+        </span>
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
           <Subtitles
               currentLine={currentLine}
@@ -160,5 +168,9 @@
       width: 100% !important;
     }
   }
-
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
 </style>

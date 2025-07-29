@@ -1,11 +1,10 @@
 <script >
     import Definition from "./Definition.svelte";
 
-    const { currentLine = "Loading...", targetLanguage = "", nativeLanguage = "en"} = $props()
+    const { currentLine = "Loading...", targetLanguage = "", nativeLanguage = "en"} = $props() 
     let {term, definition, partOfSpeech, original, translated, romanisation} = $state("")
     let fullTranslationVisibility = true
     let subtitlesArray = $state([])
-
     $effect(() => {
         subtitlesArray = currentLine.split(" ")
         fetchSentenceTranslation(currentLine)
@@ -54,8 +53,9 @@
         })
         }
 
+
 </script>
-<Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation}/>
+<Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation} language={targetLanguage}/>
 <span>
 <span class="main-subtitles">
     {#each subtitlesArray as subtitle}

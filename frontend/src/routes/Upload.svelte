@@ -3,6 +3,7 @@
     import Sidebar from "../../lib/Sidebar.svelte";
     import InlineStatus from "../../lib/InlineStatus.svelte";
     import confetti from "canvas-confetti";
+    import { onMount } from "svelte";
 
     // Initialize with empty error
     let error = $state({name: "", type: ""});
@@ -11,6 +12,7 @@
     let mediumLang = "";
     let mediumLevel = "";
     let availableLanguages = $state([]);
+    let username = $state("");
 
     function launchConfetti() {
         confetti({
@@ -19,6 +21,10 @@
             origin: { y: 0 }
         });
     }
+    onMount( async () => {
+        fetchUserSesson()
+        fetchLanguages()
+    })
 
     async function fetchLanguages(){
         const {data, error} = await supabase
@@ -33,7 +39,7 @@
             throw error
     }
 }
-fetchLanguages()
+
 
     async function handleUpload(mediumType, mediumURL, mediumLang, mediumLevel) {
         try {
@@ -63,7 +69,7 @@ fetchLanguages()
         const result = await channel.send({
             type: "broadcast",
             event: "subtitle-update",
-            payload: {id: 1, url: url, lang: lang, type: type, level: level}
+            payload: {id: 1, url: url, lang: lang, type: type, level: level, author: username}
         });
         console.log("Broadcast result:", result);
     }
@@ -99,6 +105,31 @@ fetchLanguages()
             console.error("Validation error:", err);
             error = { type: "error", name: "Error validating URL" };
             return false;
+        }
+    }
+
+        // Fetch user session, get UID, then fetch from profiles table to get the username
+    async function fetchUserSesson() {
+        const { data, error } = await supabase.auth.getSession()
+        const sessionData = data // Store session data
+        if (error) { //Id error fetching user
+            console.error('Error fetching session:', error)
+        } 
+        else if(sessionData) { // If data exists
+            const uid = sessionData.session.user.id // Get UID from session
+            // Use the UID to fetch username
+            const { data, error} = await supabase
+                .from("profiles")
+                .select("username")
+                .eq("uid", uid)
+                .single()
+            if (data) {
+                username = data.username // Set username to username from profiles table
+        }
+            if (error) {
+                // If error fetching username
+                console.error('Error fetching username:', error)
+            }
         }
     }
 </script>
