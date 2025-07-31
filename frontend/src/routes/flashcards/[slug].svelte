@@ -7,9 +7,13 @@
     let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
     let flashcardsContent = $state([]) // State to hold the flashcard content
     let flashcardsLength = $state(0) // State to hold the length of the flashcards
+    let {flashcardDeckName, flashcardDeckAuthor} = $state("")
+    
     onMount(async () => {
         const flashcards = await fetchFlashcard(slug)
         if (flashcards) {
+            flashcardDeckName = flashcards.name
+            flashcardDeckAuthor = flashcards.author
             flashcardsContent = flashcards.content // Assuming 'content' is the field that holds the flashcard data
             flashcardsLength = flashcardsContent.length // Get the length of the flashcards
             console.log(flashcardsLength)
@@ -37,7 +41,7 @@
     <section class="main-page">
     <h1 class="page-header">Flashcards</h1>
     <section class="main-content">
-        <FlashcardDeck content={flashcardsContent}  backContent={["part-of-speech", "definition"]}/>
+        <FlashcardDeck content={flashcardsContent}  backContent={["part-of-speech", "definition"]} deckName={flashcardDeckName} author={flashcardDeckAuthor}/>
     </section>
     </section>
 </main>

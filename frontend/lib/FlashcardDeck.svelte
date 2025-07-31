@@ -1,7 +1,7 @@
 <script>
-  import { onMount } from "svelte";
+    import { onMount } from "svelte";
     import confetti from "canvas-confetti";
-    const { content, backContent = [] } = $props()
+    const { content, backContent = [], deckName, author = "" } = $props()
     let cardNumber = $state(0)
     let unsure = $state([])
     let known = $state([])
@@ -16,6 +16,7 @@
         $effect(() => {
             if(content && Array.isArray(content) && content[cardNumber]){
                 const flashcardContentJSON = JSON.parse(content[cardNumber])
+                console.log(flashcardContentJSON)
                 word = flashcardContentJSON.word
                 definition = flashcardContentJSON.definition
                 partOfSpeech = flashcardContentJSON.partOfSpeech
@@ -86,6 +87,10 @@
     $inspect(content)
 </script>
 <main>
+    <div class="title-author-container">
+        <h1 class="deck-name-heading">{deckName}</h1>
+        <p class="deck-name-author">Uploaded by: <b>{author}</b></p>
+    </div>
     {#if cardNumber !== content.length}
         <span class="card-count-container">
             <span class="unsure-count card-count">{unsure.length}</span>
@@ -123,7 +128,9 @@
     {/if}
 </main>
 <style>
-
+main{
+    width: 100%;
+}
 p {
     margin: 0.25em 0;
 }
@@ -189,6 +196,8 @@ progress {
 .buttons{
     display: flex;
     justify-content: space-between;
+    width: 19.75em;
+    margin: 0 auto;
 }
 .material-symbols-rounded{
     font-size: 1.5em;
@@ -198,7 +207,8 @@ progress {
     width: 20em;
     display: flex;
     justify-content: space-between;
-    align-items: center
+    align-items: center;
+    margin: 0 auto;
 }
 .card-count{
     border-width: 2px;
@@ -228,5 +238,18 @@ progress {
     margin: 1em auto 0;
     border: rgb(197, 197, 197) 1px solid;
     color: #7a7a7a;
+}
+.deck-name-heading{
+    font-size: 2em;
+}
+.deck-name-heading,
+.deck-name-author{
+    margin:0;
+}
+.title-author-container{
+    margin: 0.25em 0 0.5em;
+    background-color: #ffffff;
+    padding: 0.4em 0.25em;
+    border-radius: 0.25em;
 }
 </style>
