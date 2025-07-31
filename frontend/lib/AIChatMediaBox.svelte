@@ -7,7 +7,7 @@
             <img src={image} alt={firstName} />
          {/if}
         <div class="text">
-            <a href={`/#/app/ai-chat/${id}`}>
+            <a href={`/#/app//${id}`}>
                 <h2>{firstName}</h2>
             </a>
             <p class="occupation">{occupation}</p>

@@ -16,7 +16,8 @@
 </section>
 <style>
     section{
-        height: 7em;
+        max-height: 8em;
+        height: fit-content;
         width: 12em;
         padding: 0.5em;
         background-color: #F5F5F5;

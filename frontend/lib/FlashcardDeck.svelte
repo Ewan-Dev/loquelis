@@ -226,5 +226,7 @@ progress {
 .flashcard-continue{
     width:12em;
     margin: 1em auto 0;
+    border: rgb(197, 197, 197) 1px solid;
+    color: #7a7a7a;
 }
 </style>
