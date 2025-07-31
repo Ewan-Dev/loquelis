@@ -63,7 +63,7 @@
         const { error } = await supabase
             .from('ai_characters')
             .insert([
-                { name, trait, occupation, language }
+                { name, trait, occupation, language, image: `https://image.pollinations.ai/prompt/Generate a pixar-style image of a ${occupation} called ${name} with trait of ${trait} who is dressed in traditional attire of ${language}.` }
             ])
         
     }
@@ -107,7 +107,7 @@
      <button class="create-ai-character" onclick={() => dialog.showModal()}><span class="material-symbols-rounded">person_add</span>Create AI Character</button>
     <div class="chats">
         {#each availableCharacters as character}
-                 <AIChatMediaBox image={`https://image.pollinations.ai/prompt/Generate a pixar-style image of a ${character.occupation} called ${character.name} with trait of ${character.trait} who is dressed in traditional attire of ${character.language}.`} firstName={character.name} trait={character.trait} lang={character.language} occupation={character.occupation} />
+                 <AIChatMediaBox image={character.image} firstName={character.name} trait={character.trait} lang={character.language} occupation={character.occupation} />
         {/each}
     
     </div>  
@@ -174,6 +174,7 @@
     }
     dialog{
         border-radius: 1em;
+        padding-bottom: 0.5em;
     }
     input{
         height: 2em;
@@ -201,6 +202,7 @@
         align-items: center;
         justify-content: center ;
         flex-direction: column;
+        margin: 0;
     }
     .main-content{
         display: flex;
@@ -216,6 +218,7 @@
         display: flex; 
         align-items: center;
         justify-content: center;
+        width: 99%;
         gap: 0.5em;
     }
     .material-symbols-rounded{
@@ -235,14 +238,14 @@
     }
     .close-dialog-btn,
     .submit-btn{
-        width: 95%;
+        width: 100%;
     }
     .submit-btn{
         background-color: #4364ea;
         color: #F4F4F4;
         font-weight: bold;
         border: #1e379b 2px solid;
-        margin: 0.25em auto;
+        margin: 0.45em auto 0.45em;
     }
     .close-dialog-btn{
         background-color: #F4F4F4;
