@@ -57,7 +57,7 @@
 
 async function sendAIMessage(inputContent, chatHistory) {
     // ADD MESSAGE TO HISTORY
-    chatHistory.push(["User", inputContent]) // Add user response
+    chatHistory.push({sender: "User", content: inputContent}) // Add user response
 
     const prompt = `You are an AI chatbot for a language learning app. Give short and simple responses and only respond in ${characterData.language} and your name is ${characterData.name} but don't but that before ur response and your personality is very exaggerated ${characterData.trait} . Your job is a ${characterData.occupation} Even if the user gets something wrong, try to interperet it and don;t give corrections Here is the user response: ${inputContent}. Here is the chat history: ${chatHistory.join('\n')}`
     
@@ -70,20 +70,34 @@ async function sendAIMessage(inputContent, chatHistory) {
 
     const aiResponseString = await response.text()
     
-    // ADD MESSAGE TO HISTORY
-    chatHistory.push(["AI", aiResponseString]) // Add AI response
+    // ADD MESSAGE O HISTORY
+    chatHistory.push({sender: "AI", content: aiResponseString})// Add AI response
 
     console.log("AI Response:", aiResponseString)
 }
-setInterval(() => {
-  messagesContainer.scrollTo(0, document.body.scrollHeight) // Scroll to bottom on container to see all images
-}, 500) // every 1 second
 
 async function getAIAnalysis() {
-    const prompt =`You are an AI for a language learning app. I will pass a user conversation with AI in the language of ${characterData.language} and you return a JSON file a percentage rating of the spelling punctuation and grammar and every mistake made ONLY BY THE USER AND BE VERY STRICT. So an example json file will have the properties spelling_percent, grammar_percent, punctuation_percent and mistakes, where mistakes is an array of objects where the object has 3 properties, type(spelling, punctuation or grammar), original_sentence, corrected_sentence. return simply as a pure json file as your output will eb immediatly parsed into JSON. leave no markdown markers for code either. here is user conversation ${chatHistory.join("/")}`
-    chatAnalysisAI = await fetch(`https://text.pollinations.ai/prompt/${prompt}?model=openai-large`)
-    console.log(chatAnalysisAI.json())
-    console.log(chatHistory.join("/"))
+        const prompt =  `
+    You are an AI for a language learning app. The user and AI are having a conversation in ${characterData.language}. The user's messages are marked with "User :". Your task is to return a pure JSON object as your response will be directly parsed into JSON and use no markdown annotates and the response has two fields:
+
+    1. "analysis" — A strict critique in English aimed at helping the user improve.
+    2. "mistakes" — An array of objects. Each object must include:
+
+    {
+    "original_sentence": <user sentence>,
+    "corrected_sentence": <correct version, even if its the same as original if no issues found>
+    }
+
+    ⚠️ Include **every single sentence** spoken by the user — even if it's 100% correct — so we can evaluate all usage. Do not skip or omit any. Assume all are full sentences. Do not return markdown, just raw JSON.
+
+    Conversation:
+    ${chatHistory.map(msg => `SENT BY ${msg.sender}: ${msg.content}`)}`
+    const encodedPrompt = encodeURIComponent(prompt);
+    console.log(prompt)
+    const response = await fetch(`https://text.pollinations.ai/prompt/${encodedPrompt}`)
+    const json = await response.json()
+    chatAnalysisAI =  json
+    console.log(chatAnalysisAI)
     const { data, error } = await supabase
         .from("profiles")
         .select("chat_history")
@@ -111,11 +125,11 @@ async function getAIAnalysis() {
             </span>
             <div class="messages-container" bind:this={messagesContainer}>
                 {#each chatHistory as message}
-                    {#if message[0] === "AI"}
-                        <div class="message ai-sent">{message[1]}</div>
+                    {#if message.sender === "AI"}
+                        <div class="message ai-sent">{message.content}</div>
                     {/if}
-                    {#if message[0] === "User"}
-                        <div class="message user-sent">{message[1]}</div>
+                    {#if message.sender === "User"}
+                        <div class="message user-sent">{message.content}</div>
                     {/if}
                 {/each}
             </div>
@@ -125,6 +139,28 @@ async function getAIAnalysis() {
             <input class="send-message-input" bind:value={messageInput}>
             <button class="send-message-btn" onclick={() => sendAIMessage(messageInput, chatHistory)}><span class="material-symbols-rounded">send</span></button>
         </span>
+    {/if}
+    {#if chatAnalysisAI}
+    <span class="analysis-character-container">
+        <img src={characterData.image} class="analysis-image" alt={characterData.name}>
+        <h1 class="analysis-header">{characterData.name}</h1>
+    </span>
+    <div class="stats-container">
+        <div class="ai-chat-analysis-container">
+            <h3 class="ai-chat-analysis-header">💡 AI Chat Analysis</h3>
+             <p class="ai-chat-analysis">{chatAnalysisAI.analysis}</p>
+        </div>
+         {#each chatAnalysisAI.mistakes as correction}
+       <span class="sentence-container">
+            <span class="corrected_sentence_label_container">📑 <p class="original_sentence_label">Original sentence: </p></span>
+            <p class="original_sentence">{correction.original_sentence}</p>
+        </span>
+       <span class="sentence-container">
+            <span class="corrected_sentence_label_container">✅ <p class="corrected_sentence_label"> Corrected sentence: </p></span>
+            <p class="corrected_sentence">{correction.corrected_sentence}</p>
+        </span>
+        {/each}
+    </div>
     {/if}
     </section>
     </section>
@@ -138,7 +174,24 @@ async function getAIAnalysis() {
         height: 100%;
     }
     .main-page{
-        height: 45em;
+        height: fit-content;
+    }.analysis-character-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap:0.75em;
+        margin: 1em;
+        margin-bottom: 0.5em;
+        height: fit-content;
+    }
+    .analysis-image{
+        width: 4em;
+        height: 4em;
+        margin: 0;
+    }
+    .analysis-header{
+        font-size: 2em;
+        margin: 0;
     }
     .send-container{
         display: flex;
@@ -148,6 +201,13 @@ async function getAIAnalysis() {
         align-items: center;
         background-color: #eaeaea;
         border-radius: 0  0 1em 1em;
+    }
+    .stats-container{
+        width: 100%;
+        padding: 0em 1em 1.75em 1em;
+        display: flex;
+        gap:0.05em;
+        flex-direction: column;
     }
     .send-message-btn{
         width: 2.5em;
@@ -248,5 +308,72 @@ async function getAIAnalysis() {
         font-weight: bold;
         height: fit-content;
         font-size: 0.75em;
-    } 
+    }
+    .original_sentence,
+    .corrected_sentence,
+    .original_sentence_label,
+    .corrected_sentence_label{
+        margin: 0;
+        margin-left: 0.25em;  }
+
+    .original_sentence_label,
+    .corrected_sentence_label{
+        font-style: italic;
+    }
+   .original_sentence,
+    .corrected_sentence{
+        font-size: 1.5em;
+        font-weight: bold;
+        width: 100%;
+        height: fit-content;
+    }
+   .original_sentence {
+    font-size: 1.5em;
+    font-weight: bold;
+    height: fit-content;
+    color: #c34747;
+    word-break: break-word;
+   }
+
+    .corrected_sentence{
+        font-size: 1.5em;
+        font-weight: bold;
+        height: fit-content;
+        color:rgba(61, 178, 90, 0.999);
+        word-break: break-word;
+    }
+
+    .sentence-container{
+        display: flex;
+        flex-direction: column;
+        gap:0;
+        width: 90%;
+        margin: 0.5em 0;
+    }
+    .ai-chat-analysis{
+        margin: 0;
+        width: 95%;
+        padding: 0.25em  0.5em;
+        border-radius: 0.75em;
+    }
+    .ai-chat-analysis-container{
+        background-color: #f2f2f2;
+        padding: 0.25em;
+        border-radius: 0.75em;
+        margin: 0;
+        margin-bottom: 0.5em;
+        width: 90%;
+    }
+    .ai-chat-analysis-header{
+        background-color: #fcfcfc;
+        padding: 0.1em 0.5em 0.15em 0.25em;
+        border-radius: 0.5em;
+        width: fit-content;
+    }
+
+    .corrected_sentence_label_container{
+        display: flex;
+        flex-direction: row;
+        margin-left: 0.5em;
+    }
 </style>
