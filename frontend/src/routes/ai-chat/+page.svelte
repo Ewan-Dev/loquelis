@@ -4,6 +4,9 @@
     import AIChatMediaBox from "../../../lib/AIChatMediaBox.svelte";
     import { supabase } from "../../../lib/supabaseClient";
     
+    import InlineStatus from "../../../lib/InlineStatus.svelte";
+  import { preventDefault } from "svelte/legacy";
+
     const { occupation = "Knight", image = "https://image.pollinations.ai/prompt/Generate%20a%20pixar-style%20image%20of%20a%20knight%20called%20Hansel%20with%20traits%20of%20brave,%20adventurous%20who%20is%20dressed%20in%20traditional%20attire%20of%20German", firstName = "Hansel", trait = "Friendly", lang = "de" } = $props()
     let { characterName, characterLang, characterTrait, characterOccupation } = $state("")
     let availableLanguages = $state([])
@@ -12,6 +15,7 @@
     let allCharacterOccupations = $state([])
     let allCharacterTraits = $state([])
     let availableCharacters = $state([])
+    let { characterCreateStatus, characterCreateMessage } = $state("")
 
     onMount(async () => {
         await fetchLanguages()
@@ -60,11 +64,24 @@
 
 
     async function createAICharacter(name, trait, occupation, language) {
+        // Reset and clear
+        characterCreateStatus = ""
+        characterCreateMessage = ""
+
         const { error } = await supabase
             .from('ai_characters')
             .insert([
                 { name, trait, occupation, language, image: `https://image.pollinations.ai/prompt/Generate a pixar-style image of a ${occupation} called ${name} with trait of ${trait} who is dressed in traditional attire of ${language}.` }
             ])
+        if (!error){
+            characterCreateStatus = "success"
+            characterCreateMessage = "Created!"
+        }
+        if (error){
+            characterCreateStatus = "error"
+            characterCreateMessage = "Error adding character"
+            console.error(error)
+        }
         
     }
 
@@ -107,7 +124,7 @@
      <button class="create-ai-character" onclick={() => dialog.showModal()}><span class="material-symbols-rounded">person_add</span>Create AI Character</button>
     <div class="chats">
         {#each availableCharacters as character}
-                 <AIChatMediaBox image={character.image} firstName={character.name} trait={character.trait} lang={character.language} occupation={character.occupation} />
+                 <AIChatMediaBox id={character.id} image={character.image} firstName={character.name} trait={character.trait} lang={character.language} occupation={character.occupation} />
         {/each}
     
     </div>  
@@ -118,13 +135,13 @@
     <dialog bind:this={dialog}>
         <div class="dialog-container">
                 <h2 class="dialog-header">Create AI Character</h2>
-                <form onsubmit={(event) => {event.preventDefault(); createAICharacter(characterName, characterTrait, characterOccupation, characterLang);}}>
+                <form onsubmit={(event) => { event.preventDefault(); createAICharacter(characterName, characterTrait, characterOccupation, characterLang);}}>
                         <label>🪪 Character name:</label>
-                        <input class="name" bind:value={characterName}>      
+                        <input class="name" required bind:value={characterName}>      
                     <span class="label-input-container">
                     <label>💬 Language:</label>
-                    <select class="language" bind:value={characterLang}>
-                        <option>--Select language--</option>
+                    <select class="language" required bind:value={characterLang}>
+                        <option value="">--Select language--</option>
                         {#if availableLanguages}
                         {#each availableLanguages as language}                 
                             <option value={language.short}>{language.emoji} {language.name}</option>
@@ -134,8 +151,8 @@
                     </span>
                     <span class="label-input-container">
                     <label>👔 Occupation:</label>
-                    <select class="occupation" bind:value={characterOccupation}>
-                        <option>--Select occupation--</option>
+                    <select class="occupation"  required bind:value={characterOccupation}>
+                        <option value="">--Select occupation--</option>
                         {#if allCharacterOccupations}
                         {#each allCharacterOccupations as occupation}                 
                             <option value={occupation}>{occupation}</option>
@@ -145,8 +162,8 @@
                     </span>
                     <span class="label-input-container">
                     <label> 🧠 Trait:</label>
-                    <select class="traits" bind:value={characterTrait}>
-                        <option>--Select trait--</option>
+                    <select class="traits" bind:value={characterTrait} required>
+                        <option value="">--Select trait--</option>
                         {#if allCharacterTraits}
                         {#each allCharacterTraits as trait}                 
                             <option value={trait}>{trait}</option>
@@ -154,6 +171,7 @@
                         {/if}
                     </select>
                     </span>
+                    <InlineStatus type={characterCreateStatus} message={characterCreateMessage} />
                     <input class="submit-btn" type="Submit">
                 </form>
             <button class="close-dialog-btn" onclick={() => dialog.close()}>Close</button>

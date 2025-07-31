@@ -1,5 +1,5 @@
 <script>
-    const { image, firstName, trait , occupation, lang} = $props();
+    const { id, image, firstName, trait , occupation, lang} = $props();
 </script>
 <section class="ai-chat-box">
     <div class="pfp-name-occupation-container">
@@ -7,14 +7,16 @@
             <img src={image} alt={firstName} />
          {/if}
         <div class="text">
-            <h2>{firstName}</h2>
+            <a href={`/#/app/ai-chat/${id}`}>
+                <h2>{firstName}</h2>
+            </a>
             <p class="occupation">{occupation}</p>
         </div>
         </div>
         <div class="flag-tags-container">
             <img class="lang-flag" src={`https://hatscripts.github.io/circle-flags/flags/${lang}.svg`} alt={lang} />
             <span class="traits">
-                    <p class="trait-tag">{trait}</p>
+                <p class="trait-tag">{trait}</p>
             </span>
         </div>
         </section>
@@ -31,6 +33,10 @@
     }
     p {
         margin: 0;
+    }
+    a{
+        text-decoration: none;
+        color: inherit;
     }
     .lang-flag {
         width: 1.5em;
