@@ -81,7 +81,7 @@
         <button class="create-flashcard-deck" onclick={() => dialog.showModal()}>+ Create Flashcard Deck</button>
         <section class="flashcard-decks">
             {#each flashcardDecks as flashcardDeck}
-            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author} terms=6 lang={flashcardDeck.language} id={flashcardDeck.id}/>
+            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author} terms=6 country={flashcardDeck.language} id={flashcardDeck.id}/>
         {/each}
         </section>
     </section>
@@ -101,7 +101,7 @@
                         <option>--Select language--</option>
                         {#if availableLanguages}
                         {#each availableLanguages as language}                 
-                            <option value={language.short}>{language.emoji} {language.name}</option>
+                            <option value={language.country_code}>{language.emoji} {language.name}</option>
                         {/each}
                         {/if}
                     </select>

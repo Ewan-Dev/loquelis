@@ -1,5 +1,5 @@
 <script>
-    let {name, author, id, terms, lang} = $props()
+    let {name, author, id, terms, country} = $props()
 </script>
 <section>
     <span class="text-container">
@@ -10,7 +10,7 @@
         <p class="author">@{author}</p>
     </span>
     <span class="language-image-container">
-          <img src="https://hatscripts.github.io/circle-flags/flags/{lang}.svg">
+          <img src="https://hatscripts.github.io/circle-flags/flags/{country}.svg">
     </span>
 
 </section>

@@ -150,8 +150,8 @@
                 </select>
             </span>
             <span>          
-            <label for="language">Select language of content:</label>
-            <select class="language" bind:value={mediumLang}>
+            <label for="language">* Select language of content:</label>
+            <select class="language" required bind:value={mediumLang}>
                 <option value="">--Select language--</option>
                 {#each availableLanguages as language}                 
                     <option value={language.short}>{language.emoji} {language.name}</option>
@@ -159,8 +159,8 @@
             </select>
             </span>
             <span>          
-            <label for="level">Select level of content:</label>
-            <select class="level" bind:value={mediumLevel}> 
+            <label for="level">* Select level of content:</label>
+            <select class="level" required bind:value={mediumLevel}> 
                 <option value="">--Select a level--</option>           
                 <option value="A1">🐣 A1</option>
                 <option value="A2">🐥 A2</option>
