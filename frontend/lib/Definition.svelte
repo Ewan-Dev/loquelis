@@ -191,6 +191,7 @@
         padding: 0.2em;
         border-radius: 500em;
         display: flex;
+        gap:0.2em;
     }
 
     .material-symbols-rounded{

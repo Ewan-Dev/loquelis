@@ -89,7 +89,7 @@
 <main>
     <div class="title-author-container">
         <h1 class="deck-name-heading">{deckName}</h1>
-        <p class="deck-name-author">Uploaded by: <b>{author}</b></p>
+        <p class="deck-name-author">Uploaded by: <b>@{author}</b></p>
     </div>
     {#if cardNumber !== content.length}
         <span class="card-count-container">
@@ -169,7 +169,7 @@ progress {
     border-radius: 8px;
     background-color: #f9f9f9;
     width: 17.5em;
-    margin: 0.25em auto 0.5em;
+    margin: 0.25em 0 0.5em;
     text-align: center;
 }
 .word{
@@ -197,7 +197,6 @@ progress {
     display: flex;
     justify-content: space-between;
     width: 19.75em;
-    margin: 0 auto;
 }
 .material-symbols-rounded{
     font-size: 1.5em;
@@ -206,9 +205,9 @@ progress {
 .card-count-container{
     width: 20em;
     display: flex;
+    margin-top: 0em;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto;
 }
 .card-count{
     border-width: 2px;
