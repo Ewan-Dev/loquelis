@@ -37,13 +37,15 @@
   let usernameInputValue = $state("")
   let { statusMessage, statusType} = $state("")
   let uid = $state("")
-  let dialog = $state(HTMLObjectElement)
+  let dialog
 
   onMount(async () => {
      await fetchUserSesson()
-     if(dialog && usernameStatus === null){
-        dialog.showModal()
-     }
+  })
+  $effect(() => {
+    if(usernameStatus === null){
+      dialog.showModal()
+    }
   })
     // Fetch user session, get UID, then fetch from profiles table to get the username
     async function fetchUserSesson(){
@@ -60,20 +62,8 @@
                 .select("username")
                 .eq("user_id", uid)
                 .single()
-            if (data) {
-                username = data.username // Set username to username from profiles table
-            }
-            if(username){
-                usernameStatus = true
-            }
-            if (username === null ){
-              console.log("NO USERNAME SET")
-              usernameStatus = null
-            }
-            if (error){
-                // If error fetching username
-                console.error('Error fetching username:', error)
-            }
+            usernameStatus = data.username
+            
         }
     }
 
