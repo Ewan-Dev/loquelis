@@ -3,11 +3,11 @@ import { supabase } from "../../lib/supabaseClient" // Importing supabase client
 import InlineStatus from "../../lib/InlineStatus.svelte" // For inline status messages
 import confetti from 'canvas-confetti' // For confetti effect
 
-    let email = "", password = "", username = ""
+    let email = "", password = ""
     let  { statusError, result } = $state("")
     
-    function handleSignup(){
-        addUsertoTable(username, email)
+    async function handleSignup(){
+        await handleAuth()
     }
 
     async function handleAuth() {
@@ -19,41 +19,19 @@ import confetti from 'canvas-confetti' // For confetti effect
         console.log("User signed up successfully", result)
         const authUser = result.data.user
         const uid = authUser.id
-        addUIDtoProfile(uid)
+        addUsertoTable(uid, email)
     }
  }
 
 
-    async function addUIDtoProfile(uid) { // This is done after the user is created in the auth table and auth due to registrtion order
+    async function addUsertoTable(uid, email){
         const { error } = await supabase
             .from("profiles")
-            .update({ uid: uid })
-            .eq("email", email)
-        if (error) {
-            console.error("Error updating profile with UID:", error.message)
-            statusError = error.message
-        } else {
-            result = "success"
-            statusError = ""
-            launchConfetti()
-        }
-        
-    }
-
-    async function addUsertoTable(username, email){
-        const { error } = await supabase
-            .from("profiles")
-            .insert({username, email})
+            .insert({user_id: uid, email})
         if (error) {
         if( error.message.includes("duplicate") && error.message.includes("email")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
         {
             statusError = "Account with email already exists"
-            console.log(statusError)
-            result = ""
-        }
-        else if( error.message.includes("duplicate") && error.message.includes("username")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
-        {
-            statusError = "Account with username already exists"
             console.log(statusError)
             result = ""
         }
@@ -64,7 +42,7 @@ import confetti from 'canvas-confetti' // For confetti effect
      }
         else if (!error) {
                 console.log("User added to profiles table")
-                handleAuth()
+                launchConfetti()
             }
     }
     
@@ -86,8 +64,6 @@ import confetti from 'canvas-confetti' // For confetti effect
     <input class="email" bind:value={email} type="email" >
     <label for="password">Password:</label>
     <input class="password" bind:value={password} type="password" > 
-    <label for="username">Username:</label>
-    <input class="username" bind:value={username} type="username" >
     <button class="sign-up" type="submit">Sign up</button>
     {#if statusError}
         <InlineStatus type="error" message={statusError} />

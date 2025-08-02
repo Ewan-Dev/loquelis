@@ -12,7 +12,7 @@
     let mediumLang = "";
     let mediumLevel = "";
     let availableLanguages = $state([]);
-    let username = $state("");
+    let userID = $state("");
 
     function launchConfetti() {
         confetti({

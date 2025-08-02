@@ -37,7 +37,7 @@
             const { data, error} = await supabase
                 .from("profiles")
                 .select("username")
-                .eq("uid", uid)
+                .eq("user_id", uid)
                 .single()
             if (data) {
                 username = data.username // Set username to username from profiles table
