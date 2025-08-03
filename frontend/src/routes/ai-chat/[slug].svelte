@@ -16,6 +16,8 @@
     let {messagesContainer, dialogBox} = $state(HTMLObjectElement)
     let deckIndex = $state()
     let {term, definition, partOfSpeech, romanisation} = $state("")
+    let userID = $state("")
+
     onMount(async () => {
         await fetchUserSesson()
     })
@@ -41,22 +43,14 @@
             console.error('Error fetching session:', error)
         } 
         else if(sessionData) { // If data exists
-            const uid = sessionData.session.user.id // Get UID from session
-            // Use the UID to fetch username
-            const { data, error} = await supabase
-                .from("profiles")
-                .select("username")
-                .eq("uid", uid)
-                .single()
-            if (data) {
-                username = data.username // Set username to username from profiles table
+            userID = sessionData.session.user.id // Get UID from session
         }
             if (error) {
                 // If error fetching username
                 console.error('Error fetching username:', error)
             }
         }
-    }
+    
 
 async function sendAIMessage(inputContent, chatHistory) {
     let prompt = ""
@@ -137,7 +131,7 @@ async function fetchFlashcardDecks() {
             const { data, error } = await supabase
                 .from("flashcards")
                 .select("*")
-                .eq("author", username) // By user
+                .eq("author", userID) // By user
                 .eq("language", characterData.language) // Matching language decks to character
             if (error) {
                 // If error fetching flashcard decks

@@ -3,9 +3,9 @@
     import Sidebar from "../../../lib/Sidebar.svelte"
     import { supabase } from "../../../lib/supabaseClient";
     import FlashcardMediaBox from "../../../lib/FlashcardMediaBox.svelte";
-    let dialog, flashCardName, flashCardLang
+    let dialog, flashCardName, flashCardLangID
     let availableLanguages = $state([])
-    let username = $state("")
+    let userID = $state()
     let flashcardDecks = $state([])
     onMount( async () => {
              fetchUserSesson()
@@ -14,40 +14,18 @@
         } 
     ) 
         $effect(async () => {
-             const { data, error } = await supabase
-                .from("flashcards")
-                .select("*")
-                .eq("author", username)
-            if (error) {
-                // If error fetching flashcard decks
-                console.error('Error fetching flashcard decks:', error)
+            if(userID){
+                const { data, error } = await supabase
+                    .from("flashcards")
+                    .select("*")
+                    .eq("author", userID)
+                if (error) {
+                    // If error fetching flashcard decks
+                    console.error('Error fetching flashcard decks:', error)
+                }
+                flashcardDecks = data || [] // Assign fetched data to flashcardDecks
             }
-            flashcardDecks = data || [] // Assign fetched data to flashcardDecks
         })
-    // Fetch user session, get UID, then fetch from profiles table to get the username
-    async function fetchUserSesson() {
-        const { data, error } = await supabase.auth.getSession()
-        const sessionData = data // Store session data
-        if (error) { //Id error fetching user
-            console.error('Error fetching session:', error)
-        } 
-        else if(sessionData) { // If data exists
-            const uid = sessionData.session.user.id // Get UID from session
-            // Use the UID to fetch username
-            const { data, error} = await supabase
-                .from("profiles")
-                .select("username")
-                .eq("user_id", uid)
-                .single()
-            if (data) {
-                username = data.username // Set username to username from profiles table
-        }
-            if (error) {
-                // If error fetching username
-                console.error('Error fetching username:', error)
-            }
-        }
-    }
 
      async function fetchLanguages(){
         const {data, error} = await supabase
@@ -62,14 +40,24 @@
             throw error
     }}
 
-    async function uploadFlashcardDeck(name, user, lang) {
+    async function uploadFlashcardDeck(name, user, lang, country) {
         const {error} = await supabase
             .from("flashcards") 
-            .insert({name: name, author : user, language: lang})   
+            .insert({name: name, author : user, language: lang, country_code: country})   
         console.log(error)
         }
     
-        $inspect(flashcardDecks)
+    // Fetch user session, get UID, then fetch from profiles table to get the username
+    async function fetchUserSesson() {
+        const { data, error } = await supabase.auth.getSession()
+        const sessionData = data // Store session data
+        if (error) { //Id error fetching user
+            console.error('Error fetching session:', error)
+        } 
+        else if(sessionData) { // If data exists
+            userID = sessionData.session.user.id
+        }
+    }
 </script>
 
 <main class="route">
@@ -81,7 +69,7 @@
         <button class="create-flashcard-deck" onclick={() => dialog.showModal()}>+ Create Flashcard Deck</button>
         <section class="flashcard-decks">
             {#each flashcardDecks as flashcardDeck}
-            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author} terms=6 country={flashcardDeck.language} id={flashcardDeck.id}/>
+            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author} terms=6 country={flashcardDeck.country_code} id={flashcardDeck.id}/>
         {/each}
         </section>
     </section>
@@ -93,15 +81,16 @@
         <div class="dialog-container">
             <div>
                 <h2>Create Flashcard Deck</h2>
-                <form onsubmit={(event) => {event.preventDefault(); uploadFlashcardDeck(flashCardName, username, flashCardLang);}}>
+                <h1>{availableLanguages[flashCardLangID]}</h1>
+                <form onsubmit={(event) => {event.preventDefault(); uploadFlashcardDeck(flashCardName, userID, availableLanguages[flashCardLangID].short,  availableLanguages[flashCardLangID].country_code);}}>
                     <label>Deck name:</label>
                     <input class="name" bind:value={flashCardName}>
                     <label>Language:</label>
-                    <select class="language" bind:value={flashCardLang}>
-                        <option>--Select language--</option>
+                    <select class="language" bind:value={flashCardLangID}>
+                        <option value="">--Select language--</option>
                         {#if availableLanguages}
-                        {#each availableLanguages as language}                 
-                            <option value={language.country_code}>{language.emoji} {language.name}</option>
+                        {#each availableLanguages as language, i}                 
+                            <option value={i}>{language.emoji} {language.name}</option>
                         {/each}
                         {/if}
                     </select>
