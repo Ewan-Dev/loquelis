@@ -82,7 +82,7 @@
         <button class="create-flashcard-deck" onclick={() => dialog.showModal()}>+ Create Flashcard Deck</button>
         <section class="flashcard-decks">
             {#each flashcardDecks as flashcardDeck}
-            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author_username} terms=6 country={flashcardDeck.country_code} id={flashcardDeck.id}/>
+            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author_username} terms={flashcardDeck.content.length} country={flashcardDeck.country_code} id={flashcardDeck.id}/>
         {/each}
         </section>
     </section>

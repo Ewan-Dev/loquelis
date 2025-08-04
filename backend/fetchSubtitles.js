@@ -13,8 +13,8 @@ async function main() {
     console.log(languages)
     await listenAndDownloadSubtitles() // Start listening for subtitles then downloading subtitles
     const { data, error } = await supabase.auth.signInWithPassword({
-        email: '***REMOVED***',
-        password: '***REMOVED***'
+        email: 'ewanmccairn2010@gmail.com',
+        password: 'Samwuser-2010'
     })
 
     const user = data.user
