@@ -69,7 +69,7 @@
         const result = await channel.send({
             type: "broadcast",
             event: "subtitle-update",
-            payload: {id: 1, url: url, lang: lang, type: type, level: level, author: username}
+            payload: {id: 1, url: url, lang: lang, type: type, level: level, author: userID}
         });
         console.log("Broadcast result:", result);
     }
@@ -108,7 +108,7 @@
         }
     }
 
-        // Fetch user session, get UID, then fetch from profiles table to get the username
+        // Fetch user session, get UID, then fetch from profiles table to get the userID
     async function fetchUserSesson() {
         const { data, error } = await supabase.auth.getSession()
         const sessionData = data // Store session data
@@ -116,22 +116,13 @@
             console.error('Error fetching session:', error)
         } 
         else if(sessionData) { // If data exists
-            const uid = sessionData.session.user.id // Get UID from session
-            // Use the UID to fetch username
-            const { data, error} = await supabase
-                .from("profiles")
-                .select("username")
-                .eq("uid", uid)
-                .single()
-            if (data) {
-                username = data.username // Set username to username from profiles table
+            userID = sessionData.session.user.id // Get UID from session
         }
-            if (error) {
-                // If error fetching username
-                console.error('Error fetching username:', error)
-            }
+        if (error) {
+            // If error fetching user id
+            console.error('Error fetching userID:', error)
         }
-    }
+        }
 </script>
 
 <main class="route">

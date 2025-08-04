@@ -13,7 +13,7 @@
         const flashcards = await fetchFlashcard(slug)
         if (flashcards) {
             flashcardDeckName = flashcards.name
-            flashcardDeckAuthor = flashcards.author
+            flashcardDeckAuthor = flashcards.author_username
             flashcardsContent = flashcards.content // Assuming 'content' is the field that holds the flashcard data
             flashcardsLength = flashcardsContent.length // Get the length of the flashcards
             console.log(flashcardsLength)

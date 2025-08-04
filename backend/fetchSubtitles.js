@@ -12,10 +12,17 @@ async function main() {
     await availableLanguages()
     console.log(languages)
     await listenAndDownloadSubtitles() // Start listening for subtitles then downloading subtitles
-    
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: '***REMOVED***',
+        password: '***REMOVED***'
+    })
+
+    const user = data.user
+    const session = data.session
+    console.log(user, session)
+
     process.stdin.resume() // Keep the process listening
 }
-
 
 async function listenAndDownloadSubtitles() {
     const channel = supabase.channel("subtitles") // Create a channel named "subtitles"

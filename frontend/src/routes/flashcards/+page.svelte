@@ -6,6 +6,7 @@
     let dialog, flashCardName, flashCardLangID
     let availableLanguages = $state([])
     let userID = $state()
+    let username = $state("")
     let flashcardDecks = $state([])
     onMount( async () => {
              fetchUserSesson()
@@ -40,10 +41,10 @@
             throw error
     }}
 
-    async function uploadFlashcardDeck(name, user, lang, country) {
+    async function uploadFlashcardDeck(name, user, lang, country, username) {
         const {error} = await supabase
             .from("flashcards") 
-            .insert({name: name, author : user, language: lang, country_code: country})   
+            .insert({name: name, author : user, author_username: username, language: lang, country_code: country})   
         console.log(error)
         }
     
@@ -56,6 +57,18 @@
         } 
         else if(sessionData) { // If data exists
             userID = sessionData.session.user.id
+            // Fetches username based ff ID
+            const { data, error } = await supabase
+                .from("profiles")
+                .select("username")
+                .eq("user_id", userID)
+                .single()
+            if (data) {
+                username = data.username
+            }
+            if(error){
+                console.log(error)
+            }
         }
     }
 </script>
@@ -69,7 +82,7 @@
         <button class="create-flashcard-deck" onclick={() => dialog.showModal()}>+ Create Flashcard Deck</button>
         <section class="flashcard-decks">
             {#each flashcardDecks as flashcardDeck}
-            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author} terms=6 country={flashcardDeck.country_code} id={flashcardDeck.id}/>
+            <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author_username} terms=6 country={flashcardDeck.country_code} id={flashcardDeck.id}/>
         {/each}
         </section>
     </section>
@@ -82,7 +95,7 @@
             <div>
                 <h2>Create Flashcard Deck</h2>
                 <h1>{availableLanguages[flashCardLangID]}</h1>
-                <form onsubmit={(event) => {event.preventDefault(); uploadFlashcardDeck(flashCardName, userID, availableLanguages[flashCardLangID].short,  availableLanguages[flashCardLangID].country_code);}}>
+                <form onsubmit={(event) => {event.preventDefault(); uploadFlashcardDeck(flashCardName, userID, availableLanguages[flashCardLangID].short,  availableLanguages[flashCardLangID].country_code, username);}}>
                     <label>Deck name:</label>
                     <input class="name" bind:value={flashCardName}>
                     <label>Language:</label>
