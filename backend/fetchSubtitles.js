@@ -5,6 +5,12 @@ import fs from "fs/promises" // Alows reading file contents for subtitiles
 const currentPath = "../backend"
 let languages = ["en", "zh"]
 
+import dotenv from 'dotenv' // Load environment variables .env file
+dotenv.config({ path: '../backend/.env' }) // Load environment variables from.env file
+
+const email = process.env.EMAIL // Email from environment variables
+const password = process.env.PASSWORD // Password from environment variables
+
 
 main() // Call the function to start listening for broadcasts
 
@@ -13,8 +19,8 @@ async function main() {
     console.log(languages)
     await listenAndDownloadSubtitles() // Start listening for subtitles then downloading subtitles
     const { data, error } = await supabase.auth.signInWithPassword({
-        email: 'ewanmccairn2010@gmail.com',
-        password: 'Samwuser-2010'
+        email: email,
+        password: password
     })
 
     const user = data.user
@@ -121,7 +127,7 @@ async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink,
     console.log(level)
     const { error } = await supabase
         .from("media")
-        .insert({ name: title, artist: channel, cover: cover, content: sub, media_type: type, embed_link: embedLink, video_link: videoLink, language: lang, level: level, author: author}) // Update the content, media_type and updated_at columns
+        .insert({ name: title, artist: channel, cover: cover, content: sub, media_type: type, embed_link: embedLink, video_link: videoLink, language: lang, level: level, author: author, }) // Update the content, media_type and updated_at columns
     if (error) {
         console.error("Error uploading subtitles:", error) // Print error if upload fails
     }
