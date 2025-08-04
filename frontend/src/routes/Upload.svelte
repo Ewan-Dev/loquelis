@@ -12,7 +12,8 @@
     let mediumLang = "";
     let mediumLevel = "";
     let availableLanguages = $state([]);
-    let userID = $state("");
+    let userID = $state("")
+    let username = $state("")
 
     function launchConfetti() {
         confetti({
@@ -69,7 +70,7 @@
         const result = await channel.send({
             type: "broadcast",
             event: "subtitle-update",
-            payload: {id: 1, url: url, lang: lang, type: type, level: level, author: userID}
+            payload: {id: 1, url: url, lang: lang, type: type, level: level, author: userID, author_username: username}
         });
         console.log("Broadcast result:", result);
     }
@@ -115,8 +116,20 @@
         if (error) { //Id error fetching user
             console.error('Error fetching session:', error)
         } 
-        else if(sessionData) { // If data exists
-            userID = sessionData.session.user.id // Get UID from session
+         else if(sessionData) { // If data exists
+            userID = sessionData.session.user.id
+            // Fetches username based ff ID
+            const { data, error } = await supabase
+                .from("profiles")
+                .select("username")
+                .eq("user_id", userID)
+                .single()
+            if (data) {
+                username = data.username
+            }
+            if(error){
+                console.log(error)
+            }
         }
         if (error) {
             // If error fetching user id
