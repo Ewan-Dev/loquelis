@@ -24,7 +24,7 @@
 
     async function fetchFlashcard(id) {
         const { data, error } = await supabase
-            .from("flashcards") // From flashcards table
+            .from("flashcard_decks") // From flashcards table
             .select("*") // Fetch all fields
             .eq("id", id) // Fetch by ID
             .single() // Fetches a single flashcard by ID

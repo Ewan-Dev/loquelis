@@ -14,6 +14,7 @@
   let name = $state("Loading...")
   let artist = $state("Loading...")
   let author = $state("Loading...")
+  let authorUsername = $state("Loading...")
   let cover = $state("https://img.youtube.com/vi/loquela/maxresdefault.jpg") // Fallback cover image
   let level = $state("Unknown Level")
   let rating = $state("No Rating")
@@ -56,7 +57,8 @@
       const song = data
       name = song.name
       artist = song.artist 
-      author = song.author 
+      author = song.author
+      authorUsername = song.author_username 
       cover = song.cover 
       level = song.level 
       rating = song.rating 
@@ -127,8 +129,8 @@
             song={name}
             artist={artist}
           />
-          {#if author !== "Loading..."}
-            <AuthorTag author={author} />
+          {#if authorUsername !== "Loading..."}
+            <AuthorTag author={authorUsername} />
           {/if}
         </span>
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>

@@ -17,14 +17,14 @@
         $effect(async () => {
             if(userID){
                 const { data, error } = await supabase
-                    .from("flashcards")
+                    .from("flashcard_decks")
                     .select("*")
-                    .eq("author", userID)
                 if (error) {
                     // If error fetching flashcard decks
                     console.error('Error fetching flashcard decks:', error)
                 }
                 flashcardDecks = data || [] // Assign fetched data to flashcardDecks
+                console.log(flashcardDecks)
             }
         })
 
@@ -43,8 +43,8 @@
 
     async function uploadFlashcardDeck(name, user, lang, country, username) {
         const {error} = await supabase
-            .from("flashcards") 
-            .insert({name: name, author : user, author_username: username, language: lang, country_code: country})   
+            .from("flashcard_decks") 
+            .insert({name: name, author : user, author_username: username, language: lang, country_code: country, content: []})   
         console.log(error)
         }
     

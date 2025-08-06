@@ -25,7 +25,7 @@
     // Fetch current flashcards lin deck
     async function fetchFlashcardData(id){
         const { data, error } = await supabase
-            .from("flashcards")
+            .from("flashcard_decks")
             .select("content")
             .eq("id", id)
             
@@ -42,7 +42,7 @@
         flashcards.push({word, definition, partOfSpeech, romanisation}) // Push to array of existing flashcards
        // Update newly changed array to database
         const { error } = await supabase
-            .from("flashcards")
+            .from("flashcard_decks")
             .update({ content: flashcards })
             .eq("id", id)
         if(error){
@@ -54,7 +54,7 @@
 
     async function fetchUserFlashcardDecks(user) {
         const { data, error } = await supabase
-            .from("flashcards")
+            .from("flashcard_decks")
             .select("*")
             .eq("author", user)
             .eq("language", language)

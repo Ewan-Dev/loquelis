@@ -62,7 +62,8 @@
                 .select("username")
                 .eq("user_id", uid)
                 .single()
-            usernameStatus = data.username
+            username = data.username
+            usernameStatus = true
             
         }
     }
@@ -86,6 +87,12 @@
           statusMessage = error.message
           statusType = "error"
       }
+      }
+      if( error.message === `Column "username" cannot be modified once set`){ 
+        statusMessage = ""
+        statusType = ""
+        statusMessage = "Username already set!"
+        statusType = "warn"
       }
       if(!error){
         statusMessage = ""
