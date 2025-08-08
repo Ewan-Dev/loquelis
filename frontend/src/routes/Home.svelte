@@ -1,6 +1,5 @@
 <script>
   import Sidebar from "../../lib/Sidebar.svelte";
-  import Greeting from "../../lib/Greeting.svelte";
     import { supabase } from "../../lib/supabaseClient";
     import { onMount } from "svelte";
 
