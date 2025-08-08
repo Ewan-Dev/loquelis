@@ -87,10 +87,12 @@
     $inspect(content)
 </script>
 <main>
-    <div class="title-author-container">
-        <h1 class="deck-name-heading">{deckName}</h1>
-        <p class="deck-name-author">Uploaded by: <b>@{author}</b></p>
-    </div>
+    {#if author && deckName}
+        <div class="title-author-container">
+            <h1 class="deck-name-heading">{deckName}</h1>
+            <p class="deck-name-author">Uploaded by: <b>@{author}</b></p>
+        </div>
+    {/if}
     {#if cardNumber !== content.length}
         <span class="card-count-container">
             <span class="unsure-count card-count">{unsure.length}</span>
@@ -129,7 +131,7 @@
 </main>
 <style>
 main{
-    width: 100%;
+    width: fit-content
 }
 p {
     margin: 0.25em 0;

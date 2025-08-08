@@ -4,7 +4,6 @@
   import MediaHeader from "../../../lib/MediaHeader.svelte"
   import Definition from "../../../lib/Definition.svelte"
   import Subtitles from "../../../lib/Subtitles.svelte"
-  import AuthorTag from "../../../lib/AuthorTag.svelte"
   import { location } from 'svelte-spa-router'
   import { onMount } from "svelte";
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
@@ -129,9 +128,7 @@
             song={name}
             artist={artist}
           />
-          {#if authorUsername !== "Loading..."}
-            <AuthorTag author={authorUsername} />
-          {/if}
+
         </span>
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
           <Subtitles

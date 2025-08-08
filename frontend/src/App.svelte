@@ -14,10 +14,12 @@
   import VideoSlug from './routes/videos/[slug].svelte'
   import AIChat from './routes/ai-chat/+page.svelte'
   import AIChatSlug from './routes/ai-chat/[slug].svelte'
+  import Welcome from './routes/Welcome.svelte'
   import { onMount } from 'svelte'
   import InlineStatus from '../lib/InlineStatus.svelte'
   // Setting the routes
   const routes = {
+    '/welcome': Welcome,
     '/app/ai-chat/:slug': AIChatSlug,
     '/app/ai-chat': AIChat,
     '/app/videos/:slug': VideoSlug,
