@@ -9,35 +9,35 @@
 <button class="open-sidebar-icon icon" onclick={toggleSidebar}>≡</button> <!-- Open hamburger button for the sidebar, only visible on small screens -->
 <aside class="sidebar" class:show={sidebarVisible}>
     <div class="sidebar-header">
-        <img src="../static/loquela.png" class="logo" alt="loquela logo">
+        <img src="./static/loquela.png" class="logo" alt="loquela logo">
         <button class="close-sidebar-icon icon" onclick={toggleSidebar}>X</button> <!-- Close button for the sidebar -->
     </div>
     <nav class="sidebar-nav">
-        <a href="/" class:selected={currentPage === '/'}> <!-- 'selected' is set to true if 'currentPage' is equal to set path -->      
+        <a href="./" class:selected={currentPage === '/'}> <!-- 'selected' is set to true if 'currentPage' is equal to set path -->      
         <span class="material-symbols-rounded">home</span>
             Home
         </a>
-        <a href="/#/app/leaderboard" class:selected={currentPage === '/leaderboard'} >
+        <a href="./#/app/leaderboard" class:selected={currentPage === '/leaderboard'} >
             <span class="material-symbols-rounded">trophy</span>
             Leaderboard
         </a>
-        <a href="/#/app/music" class:selected={currentPage === '/music'} >
+        <a href="./#/app/music" class:selected={currentPage === '/music'} >
             <span class="material-symbols-rounded">music_note</span>
             Music
         </a>
-        <a href="/#/app/videos" class:selected={currentPage === '/videos'} >
+        <a href="./#/app/videos" class:selected={currentPage === '/videos'} >
             <span class="material-symbols-rounded">movie</span>
             Videos
         </a>
-        <a href="/#/app/upload" class:selected={currentPage === '/upload'} >
+        <a href="./#/app/upload" class:selected={currentPage === '/upload'} >
             <span class="material-symbols-rounded">upload</span>
             Upload
         </a>
-        <a href="/#/app/flashcards" class:selected={currentPage === '/flashcards'} >
+        <a href="./#/app/flashcards" class:selected={currentPage === '/flashcards'} >
             <span class="material-symbols-rounded">cards_star</span>
             Flashcards
         </a>
-        <a href="/#/app/ai-chat" class:selected={currentPage === '/ai-chat'} >
+        <a href="./#/app/ai-chat" class:selected={currentPage === '/ai-chat'} >
             <span class="material-symbols-rounded">chat</span>
             AI Chat
         </a>
