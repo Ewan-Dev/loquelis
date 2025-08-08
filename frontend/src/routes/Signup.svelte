@@ -11,41 +11,20 @@ import confetti from 'canvas-confetti' // For confetti effect
     }
 
     async function handleAuth() {
-        result = await supabase.auth.signUp({email, password}) 
+        result = await supabase.auth.signUp({email, password})
+        console.log(result)
     if (result.error) {
        statusError = result.error.message
        console.error(statusError)
     } else {
         console.log("User signed up successfully", result)
-        const authUser = result.data.user
-        const uid = authUser.id
-        addUsertoTable(uid, email)
+        statusError = null
+        launchConfetti() // Launching confetti effect when signup is successful 
+        
     }
  }
 
 
-    async function addUsertoTable(uid, email){
-        const { error } = await supabase
-            .from("profiles")
-            .insert({user_id: uid, email})
-        if (error) {
-        if( error.message.includes("duplicate") && error.message.includes("email")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
-        {
-            statusError = "Account with email already exists"
-            console.log(statusError)
-            result = ""
-        }
-        else if (error.message) {
-            result = ""
-            statusError = error.message     
-        }
-     }
-        else if (!error) {
-                console.log("User added to profiles table")
-                launchConfetti()
-            }
-    }
-    
     function launchConfetti() {
         confetti({
             particleCount: 200,

@@ -1,19 +1,52 @@
-<script>
+<script lang="ts">
     import { supabase } from "../../lib/supabaseClient"; // Importing supabase client for authentication
     import InlineStatus from "../../lib/InlineStatus.svelte" // For inline status messages
     import confetti from 'canvas-confetti' // For confetti effect
+  import { AuthError } from "@supabase/supabase-js";
 
-    let email = "", password = "", error = "", data = ""
+    let email = $state(""), password =  $state(""), error =  $state(""), data =  $state("")
+    let statusError = $state("")
+    let result =  $state("")
+
+    $inspect(() => {
+        console.error(statusError)
+    })
+    
     async function handleSignin() {
-    ({data, error} = await supabase.auth.signInWithPassword({email, password})) 
+    const {data: authData, error: authError} = await supabase.auth.signInWithPassword({email, password})
     if (error) {
-       console.error(error.message)
+       console.error(authError.message)
     } else {
         console.log("Login successful", data)
+        data = authData
         launchConfetti()
+        addUsertoTable(authData.user.email)
+
     }
     }
-        
+    
+        async function addUsertoTable(email){
+        const { error } = await supabase
+            .from("profiles")
+            .insert({email})
+        if (error) {
+        if( error.message.includes("duplicate") && error.message.includes("email")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
+        {
+            statusError = "Account with email already exists"
+            console.log(statusError)
+            result = ""
+        }
+        else if (error.message) {
+            result = ""
+            statusError = error.message     
+        }
+     }
+        else if (!error) {
+                console.log("User added to profiles table")
+                launchConfetti()
+            }
+    }
+
     function launchConfetti() {
         confetti({
             particleCount: 200,

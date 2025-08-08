@@ -45,7 +45,7 @@
      await fetchUserSesson()
   })
   $effect(() => {
-    if(usernameStatus === null){
+    if(usernameStatus){
       dialog.showModal()
     }
   })
@@ -64,8 +64,16 @@
                 .select("username")
                 .eq("user_id", uid)
                 .single()
-            username = data.username
-            usernameStatus = true
+                if (data) {
+                  console.log(data)
+                  username = data.username
+                  console.log("User: ", username)
+
+                  if (!username) {
+                    usernameStatus = true
+                  }
+                }
+
             
         }
     }
@@ -82,13 +90,16 @@
         statusType = ""
         if( error.message.includes("duplicate") && error.message.includes("username")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
         {
+          statusMessage = ""
+        statusType = ""
           statusMessage = "Account with username already exists"
            statusType = "error"
       }
       else{
+        statusMessage = ""
+        statusType = ""
           statusMessage = error.message
           statusType = "error"
-      }
       }
       if( error.message === `Column "username" cannot be modified once set`){ 
         statusMessage = ""
@@ -96,7 +107,8 @@
         statusMessage = "Username already set!"
         statusType = "warn"
       }
-      if(!error){
+    } 
+      else{
         statusMessage = ""
         statusType = ""
         statusMessage = "success"
@@ -104,6 +116,8 @@
       }
       }
       else{
+          statusMessage = ""
+        statusType = ""
           statusMessage = "No username typed"
           statusType = "warn"
       }
@@ -116,8 +130,6 @@
 </head>
 
 <main>
-  <!-- If username isn't set -->
-  {#if usernameStatus === null}
     <!-- Show dialog -->
     <dialog bind:this={dialog}>
       <form onsubmit={(event) => {event.preventDefault(); addUsername(usernameInputValue);}}>
@@ -131,7 +143,6 @@
         {/if}
         </form>
     </dialog>
-  {/if}
 
   <!-- Import router component to allow for routing -->
   <Router {routes} /> 
@@ -192,8 +203,6 @@
   dialog{
     border-radius: 1em;
     padding: 1em;
-    display: flex;
-    flex-direction: column;
     gap:0.5em;
     border: #ababab solid 1.5px;
   }
