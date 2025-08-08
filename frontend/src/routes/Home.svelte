@@ -17,11 +17,9 @@
     <h1 class="page-header">Home</h1>
         <!-- Main content section for styles to be applied -->
     <section class="main-content">
-        <Greeting firstName="Ewan" /> <!--Dynamically greet user -->
+        <h1>👋 Hello, welcome back.</h1>
     </section>
     </section>
-    <a href="/song/song-1">Go to Song 1</a>
-    <a href="/song/song-2">Go to Song 2</a>
 </main>
 
 <style>
