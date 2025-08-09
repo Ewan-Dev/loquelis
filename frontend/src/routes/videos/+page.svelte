@@ -61,8 +61,12 @@
         {/each}
     </select>
      <section class="media-container">
-        {#if !videos[0]}
+        {#if !videos[0] && currentLanguage}
         <p class="not-found">:/ Oops! No videos found; try uploading your own or try again later.</p>
+        {/if}
+        {#if !currentLanguage}
+            <p>Try selecting a language to show media. If no languages show up, come back later as the servers may be down.
+            </p>
         {/if}
         <!-- For each video, create a MediaBox component -->
         {#each videos as video} 

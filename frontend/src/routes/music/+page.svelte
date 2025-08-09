@@ -56,6 +56,10 @@
         {/each}
     </select>
     <section class="media-container">
+        {#if !currentLanguage}
+            <p>Try selecting a language to show media. If no languages show up, come back later as the servers may be down.
+            </p>
+        {/if}
         {#if !songs[0] && currentLanguage}
         <p class="not-found">:/ Oops! No music found; try uploading your own or try again later.</p>
         {/if}
