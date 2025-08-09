@@ -1,6 +1,5 @@
 <script lang="ts">
   import { supabase } from '../lib/supabaseClient'
-  import Leaderboard from './routes/Leaderboard.svelte'
   import Home from './routes/Home.svelte'
   import Signup from './routes/Signup.svelte'
   import Login from './routes/Login.svelte'
@@ -31,7 +30,6 @@
     '/app/music' : Music,
     '/app/login' : Login,
     '/app/signup' : Signup,
-    '/app/leaderboard': Leaderboard,
     '/app/home': Home
   }
   let username = $state("")
