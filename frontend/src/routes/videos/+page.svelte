@@ -93,7 +93,6 @@
     .main-content{
         display: flex;
         flex-direction: column;
-        width: 100%;
     }
     .media-container{
         display: flex;
@@ -101,7 +100,7 @@
         flex-wrap: wrap;
         width: 100%;
     }
-    .not-found{
+        .not-found{
         font-weight: bold;
         color: #c5c5c5;
     }
