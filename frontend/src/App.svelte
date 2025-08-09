@@ -19,7 +19,7 @@
   import InlineStatus from '../lib/InlineStatus.svelte'
   // Setting the routes
   const routes = {
-    '/welcome': Welcome,
+    '/': Welcome,
     '/app/ai-chat/:slug': AIChatSlug,
     '/app/ai-chat': AIChat,
     '/app/videos/:slug': VideoSlug,
@@ -32,7 +32,7 @@
     '/app/login' : Login,
     '/app/signup' : Signup,
     '/app/leaderboard': Leaderboard,
-    '/': Home
+    '/app/home': Home
   }
   let username = $state("")
   let usernameStatus = $state(false)

@@ -123,6 +123,9 @@
     <section class="main-content">
      <button class="create-ai-character" onclick={() => dialog.showModal()}><span class="material-symbols-rounded">person_add</span>Create AI Character</button>
     <div class="chats">
+        {#if !availableCharacters[0]}
+                <p class="not-found">:/ Oops! No flashcards found; try uploading your own or try again later.</p>
+            {/if}
         {#each availableCharacters as character}
                  <AIChatMediaBox id={character.id} image={character.image} firstName={character.name} trait={character.trait} lang={character.language} occupation={character.occupation} />
         {/each}
@@ -283,5 +286,9 @@
         color: #1d1d1d;
         font-weight: bold;
         border: #c0c0c0 2px solid;
+    }
+         .not-found{
+        font-weight: bold;
+        color: #c5c5c5;
     }
 </style>

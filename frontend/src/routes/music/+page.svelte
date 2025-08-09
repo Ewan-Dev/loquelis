@@ -56,6 +56,9 @@
         {/each}
     </select>
     <section class="media-container">
+        {#if !songs[0] && currentLanguage}
+        <p class="not-found">:/ Oops! No music found; try uploading your own or try again later.</p>
+        {/if}
         <!-- For each song, create a MediaBox component -->
         {#each songs as song} 
         <MediaBox 
@@ -86,5 +89,9 @@
         gap: 1em;
         flex-wrap: wrap;
         width: 100%;
+    }
+        .not-found{
+        font-weight: bold;
+        color: #c5c5c5;
     }
 </style>

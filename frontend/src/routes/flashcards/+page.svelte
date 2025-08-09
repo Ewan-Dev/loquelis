@@ -81,6 +81,9 @@
     <section class="main-content">
         <button class="create-flashcard-deck" onclick={() => dialog.showModal()}>+ Create Flashcard Deck</button>
         <section class="flashcard-decks">
+            {#if !flashcardDecks[0]}
+                <p class="not-found">:/ Oops! No flashcards found; try uploading your own or try again later.</p>
+            {/if}
             {#each flashcardDecks as flashcardDeck}
             <FlashcardMediaBox name={flashcardDeck.name} author={flashcardDeck.author_username} terms={flashcardDeck.content.length} country={flashcardDeck.country_code} id={flashcardDeck.id}/>
         {/each}
@@ -178,5 +181,9 @@
         height: 2em;
         width: 17.15em;
         border-width: 0.15em;
+    }
+    .not-found{
+        font-weight: bold;
+        color: #c5c5c5;
     }
 </style>

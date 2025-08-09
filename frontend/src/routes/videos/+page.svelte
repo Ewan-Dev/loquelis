@@ -21,6 +21,7 @@
             videos = data || []; // If data is returned, assign it to videos
         } else {
             console.error('Error fetching videos:', error);
+            videos = []
         }
     }
 
@@ -60,6 +61,9 @@
         {/each}
     </select>
      <section class="media-container">
+        {#if !videos[0]}
+        <p class="not-found">:/ Oops! No videos found; try uploading your own or try again later.</p>
+        {/if}
         <!-- For each video, create a MediaBox component -->
         {#each videos as video} 
         <MediaBox 
@@ -92,5 +96,9 @@
         gap: 1em;
         flex-wrap: wrap;
         width: 100%;
+    }
+    .not-found{
+        font-weight: bold;
+        color: #c5c5c5;
     }
 </style>
