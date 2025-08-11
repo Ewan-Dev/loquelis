@@ -11,10 +11,28 @@
     let mediumURL = "";
     let mediumLang = "";
     let mediumLevel = "";
+    let mediumCategory = "";
     let availableLanguages = $state([]);
+    let availableCategories = $state([])
     let userID = $state("")
     let username = $state("")
 
+    availableCategories = [
+        {name: "Comedy", emoji: "🤣"},
+        {name: "Cartoon", emoji: "🖌️"},
+        {name: "Documentary", emoji: "📑"},
+        {name: "Sport", emoji: "⚽️"},
+        {name: "History", emoji: "🏰"},
+        {name: "Politics", emoji: "🇺🇳"},
+        {name: "Action", emoji: "⚡️"},
+        {name: "Reviews Unboxings", emoji: "📦"},
+        {name: "Gaming", emoji: "🎮"},
+        {name: "Vlogs", emoji: "📷"},
+        {name: "Movie/ Film", emoji: "🍿"},
+        {name: "Series", emoji: "📺"}
+
+
+    ]
     function launchConfetti() {
         confetti({
             particleCount: 600,
@@ -42,7 +60,7 @@
 }
 
 
-    async function handleUpload(mediumType, mediumURL, mediumLang, mediumLevel) {
+    async function handleUpload(mediumType, mediumURL, mediumLang, mediumLevel, mediumCategory) {
         try {
             const isUploaded = await isAlreadyUploaded(mediumURL);
             
@@ -52,7 +70,7 @@
             }
             
             if (mediumType === "video" || mediumType === "music") {
-                await requestSubtitles(mediumURL, mediumLang, mediumType, mediumLevel);
+                await requestSubtitles(mediumURL, mediumLang, mediumType, mediumLevel, mediumCategory);
                 error = { type: "success", name: "Beginning upload..." };
                 launchConfetti();
             } else {
@@ -64,13 +82,13 @@
         }
     }
 
-    async function requestSubtitles(url, lang, type, level) {
+    async function requestSubtitles(url, lang, type, level, category) {
         const channel = supabase.channel("subtitles");
         await channel.subscribe();
         const result = await channel.send({
             type: "broadcast",
             event: "subtitle-update",
-            payload: {id: 1, url: url, lang: lang, type: type, level: level, author: userID, author_username: username}
+            payload: {id: 1, url: url, lang: lang, type: type, level: level, author: userID, author_username: username, category: category}
         });
         console.log("Broadcast result:", result);
     }
@@ -91,7 +109,7 @@
         return !!data;
     }
 
-    async function videoExists(mediumURL, mediumType, mediumLang, mediumLevel) {
+    async function videoExists(mediumURL, mediumType, mediumLang, mediumLevel, mediumCategory) {
         try {
             const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(mediumURL)}&format=json`);
             
@@ -100,7 +118,7 @@
                 return false;
             }
             
-            await handleUpload(mediumType, mediumURL, mediumLang, mediumLevel);
+            await handleUpload(mediumType, mediumURL, mediumLang, mediumLevel, mediumCategory);
             return true;
         } catch (err) {
             console.error("Validation error:", err);
@@ -143,7 +161,7 @@
     <section class="main-page">
     <h1 class="page-header">Upload</h1>
     <section class="main-content">
-        <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLang, mediumLevel); }}>
+        <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLang, mediumLevel, mediumCategory); }}>
             <div class="vertical-container">
             <span>
                 <label for="media">* Select media type:</label>
@@ -172,6 +190,12 @@
                 <option value="B2">🦅 B2</option>
                 <option value="C1">🦜 C1</option>
                 <option value="C2">🦚 C2</option>
+            </select>
+            <select class="category" required bind:value={mediumCategory}>
+                <option value="">--Select category--</option>
+                {#each availableCategories as category}                 
+                    <option value={category.name}>{category.emoji} {category.name}</option>
+                {/each}
             </select>
             </span>
         </div>
