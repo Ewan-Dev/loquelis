@@ -171,8 +171,9 @@
 <section class="page-5 page" >
     <h1>Start your journey. <p class="blue">Today.</p></h1>
     <div class="sign-up-contact-container">
-        <button class="big-get-started-btn"><a href="/#/app/signup/">Get started! →</a></button>
-        <button class="big-contact-btn"><span class="material-symbols-rounded">contact_support</span><a href="/#/app/contact/" class="contact-p">Contact Us</a></button>
+        <button class="big-get-started-btn"><a href="./#/app/signup/">Get started! →</a></button>
+        <button class="big-contact-btn"><span class="material-symbols-rounded">login</span><a href="./#/app/login/" class="contact-p">Sign in</a></button>
+        <button class="big-contact-btn"><span class="material-symbols-rounded">contact_support</span><a href="./#/app/contact/" class="contact-p">Contact Us</a></button>
     </div>
 </section>
 </main>
@@ -511,6 +512,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        gap:0.3em;
         padding: 0;
         font-size: 1em;
         background-color: rgb(226, 226, 226);

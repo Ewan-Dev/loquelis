@@ -4,7 +4,7 @@ import InlineStatus from "../../lib/InlineStatus.svelte" // For inline status me
 import confetti from 'canvas-confetti' // For confetti effect
 
     let email = "", password = ""
-    let  { statusError, result } = $state("")
+    let  { statusError, result, statusType } = $state("")
     
     async function handleSignup(){
         await handleAuth()
@@ -13,13 +13,19 @@ import confetti from 'canvas-confetti' // For confetti effect
     async function handleAuth() {
         result = await supabase.auth.signUp({email, password})
         console.log(result)
-    if (result.error) {
-       statusError = result.error.message
-       console.error(statusError)
-    } else {
-        console.log("User signed up successfully", result)
-        statusError = null
-        launchConfetti() // Launching confetti effect when signup is successful 
+    if (statusError && statusError.includes("Password should contain at least one character of each")){
+            statusError = "Password must contain capital letters, lowercase letters, numbers and special characters."
+            statusType = "warn"
+        }
+        else if (statusError) {
+            statusType = "error"
+        }
+        else if (result && !statusError){
+            statusError = "Signup successful! Check your email to confirm."
+            statusType = "success"
+            console.log("User signed up successfully", result)
+            statusError = null
+            launchConfetti() // Launching confetti effect when signup is successful 
         
     }
  }
@@ -33,7 +39,10 @@ import confetti from 'canvas-confetti' // For confetti effect
         })
     }
 
+    $effect(() => {
+        
 
+    })
 </script>
 
 <main>
@@ -44,13 +53,9 @@ import confetti from 'canvas-confetti' // For confetti effect
     <label for="password">Password:</label>
     <input class="password" bind:value={password} type="password" > 
     <button class="sign-up" type="submit">Sign up</button>
-    {#if statusError}
-        <InlineStatus type="error" message={statusError} />
+    {#if statusError && statusType}
+        <InlineStatus type={statusType} message={statusError} />
     {/if}
-    {#if result && !statusError}
-        <InlineStatus type="success" message="Signup successful! Check your email to confirm." />
-    {/if}
-
     </form>
 </main>
 
