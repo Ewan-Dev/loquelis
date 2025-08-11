@@ -41,6 +41,7 @@ async function listenAndDownloadSubtitles() {
     const type = broadcast.payload.type // Get type
     const level = broadcast.payload.level // Get level
     const author = broadcast.payload.author // Get author
+    const category = broadcast.payload.category // Get author
     const authorUsername = broadcast.payload.author_username // Get author username
     console.log(`Language: ${lang}`) // Print language
     console.log(`URL: ${url}`)  // Print URL
@@ -71,7 +72,7 @@ async function listenAndDownloadSubtitles() {
         const subtitlesText = rawSubtitles.toString("utf-8")
         const subtitlesJSON = JSON.parse(subtitlesText)
         console.log(subtitlesJSON)
-        uploadMedia(id, title, channel, cover, subtitlesJSON, embedLink, videoLink, type, lang, level, author, authorUsername) // Upload subtitles to the database
+        uploadMedia(id, title, channel, cover, subtitlesJSON, embedLink, videoLink, type, lang, level, author, authorUsername, category) // Upload subtitles to the database
     }
     catch (error) {
         console.error(error)
@@ -123,12 +124,12 @@ async function availableLanguages(){
 
 }
 
-async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink, type, lang, level, author, authorUsername) {
+async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink, type, lang, level, author, authorUsername, category) {
     const currentDate = new Date();
     console.log(level)
     const { error } = await supabase
         .from("media")
-        .insert({ name: title, artist: channel, cover: cover, content: sub, media_type: type, embed_link: embedLink, video_link: videoLink, language: lang, level: level}) // Update the content, media_type and updated_at columns
+        .insert({ name: title, artist: channel, cover: cover, content: sub, media_type: type, embed_link: embedLink, video_link: videoLink, language: lang, level: level, category: category}) // Update the content, media_type and updated_at columns
     if (error) {
         console.error("Error uploading subtitles:", error) // Print error if upload fails
     }
