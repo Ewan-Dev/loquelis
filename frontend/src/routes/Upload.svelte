@@ -157,11 +157,12 @@
 </script>
 
 <main class="route">
-   <Sidebar currentPage="Upload" />
+   <Sidebar currentPage="/upload" />
     <section class="main-page">
     <h1 class="page-header">Upload</h1>
     <section class="main-content">
         <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLang, mediumLevel, mediumCategory); }}>
+            <p>Hello, please note that the upload feature is disabled for now as I cannot use my Raspberry Pi to host it just yet as I am away from home - Ewan</p>
             <div class="vertical-container">
             <span>
                 <label for="media">* Select media type:</label>
@@ -191,6 +192,9 @@
                 <option value="C1">🦜 C1</option>
                 <option value="C2">🦚 C2</option>
             </select>
+            </span>
+            <span>
+            <label for="category">* Select category of content:</label>
             <select class="category" required bind:value={mediumCategory}>
                 <option value="">--Select category--</option>
                 {#each availableCategories as category}                 
