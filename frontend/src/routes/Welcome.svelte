@@ -107,7 +107,7 @@
         <h1 class="welcome">Welcome to Loquelis!!!</h1>
         <p class="welcome-message">🤗 Happy to see you!</p>
     </section>
-    <button class="get-started-btn"><a href="/#/app/signup/">Let's get started! →</a></button>
+    <button class="get-started-btn"><a href="./#/app/signup/">Let's get started! →</a></button>
 </section>
 <section class="page-2 page" >
     <h1>Let's get started with a language-learning favourite - Peppa Pig! 🐷</h1>
