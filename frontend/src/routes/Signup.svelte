@@ -11,7 +11,11 @@ import confetti from 'canvas-confetti' // For confetti effect
     }
 
     async function handleAuth() {
-        result = await supabase.auth.signUp({email, password})
+        result = await supabase.auth.signUp({email, password,
+            options: {
+                emailRedirectTo: "https://ewan.is-a.dev/loquelis/#/app/login/"
+  }
+        })
         console.log(result)
     if (statusError && statusError.includes("Password should contain at least one character of each")){
             statusError = "Password must contain capital letters, lowercase letters, numbers and special characters."

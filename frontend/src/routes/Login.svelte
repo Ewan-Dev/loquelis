@@ -13,7 +13,11 @@
     })
     
     async function handleSignin() {
-    const {data: authData, error: authError} = await supabase.auth.signInWithPassword({email, password})
+    const {data: authData, error: authError} = await supabase.auth.signInWithPassword({email, password,
+        options: {
+            redirectTo: 'https://ewan.is-a.dev/loquelis/#/app/home'
+  }
+    })
     if (error) {
        console.error(authError.message)
     } else {
