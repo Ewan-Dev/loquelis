@@ -11,7 +11,7 @@
 </script>
 
 <main class="route">
-    <Sidebar currentPage="/"/> 
+    <Sidebar currentPage="/home"/> 
     <section class="main-page">
     <h1 class="page-header">Home</h1>
         <!-- Main content section for styles to be applied -->

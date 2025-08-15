@@ -9,11 +9,11 @@
 <button class="open-sidebar-icon icon" onclick={toggleSidebar}>≡</button> <!-- Open hamburger button for the sidebar, only visible on small screens -->
 <aside class="sidebar" class:show={sidebarVisible}>
     <div class="sidebar-header">
-        <img src="./static/loquela.png" class="logo" alt="loquela logo">
+        <img src="../../static/loquela.png" class="logo" alt="loquela logo">
         <button class="close-sidebar-icon icon" onclick={toggleSidebar}>X</button> <!-- Close button for the sidebar -->
     </div>
     <nav class="sidebar-nav">
-        <a href="./" class:selected={currentPage === '/'}> <!-- 'selected' is set to true if 'currentPage' is equal to set path -->      
+        <a href="./#/app/home" class:selected={currentPage === '/home'}> <!-- 'selected' is set to true if 'currentPage' is equal to set path -->      
         <span class="material-symbols-rounded">home</span>
             Home
         </a>
