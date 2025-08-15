@@ -78,6 +78,7 @@
                 {/if}   
                 {#if data }
                     <InlineStatus type="success" message="Login successful!" width="15em"/>
+                    <p>Continue <a href="https://ewan.is-a.dev/#/app/home">https://ewan.is-a.dev/#/app/home</a></p>
                 {/if}
                 </form>
                 </section>
