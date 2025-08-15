@@ -18,7 +18,8 @@
   import InlineStatus from '../lib/InlineStatus.svelte'
   // Setting the routes
   const routes = {
-    '/': Welcome,
+    '/': Login,
+    '/welcome': Welcome,
     '/app/ai-chat/:slug': AIChatSlug,
     '/app/ai-chat': AIChat,
     '/app/videos/:slug': VideoSlug,
@@ -141,7 +142,6 @@
         {/if}
         </form>
     </dialog>
-    <h1>test</h1>
   <!-- Import router component to allow for routing -->
   <Router {routes} /> 
 </main>

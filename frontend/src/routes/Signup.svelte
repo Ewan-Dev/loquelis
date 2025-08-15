@@ -1,34 +1,37 @@
-<script>
+<script lang="ts">
 import { supabase } from "../../lib/supabaseClient" // Importing supabase client for authentication
 import InlineStatus from "../../lib/InlineStatus.svelte" // For inline status messages
 import confetti from 'canvas-confetti' // For confetti effect
 
     let email = "", password = ""
-    let  { statusError, result, statusType } = $state("")
+    let  { statusError, statusType } = $state("")
     
     async function handleSignup(){
         await handleAuth()
     }
 
     async function handleAuth() {
-        result = await supabase.auth.signUp({email, password,
+            let {data, error} = await supabase.auth.signUp({email, password,
             options: {
-                emailRedirectTo: "https://ewan.is-a.dev/loquelis/#/app/login/"
+                emailRedirectTo: "https://ewan.is-a.dev/#/app/login/"
   }
         })
-        console.log(result)
-    if (statusError && statusError.includes("Password should contain at least one character of each")){
+    if (error && error.message.includes("Password should contain at least one character of each")){
+            statusError = ""
+            statusType = ""
             statusError = "Password must contain capital letters, lowercase letters, numbers and special characters."
             statusType = "warn"
         }
-        else if (statusError) {
+        else if (error && error.message) {
+            statusType = ""
             statusType = "error"
+            statusError = ""
+            statusError = error.message
         }
-        else if (result && !statusError){
+        else if (data && !error){
             statusError = "Signup successful! Check your email to confirm."
             statusType = "success"
-            console.log("User signed up successfully", result)
-            statusError = null
+            console.log("User signed up successfully", data)
             launchConfetti() // Launching confetti effect when signup is successful 
         
     }
@@ -43,10 +46,7 @@ import confetti from 'canvas-confetti' // For confetti effect
         })
     }
 
-    $effect(() => {
-        
-
-    })
+            $inspect(statusError)
 </script>
 
 <main>
