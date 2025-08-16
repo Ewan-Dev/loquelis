@@ -22,6 +22,7 @@
         statusError = ""
        statusError = authError.message
     } else {
+        result = authData
         console.log("Login successful", data)
         statusError = ""
         launchConfetti()
@@ -48,6 +49,7 @@
         }
      }
         else if (!error) {
+                statusError = ""
                 console.log("User added to profiles table")
                 launchConfetti()
             }
@@ -76,7 +78,7 @@
                 {#if statusError}
                     <InlineStatus type="error" message={statusError} />
                 {/if}   
-                {#if data && !error }
+                {#if !statusError && result}
                     <InlineStatus type="success" message="Login successful!" width="15em"/>
                     <p>Continue <a href="https://ewan.is-a.dev/#/app/home">https://ewan.is-a.dev/#/app/home</a></p>
                 {/if}

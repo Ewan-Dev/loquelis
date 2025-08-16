@@ -155,16 +155,16 @@
     <h1 class="media-header">🗃️ Flashcards</h1> 
     <p class="media-p">Create your own decks from words saved from songs, videos and AI Chats</p>
     <div class="media-image-container">
-        <img src="../static/food-deck.png" class="deck-media-img media-img" alt="deck">
-        <img src="../../static/animals-deck.png" alt="deck" class="deck-media-img media-img">
-        <img src='../../static/flashcards.png' alt="flashcards" class="deck-media-img media-img">
+        <img src="https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/food-deck.png" class="deck-media-img media-img" alt="deck">
+        <img src="https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/animals-deck.png" alt="deck" class="deck-media-img media-img">
+        <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/flashcards.png' alt="flashcards" class="deck-media-img media-img">
     </div>    
     
     <hr>
     <h1 class="media-header"  bind:this={chatAIHeader}>💬 AI Chat</h1> 
     <p class="media-p">Create your own AI character to practise your language skills and decks with.</p>
     <div class="media-image-container">
-        <img src="../../static/ai-chat.png" alt="ai chat" class="ai-chat-img media-img">
+        <img src="https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/ai-chat.png" alt="ai chat" class="ai-chat-img media-img">
     </div>
 </section>
 <hr>

@@ -16,6 +16,7 @@
   import Welcome from './routes/Welcome.svelte'
   import { onMount } from 'svelte'
   import InlineStatus from '../lib/InlineStatus.svelte'
+
   // Setting the routes
   const routes = {
     '/': Login,
@@ -31,7 +32,7 @@
     '/app/music' : Music,
     '/app/login' : Login,
     '/app/signup' : Signup,
-    '/app/home': Home
+    '/app/home': Home,
   }
   let username = $state("")
   let usernameStatus = $state(false)

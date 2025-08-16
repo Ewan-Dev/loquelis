@@ -10,7 +10,7 @@
 
 </script>
 
-<main class="route">g
+<main class="route">
     <Sidebar currentPage="/home"/> 
     <section class="main-page">
     <h1 class="page-header">Home</h1>
