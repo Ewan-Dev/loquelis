@@ -63,7 +63,7 @@
     }
 
 
-    async function createAICharacter(name, trait, occupation, language) {
+    async function createAICharacter(name, trait, occupation, language, country) {
         // Reset and clear
         characterCreateStatus = ""
         characterCreateMessage = ""
@@ -71,7 +71,7 @@
         const { error } = await supabase
             .from('ai_characters')
             .insert([
-                { name, trait, occupation, language, image: `https://image.pollinations.ai/prompt/Generate a pixar-style image of a ${occupation} called ${name} with trait of ${trait} who is dressed in traditional attire of ${language}.` }
+                { name, trait, occupation, language, country, image: `https://image.pollinations.ai/prompt/Generate a pixar-style image of a ${occupation} called ${name} with trait of ${trait} who is dressed in traditional attire of ${language}.` }
             ])
         if (!error){
             characterCreateStatus = "success"
@@ -127,7 +127,7 @@
                 <p class="not-found">:/ Oops! No flashcards found; try uploading your own or try again later.</p>
             {/if}
         {#each availableCharacters as character}
-                 <AIChatMediaBox id={character.id} image={character.image} firstName={character.name} trait={character.trait} lang={character.language} occupation={character.occupation} />
+                 <AIChatMediaBox id={character.id} image={character.image} firstName={character.name} trait={character.trait} lang={character.country} occupation={character.occupation} />
         {/each}
     
     </div>  
@@ -138,7 +138,7 @@
     <dialog bind:this={dialog}>
         <div class="dialog-container">
                 <h2 class="dialog-header">Create AI Character</h2>
-                <form onsubmit={(event) => { event.preventDefault(); createAICharacter(characterName, characterTrait, characterOccupation, characterLang);}}>
+                <form onsubmit={(event) => { event.preventDefault(); createAICharacter(characterName, characterTrait, characterOccupation, availableCharacters[characterLang].language, availableCharacters[characterLang].country_code);}}>
                         <label>🪪 Character name:</label>
                         <input class="name" required bind:value={characterName}>      
                     <span class="label-input-container">
@@ -146,8 +146,8 @@
                     <select class="language" required bind:value={characterLang}>
                         <option value="">--Select language--</option>
                         {#if availableLanguages}
-                        {#each availableLanguages as language}                 
-                            <option value={language.short}>{language.emoji} {language.name}</option>
+                        {#each availableLanguages as language, i}                 
+                            <option value={i}>{language.emoji} {language.name}</option>
                         {/each}
                         {/if}
                     </select>

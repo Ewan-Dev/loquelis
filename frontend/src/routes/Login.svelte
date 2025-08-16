@@ -13,17 +13,17 @@
     })
     
     async function handleSignin() {
-    const {data: authData, error: authError} = await supabase.auth.signInWithPassword({email, password,
+    let {data: authData, error: authError} = await supabase.auth.signInWithPassword({email, password,
         options: {
             redirectTo: 'https://ewan.is-a.dev/loquelis/#/app/home'
   }
     })
-    if (error) {
-       console.error(authError.message)
+    if (authError) {
+        statusError = ""
+       statusError = authError.message
     } else {
         console.log("Login successful", data)
-        data = ""
-        data = authData
+        statusError = ""
         launchConfetti()
         addUsertoTable(authData.user.email)
 
@@ -73,10 +73,10 @@
                 <label for="password">Password:</label>
                 <input class="password" bind:value={password} type="password" > 
                 <button class="log-in" type="submit">Sign in</button>
-                {#if error}
-                    <InlineStatus type="error" message={error} />
+                {#if statusError}
+                    <InlineStatus type="error" message={statusError} />
                 {/if}   
-                {#if data }
+                {#if data && !error }
                     <InlineStatus type="success" message="Login successful!" width="15em"/>
                     <p>Continue <a href="https://ewan.is-a.dev/#/app/home">https://ewan.is-a.dev/#/app/home</a></p>
                 {/if}
