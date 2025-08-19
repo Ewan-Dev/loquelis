@@ -173,7 +173,6 @@
     <div class="sign-up-contact-container">
         <button class="big-get-started-btn"><a href="./#/app/signup/">Get started! →</a></button>
         <button class="big-contact-btn"><span class="material-symbols-rounded">login</span><a href="./#/app/login/" class="contact-p">Sign in</a></button>
-        <button class="big-contact-btn"><span class="material-symbols-rounded">contact_support</span><a href="./#/app/contact/" class="contact-p">Contact Us</a></button>
     </div>
 </section>
 </main>

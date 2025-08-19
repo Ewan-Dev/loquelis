@@ -9,7 +9,7 @@
 <button class="open-sidebar-icon icon" onclick={toggleSidebar}>≡</button> <!-- Open hamburger button for the sidebar, only visible on small screens -->
 <aside class="sidebar" class:show={sidebarVisible}>
     <div class="sidebar-header">
-        <img src="../../static/loquela.png" class="logo" alt="loquela logo">
+        <img src="https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/loquela.png" class="logo" alt="loquela logo">
         <button class="close-sidebar-icon icon" onclick={toggleSidebar}>X</button> <!-- Close button for the sidebar -->
     </div>
     <nav class="sidebar-nav">

@@ -46,6 +46,7 @@
             .from("flashcard_decks") 
             .insert({name: name, author : user, author_username: username, language: lang, country_code: country, content: []})   
         console.log(error)
+        location.reload(); 
         }
     
     // Fetch user session, get UID, then fetch from profiles table to get the username
@@ -98,7 +99,7 @@
             <div>
                 <h2>Create Flashcard Deck</h2>
                 <h1>{availableLanguages[flashCardLangID]}</h1>
-                <form onsubmit={(event) => {event.preventDefault(); uploadFlashcardDeck(flashCardName, userID, availableLanguages[flashCardLangID].short,  availableLanguages[flashCardLangID].country_code, username);}}>
+                <form onsubmit={(event) => {uploadFlashcardDeck(flashCardName, userID, availableLanguages[flashCardLangID].short,  availableLanguages[flashCardLangID].country_code, username);}}>
                     <label>Deck name:</label>
                     <input class="name" bind:value={flashCardName}>
                     <label>Language:</label>

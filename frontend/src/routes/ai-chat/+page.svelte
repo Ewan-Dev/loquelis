@@ -138,7 +138,7 @@
     <dialog bind:this={dialog}>
         <div class="dialog-container">
                 <h2 class="dialog-header">Create AI Character</h2>
-                <form onsubmit={(event) => { event.preventDefault(); createAICharacter(characterName, characterTrait, characterOccupation, availableCharacters[characterLang].language, availableCharacters[characterLang].country_code);}}>
+                <form onsubmit={(event) => { createAICharacter(characterName, characterTrait, characterOccupation, availableCharacters[characterLang].language, availableCharacters[characterLang].country_code);}}>
                         <label>🪪 Character name:</label>
                         <input class="name" required bind:value={characterName}>      
                     <span class="label-input-container">
