@@ -58,6 +58,7 @@
     <section class="media-container">
         {#if !currentLanguage}
             <p>Try selecting a language to show media. If no languages show up, come back later as the servers may be down.
+                Also, please note that the music catalogue is currently very scarce and recommend checking out the videos instead!
             </p>
         {/if}
         {#if !songs[0] && currentLanguage}
