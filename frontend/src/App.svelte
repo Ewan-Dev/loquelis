@@ -2,7 +2,8 @@
   import { supabase } from '../lib/supabaseClient'
   import Home from './routes/Home.svelte'
   import Signup from './routes/Signup.svelte'
-  import Login from './routes/Login.svelte'
+  import Login from './routes/login/+page.svelte'
+  import LoginSlug from './routes/login/[slug].svelte'
   import Music from './routes/music/+page.svelte'
   import MusicSlug from './routes/music/[slug].svelte'
   import Upload from './routes/Upload.svelte'
@@ -31,6 +32,7 @@
     '/app/music/:slug' : MusicSlug,
     '/app/music' : Music,
     '/app/login' : Login,
+    '/app/login/:slug': LoginSlug,
     '/app/signup' : Signup,
     '/app/home': Home,
   }

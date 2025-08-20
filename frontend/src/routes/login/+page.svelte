@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { supabase } from "../../lib/supabaseClient"; // Importing supabase client for authentication
-    import InlineStatus from "../../lib/InlineStatus.svelte" // For inline status messages
+    import { supabase } from "../../../lib/supabaseClient"; // Importing supabase client for authentication
+    import InlineStatus from "../../../lib/InlineStatus.svelte" // For inline status messages
     import confetti from 'canvas-confetti' // For confetti effect
   import { AuthError } from "@supabase/supabase-js";
 

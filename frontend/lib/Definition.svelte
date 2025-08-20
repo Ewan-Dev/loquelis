@@ -50,7 +50,7 @@
             return error
         }
         else if(error){
-            definitionStatus = {type: "error", message: error.message}
+            definitionStatus = {type: "error", message: gerror.message}
             return error
         }
         definitionStatus = {type: "success", message: "Added!"}
