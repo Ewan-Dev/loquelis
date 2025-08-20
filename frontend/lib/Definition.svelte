@@ -45,7 +45,11 @@
             .from("flashcard_decks")
             .update({ content: flashcards })
             .eq("id", id)
-        if(error){
+         if (error.message === `invalid input syntax for type bigint: "undefined"`){
+            definitionStatus = {type: "error", message: "You haven't selected a deck. Try making one on 'Flashcards' page"}
+            return error
+        }
+        else if(error){
             definitionStatus = {type: "error", message: error.message}
             return error
         }

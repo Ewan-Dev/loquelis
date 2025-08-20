@@ -162,7 +162,16 @@
     <h1 class="page-header">Upload</h1>
     <section class="main-content">
         <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLang, mediumLevel, mediumCategory); }}>
-            <p>Hello, please note that the upload feature is disabled for now as I cannot use my Raspberry Pi to host it just yet as I am away from home - Ewan</p>
+            <div class="big-warning">
+           <p>PLEASE NOTE THAT THIS FEATURE IS CURRENTLY UNAVALIBLE AS I AM AWAY FROM HOME FOR A WHILE AND UNABLE TO MAINTAIN THE RASPBERRY PI SERVER. THANK YOU FOR YOUR UNDERSTANDING.
+            <br>
+            YOU CAN FIND UPLOADED MEDIA IN VIDEOS AND MUSIC SECTION
+           </div>
+            <div class="big-warning">
+           <p>Please ensure that your YT video link has manual subtitles in the language you selected. For example:</p>
+            <img class="example-subtitles-img" src="https://www.wikihow.com/images/thumb/7/7f/Turn-On-YouTube-Subtitles-Step-6.jpg/v4-460px-Turn-On-YouTube-Subtitles-Step-6.jpg">
+            <figcaption>As you can see, 'English' is selected and available from the dropdown below on YT, so in Loquelis you should select 'English' from the dropdown below.</figcaption>
+           </div>
             <div class="vertical-container">
             <span>
                 <label for="media">* Select media type:</label>
@@ -304,5 +313,16 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
+    }
+    .big-warning{
+        background-color: #d94848;
+        padding: 0.5em 1em;
+        border-radius: 1em;
+        font-weight: bold;
+        color: #F4F4F4;
+    }
+    img{
+        border-radius: 2em;
+        height: 17.5em;
     }
 </style>

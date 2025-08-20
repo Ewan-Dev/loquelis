@@ -75,7 +75,7 @@
             ])
         if (!error){
             characterCreateStatus = "success"
-            characterCreateMessage = "Created!"
+            characterCreateMessage = "Created! Reload the page to see your character!"
         }
         if (error){
             characterCreateStatus = "error"

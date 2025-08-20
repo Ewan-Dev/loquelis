@@ -134,4 +134,3 @@ async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink,
         console.error("Error uploading subtitles:", error) // Print error if upload fails
     }
 }
-
