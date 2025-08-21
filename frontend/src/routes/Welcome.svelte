@@ -114,6 +114,9 @@
     <span class="video-info-box info-box">
         <p class="icon">💡</p>Click on a word for a definition based off context, part of speech and romanisation.
     </span>
+     <span class="video-info-box info-box">
+        <p class="icon">📍</p>Play the video and watch the live subtitles flow through!
+    </span>
     <section class="video-container">
            <iframe id="player" src={`https://www.youtube.com/embed/Q_sqR4aLLu0?enablejsapi=1`} title={ "peppapig" } frameborder="0" allowfullscreen></iframe>
             <Subtitles
