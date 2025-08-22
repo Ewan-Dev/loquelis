@@ -169,7 +169,7 @@
            </div>
             <div class="big-warning">
            <p>Please ensure that your YT video link has manual subtitles in the language you selected. For example:</p>
-            <img class="example-subtitles-img" src="https://www.wikihow.com/images/thumb/7/7f/Turn-On-YouTube-Subtitles-Step-6.jpg/v4-460px-Turn-On-YouTube-Subtitles-Step-6.jpg">
+            <img class="example-subtitles-img" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1bbca6974c333d463fce25f05a428fabe1750ebd_screenshot_2025-08-22_at_19.33.26.png">
             <figcaption>As you can see, 'English' is selected and available from the dropdown below on YT, so in Loquelis you should select 'English' from the dropdown below.</figcaption>
            </div>
             <div class="vertical-container">
