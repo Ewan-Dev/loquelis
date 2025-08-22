@@ -1,7 +1,7 @@
 <script >
     import Definition from "./Definition.svelte";
 
-    const { currentLine = "Loading...", targetLanguage = "", nativeLanguage = "en"} = $props() 
+    const { currentLine = "Play the video too see live subtitles. Click on an individual word for a definition!", targetLanguage = "", nativeLanguage = "en"} = $props() 
     let {term, definition, partOfSpeech, original, translated, romanisation} = $state("")
     let fullTranslationVisibility = true
     let subtitlesArray = $state([])
