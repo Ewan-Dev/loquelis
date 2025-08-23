@@ -162,16 +162,6 @@
     <h1 class="page-header">Upload</h1>
     <section class="main-content">
         <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLang, mediumLevel, mediumCategory); }}>
-            <div class="big-warning">
-           <p>PLEASE NOTE THAT THIS FEATURE IS CURRENTLY UNAVALIBLE AS I AM AWAY FROM HOME FOR A WHILE AND UNABLE TO MAINTAIN THE RASPBERRY PI SERVER. THANK YOU FOR YOUR UNDERSTANDING.
-            <br>
-            YOU CAN FIND UPLOADED MEDIA IN VIDEOS AND MUSIC SECTION
-           </div>
-            <div class="big-warning">
-           <p>Please ensure that your YT video link has manual subtitles in the language you selected. For example:</p>
-            <img class="example-subtitles-img" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1bbca6974c333d463fce25f05a428fabe1750ebd_screenshot_2025-08-22_at_19.33.26.png">
-            <figcaption>As you can see, 'English' is selected and available from the dropdown below on YT, so in Loquelis you should select 'English' from the dropdown below.</figcaption>
-           </div>
             <div class="vertical-container">
             <span>
                 <label for="media">* Select media type:</label>
@@ -313,16 +303,5 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-    }
-    .big-warning{
-        background-color: #d94848;
-        padding: 0.5em 1em;
-        border-radius: 1em;
-        font-weight: bold;
-        color: #F4F4F4;
-    }
-    img{
-        border-radius: 2em;
-        height: 17.5em;
     }
 </style>
