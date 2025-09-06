@@ -35,18 +35,10 @@
         const { error } = await supabase
             .from("profiles")
             .insert({email})
-        if (error) {
-        if( error.message.includes("duplicate") && error.message.includes("email")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
-        {
-            statusError = ""
-            statusError = "Account with email already exists"
-            console.log(statusError)
-            result = ""
-        }
-        else if (error.message) {
+        if (error && error.message) {
             result = ""
             statusError = error.message     
-        }
+        
      }
         else if (!error) {
                 statusError = ""
