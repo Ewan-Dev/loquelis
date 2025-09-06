@@ -36,14 +36,11 @@
             .from("profiles")
             .insert({email})
         if (error && error.message) {
-            result = ""
-            statusError = error.message     
-        
-     }
+            console.error(error.message)
+        }
         else if (!error) {
                 statusError = ""
                 console.log("User added to profiles table")
-                launchConfetti()
             }
     }
 
