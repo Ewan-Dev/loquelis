@@ -19,8 +19,10 @@
   }
     })
     if (authError) {
+        if (authError && authError.message.includes("profiles_email_key")){
         statusError = ""
-       statusError = authError.message
+        }
+         statusError = authError.message
     } else {
         result = authData
         console.log("Login successful", data)
