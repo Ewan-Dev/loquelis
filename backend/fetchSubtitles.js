@@ -25,7 +25,12 @@ async function main() {
 
     const user = data.user
     const session = data.session
-    console.log(user, session)
+    if (user && session) {
+        console.log("Signin successful")
+    }
+    else {
+        console.error("Error signing in:", error)
+    }
 
     process.stdin.resume() // Keep the process listening
 }
