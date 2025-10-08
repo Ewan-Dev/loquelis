@@ -4,6 +4,7 @@
   import MediaHeader from "../../../lib/MediaHeader.svelte"
   import Definition from "../../../lib/Definition.svelte"
   import Subtitles from "../../../lib/Subtitles.svelte"
+  import AuthorTag from "../../../lib/AuthorTag.svelte"
   import { location } from 'svelte-spa-router'
   import { onMount } from "svelte";
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
@@ -13,7 +14,6 @@
   let name = $state("Loading...")
   let artist = $state("Loading...")
   let author = $state("Loading...")
-  let authorUsername = $state("Loading...")
   let cover = $state("https://img.youtube.com/vi/loquela/maxresdefault.jpg") // Fallback cover image
   let level = $state("Unknown Level")
   let rating = $state("No Rating")
@@ -56,8 +56,7 @@
       const song = data
       name = song.name
       artist = song.artist 
-      author = song.author
-      authorUsername = song.author_username 
+      author = song.author 
       cover = song.cover 
       level = song.level 
       rating = song.rating 
@@ -128,12 +127,8 @@
             song={name}
             artist={artist}
           />
-
         </span>
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
-          {#if link === "https://youtu.be/zabswqP6xEM"}
-            <p>Oops. Loquelis is struggling to the media - it may be invalid or unavailable.</p>
-          {/if}
           <Subtitles
               currentLine={currentLine}
               targetLanguage={language}

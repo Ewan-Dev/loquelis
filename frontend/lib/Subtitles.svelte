@@ -6,7 +6,8 @@
     let fullTranslationVisibility = true
     let subtitlesArray = $state([])
     $effect(() => {
-        subtitlesArray = currentLine.split(" ")
+        const segmenter = new Intl.Segmenter('zh', {granularity: 'word'})
+        subtitlesArray = [...segmenter.segment(currentLine)].map(s => s.segment)
         fetchSentenceTranslation(currentLine)
     })
     async function fetchDefinition(word, contextArray) {
