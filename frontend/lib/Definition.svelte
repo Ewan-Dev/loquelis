@@ -20,7 +20,7 @@
             flashcardDecks = []
         }
 })
-
+    $inspect(definitionStatus)
 
     // Fetch current flashcards lin deck
     async function fetchFlashcardData(id){
@@ -45,7 +45,7 @@
             .from("flashcard_decks")
             .update({ content: flashcards })
             .eq("id", id)
-         if (error.message === `invalid input syntax for type bigint: "undefined"`){
+         if (error && error.message === `invalid input syntax for type bigint: "undefined"`){
             definitionStatus = {type: "error", message: "You haven't selected a deck. Try making one on 'Flashcards' page"}
             return error
         }
@@ -112,9 +112,9 @@
             <p class='definition-info-body'>This is as you may not yet have a deck for the language you are curretly studying; You can only add words to decks of the same language</p>
             <button on:click={infoDialog.close()} class="close-dialog">OK</button> <!--Closes the dialog box with info about decks-->
         </dialog>
+        {/if}
             <InlineStatus type={definitionStatus.type} message={definitionStatus.message}/>
 
-{/if}
         </section>
 {/if}
 <style>

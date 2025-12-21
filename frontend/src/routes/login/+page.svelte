@@ -13,14 +13,12 @@
     })
     
     async function handleSignin() {
-    let {data: authData, error: authError} = await supabase.auth.signInWithPassword({email, password,
-        options: {
-            redirectTo: 'https://ewan.is-a.dev/loquelis/#/app/home'
-  }
-    })
+    let {data: authData, error: authError} = await supabase.auth.signInWithPassword({email, password})
     if (authError) {
+        if (authError && authError.message.includes("profiles_email_key")){
         statusError = ""
-       statusError = authError.message
+        }
+         statusError = authError.message
     } else {
         result = authData
         console.log("Login successful", data)
@@ -69,7 +67,7 @@
                 {/if}   
                 {#if !statusError && result}
                     <InlineStatus type="success" message="Login successful!" width="15em"/>
-                    <p>Continue <a href="https://ewan.is-a.dev/#/app/home">https://ewan.is-a.dev/#/app/home</a></p>
+                    <p>Continue <a href="./#/app/home">here</a></p>
                 {/if}
                 </form>
                 </section>
