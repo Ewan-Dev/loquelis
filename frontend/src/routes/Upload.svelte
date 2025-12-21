@@ -156,10 +156,40 @@
         }
 </script>
 
-<main class="route">
+<main class="route ">
    <Sidebar currentPage="/upload" />
     <section class="main-page">
     <h1 class="page-header">Upload</h1>
+        <section class="notice">
+            <h3 class='notice-text'>Notice</h3>
+            <p class='notice-text'>Media upload only works if the YT video has manually added subtitles. The subtitle language must match to the dropdown below.</p>
+            <br>
+            <p class='notice-text'><b>Example:</b></p>
+
+            <p>✅ Correct</p>
+            <section class="image-guides">
+            <section class="video-dd-stack">
+            <img src='.././static/ja-YT.png' alt="japanese YouTube dropdown" class="yt-img">
+            <img src='.././static/ja-dd.png' alt="japanese YouTube dropdown" class="dd-img">
+            </section>
+            <section class="video-dd-stack">
+            <img src='.././static/en-GB-YT.png' alt="british english YouTube dropdown" class="yt-img">
+            <img src='.././static/en-Gb-dd.png' alt="japanese YouTube dropdown" class="dd-img">
+            </section>
+            </section>
+
+            <p>❌ Incorrect</p>
+            <section class="image-guides">
+            <section class="video-dd-stack">
+            <img src='.././static/en-GB-YT.png' alt="british english YouTube" class="yt-img">
+            <img src='.././static/en-dd.png' alt="english dropdown" class="dd-img">
+            </section>
+            <section class="video-dd-stack">
+            <img src='.././static/zh-HK-YT.png' alt="hongkong chinese YouTube " class="yt-img">
+            <img src='.././static/zh-dd.png' alt="chinese dropdown" class="dd-img">
+            </section>
+            </section>
+        </section>
     <section class="main-content">
         <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLang, mediumLevel, mediumCategory); }}>
             <div class="vertical-container">
@@ -303,5 +333,40 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
+    }
+
+    .yt-img,
+    .dd-img{
+        width: 15em;
+        border-radius: 0.75em;
+        margin: 0;
+        margin-top: 0.5em;
+    }
+
+    .dd-img{
+            height: auto;
+        padding: 0;   }
+
+    .notice{
+        background-color: #f7f7f7;
+        padding: 1em 1em;
+        border-radius: 0.75em;
+        border: #eee 1px solid;
+        width: 89.5%;
+        margin: 0.5em;
+    }
+
+    .notice-text{
+        margin: 0em;
+    }
+    .video-dd-stack{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .image-guides{
+        display: flex;
+        flex-direction: row;
+        gap: 01em;
     }
 </style>
