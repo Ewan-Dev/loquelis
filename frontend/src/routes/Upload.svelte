@@ -169,24 +169,24 @@
             <p>✅ Correct</p>
             <section class="image-guides">
             <section class="video-dd-stack">
-            <img src='.././static/ja-YT.png' alt="japanese YouTube dropdown" class="yt-img">
-            <img src='.././static/ja-dd.png' alt="japanese YouTube dropdown" class="dd-img">
+            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/ja-YT.png' alt="japanese YouTube dropdown" class="yt-img">
+            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/ja-dd.png' alt="japanese YouTube dropdown" class="dd-img">
             </section>
             <section class="video-dd-stack">
-            <img src='.././static/en-GB-YT.png' alt="british english YouTube dropdown" class="yt-img">
-            <img src='.././static/en-Gb-dd.png' alt="japanese YouTube dropdown" class="dd-img">
+            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/en-GB-YT.png' alt="british english YouTube dropdown" class="yt-img">
+            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/en-GB-dd.png' alt="english YouTube dropdown" class="dd-img">
             </section>
             </section>
 
             <p>❌ Incorrect</p>
             <section class="image-guides">
             <section class="video-dd-stack">
-            <img src='.././static/en-GB-YT.png' alt="british english YouTube" class="yt-img">
-            <img src='.././static/en-dd.png' alt="english dropdown" class="dd-img">
+            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/en-GB-YT.png' alt="british english YouTube" class="yt-img">
+            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/en-dd.png' alt="english dropdown" class="dd-img">
             </section>
             <section class="video-dd-stack">
-            <img src='.././static/zh-HK-YT.png' alt="hongkong chinese YouTube " class="yt-img">
-            <img src='.././static/zh-dd.png' alt="chinese dropdown" class="dd-img">
+            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/zh-HK-YT.png' alt="hongkong chinese YouTube " class="yt-img">
+            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/zh-dd.png' alt="chinese dropdown" class="dd-img">
             </section>
             </section>
         </section>

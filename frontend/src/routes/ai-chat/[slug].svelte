@@ -9,7 +9,7 @@
     let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
     let characterData = $state(Object) //Stores character data from Supabase
     let messageInput = $state("")
-    let flashcardDecks = $state()
+    let flashcardDecks = $state([])
     let chatHistory = $state([])
     let username = $state("")
     let chatAnalysisAI = $state("")
@@ -56,7 +56,8 @@ async function sendAIMessage(inputContent, chatHistory) {
     let prompt = ""
     // ADD MESSAGE TO HISTORY
     chatHistory.push({sender: "User", content: inputContent}) // Add user response
-    if (flashcardDecks){
+    if (flashcardDecks != []){
+        print(flashcardDecks)
         prompt = `You are an AI chatbot for a language learning app. 
                 your name is ${characterData.name} - but you dont need to append that before your response
         Give short and simple responses and only respond in ISO CODE ${characterData.language} 
@@ -65,7 +66,7 @@ async function sendAIMessage(inputContent, chatHistory) {
         only respond in ISO ${characterData.language}
         your personality is ${characterData.trait} for character engagement reasons.
         Here is the deck content:
-        ${flashcardDecks[deckIndex].content}
+        ${flashcardDecks[deckIndex]}
         Here is the user response: 
         ${inputContent}. 
         Here is the chat history:
@@ -113,7 +114,7 @@ async function getAIAnalysis() {
     ⚠️ Include **every single sentence** spoken by the user — even if it's 100% correct — so we can evaluate all usage. Do not skip or omit any. Assume all are full sentences. Do not return markdown, just raw JSON.
 
     Here is the deck content:
-    ${flashcardDecks[deckIndex].content}
+    ${flashcardDecks[deckIndex]}
     Conversation:
     ${chatHistory.map(msg => `SENT BY ${msg.sender}: ${msg.content}`)}`
 
@@ -137,7 +138,12 @@ async function fetchFlashcardDecks() {
                 // If error fetching flashcard decks
                 console.error('Error fetching flashcard decks:', error)
             }
-            flashcardDecks = data || [] // Assign fetched data to flashcardDecks
+            if (data){
+            flashcardDecks = data
+            }
+            else{
+                flashcardDecks= []
+            }
             console.log(flashcardDecks)
     }
     
