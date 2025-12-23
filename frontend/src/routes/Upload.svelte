@@ -113,8 +113,8 @@
         try {
             const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(mediumURL)}&format=json`);
             
-            if (!response.ok) {
-                error = { type: "error", name: "Invalid YouTube URL" };
+            if (!response.ok || mediumURL.startswith("https://www.youtube.com/watch?v=")) {
+                error = { type: "error", name: "Invalid URL. Must be in format 'https://www.youtube.com/watch?v='" };
                 return false;
             }
             
