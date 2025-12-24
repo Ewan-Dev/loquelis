@@ -6,6 +6,8 @@ const currentPath = "../backend"
 let languages = ["en", "zh"]
 
 import dotenv from 'dotenv' // Load environment variables .env file
+import { isTypedArray } from "util/types";
+import { experimentalSetDeliveryMetricsExportedToBigQueryEnabled } from "firebase/messaging/sw";
 dotenv.config({ path: '../backend/.env' }) // Load environment variables from.env file
 
 const email = process.env.EMAIL // Email from environment variables
@@ -53,35 +55,14 @@ async function listenAndDownloadSubtitles() {
     console.log(languages.includes(lang))
     if(languages.includes(lang) && url.startsWith("https://www.youtube.com")){
     // Execute yt-dlp command to fetch subtitles
-    try {
-        const { stdout } = await execa("yt-dlp", [
-            "--skip-download", // Skip downloading the video
-            "--write-sub", // Get manually set subtitles
-            "--sub-lang", lang, // Language of the subtitles
-            "--sub-format", "json3", // Format of the subtitles
-            "-o", "subtitles",
-            "--print-json", // Print the subtitles in JSON format
-            url // Vid URL
-        ], {
-            cwd: currentPath // Where to run command 
-        })
-        console.log("Success!") // Print success message
-        const videoData = JSON.parse(stdout) // Parse the JSON output
-        const title = videoData.title
-        const channel = videoData.channel
-        const videoID = videoData.id
-        const cover = `https://i.ytimg.com/vi/${videoID}/sddefault.jpg`
-        const embedLink = `https://www.youtube.com/embed/${videoID}`
-        const videoLink = `https://www.youtube.com/watch?v=${videoID}`
-        const rawSubtitles = await fs.readFile(`subtitles.${lang}.json3`)
-        const subtitlesText = rawSubtitles.toString("utf-8")
-        const subtitlesJSON = JSON.parse(subtitlesText)
-        console.log(subtitlesJSON)
-        uploadMedia(id, title, channel, cover, subtitlesJSON, embedLink, videoLink, type, lang, level, author, authorUsername, category) // Upload subtitles to the database
-    }
-    catch (error) {
-        console.error(error)
-    }
+
+        console.log("Trying manual subs...")
+        const downloadUploadStatus = await downloadAndUploadSubtitles("--write-subs", lang, url, id, level, author, authorUsername, category, type)
+        console.log(downloadUploadStatus)
+        if (downloadUploadStatus == 1){
+            console.log("Trying auto subs...")
+            downloadAndUploadSubtitles("--write-auto-subs",  lang, url, id, level, author, authorUsername, category, type)
+        }
     }
     else if (!languages.includes(lang)) {
         console.error(`Language ${lang} is not available.`) // Print error if language is not available
@@ -139,3 +120,78 @@ async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink,
         console.error("Error uploading subtitles:", error) // Print error if upload fails
     }
 }
+
+async function downloadAndUploadSubtitles(subtitleType, lang, url, id, level, author, authorUsername, category, mediaType){
+    try {
+        const { stdout } = await execa("yt-dlp", [
+                "--skip-download", // Skip downloading the video
+                subtitleType, // Get manually set subtitles
+                "--sub-lang", lang, // Language of the subtitles
+                "--sub-format", "json3", // Format of the subtitles
+                "-o", "subtitles",
+                "--print-json", // Print the subtitles in JSON format
+                url // Vid URL
+            ], {
+                cwd: currentPath // Where to run command 
+            })
+        console.log("stdout")
+        const videoData = JSON.parse(stdout) // Parse the JSON output
+        const title = videoData.title
+        const channel = videoData.channel
+        const videoID = videoData.id
+        const cover = `https://i.ytimg.com/vi/${videoID}/sddefault.jpg`
+        const embedLink = `https://www.youtube.com/embed/${videoID}`
+        const videoLink = `https://www.youtube.com/watch?v=${videoID}`
+        const rawSubtitles = await fs.readFile(`subtitles.${lang}.json3`)
+        const subtitlesText = rawSubtitles.toString("utf-8")
+        let subtitlesJSON = ''
+        if (subtitleType != "--write-subs"){
+            subtitlesJSON = JSON.parse(subtitlesText)
+        }
+        else if (subtitleType != "--write-auto-subs"){
+            subtitlesJSON = condenseJSONEvents(JSON.parse(subtitlesText))
+            console.log("JSON")
+            console.log(subtitlesJSON)
+        }
+        else{
+            console.error("Subtitle type must be `--write-auto-subs` or `--write-subs`")
+            return 1
+    }
+
+        try{
+        uploadMedia(id, title, channel, cover, subtitlesJSON, embedLink, videoLink, mediaType, lang, level, author, authorUsername, category) // Upload subtitles to the database
+        }
+        catch (error){
+            console.error(error)
+            return 1
+        }
+        return 0
+    }
+    catch (error){
+        console.error(error)
+        return 1
+    }
+    }
+
+    function condenseJSONEvents(json){
+        const jsonEvents = json.events
+        let condensed = [] 
+        for (let i = 0; i < jsonEvents.length; i++){
+            const jsonEvent =  jsonEvents[i]
+            let text = ''
+            if (!jsonEvent.segs) continue;
+            const jsonEventSegs = jsonEvent.segs
+            for (let j = 0; j < jsonEventSegs.length; j++){
+                text += jsonEventSegs[j].utf8
+            }
+            text = text.trim()
+            condensed.push({
+                tStartMs: jsonEvent.tStartMs,
+                dDurationMs: jsonEvent.dDurationMs,
+                segs: [{"utf8":text}]
+            })
+
+
+        }
+        return condensed
+    }
