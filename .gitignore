@@ -11,7 +11,6 @@ passwords.txt
 
 
 node_modules/
-dist
 dist-ssr
 *.local
 
@@ -25,8 +24,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-<<<<<<< HEAD
 .env
-=======
 passwords.txt
->>>>>>> cb2c8f5d3f1358e915edf1c1eee43f57a76d04a0
