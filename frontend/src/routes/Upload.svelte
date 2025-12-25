@@ -163,33 +163,7 @@
     <h1 class="page-header">Upload</h1>
         <section class="notice">
             <h3 class='notice-text'>Notice</h3>
-            <p class='notice-text'>Media upload only works if the YT video has manually added subtitles. The subtitle language must match to the dropdown below.</p>
-            <br>
-            <p class='notice-text'><b>Example:</b></p>
-
-            <p>✅ Correct</p>
-            <section class="image-guides">
-            <section class="video-dd-stack">
-            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/ja-YT.png' alt="japanese YouTube dropdown" class="yt-img">
-            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/ja-dd.png' alt="japanese YouTube dropdown" class="dd-img">
-            </section>
-            <section class="video-dd-stack">
-            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/en-GB-YT.png' alt="british english YouTube dropdown" class="yt-img">
-            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/en-GB-dd.png' alt="english YouTube dropdown" class="dd-img">
-            </section>
-            </section>
-
-            <p>❌ Incorrect</p>
-            <section class="image-guides">
-            <section class="video-dd-stack">
-            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/en-GB-YT.png' alt="british english YouTube" class="yt-img">
-            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/en-dd.png' alt="english dropdown" class="dd-img">
-            </section>
-            <section class="video-dd-stack">
-            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/zh-HK-YT.png' alt="hongkong chinese YouTube " class="yt-img">
-            <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/zh-dd.png' alt="chinese dropdown" class="dd-img">
-            </section>
-            </section>
+            <p class='notice-text'>Please ensure video has subtitles enabled by creator!</p>
         </section>
     <section class="main-content">
         <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLang, mediumLevel, mediumCategory); }}>
