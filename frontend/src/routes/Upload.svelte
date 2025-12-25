@@ -25,11 +25,28 @@
         {name: "History", emoji: "🏰"},
         {name: "Politics", emoji: "🇺🇳"},
         {name: "Action", emoji: "⚡️"},
-        {name: "Reviews Unboxings", emoji: "📦"},
+        {name: "Reviews/Unboxings", emoji: "📦"},
         {name: "Gaming", emoji: "🎮"},
         {name: "Vlogs", emoji: "📷"},
         {name: "Movie/ Film", emoji: "🍿"},
-        {name: "Series", emoji: "📺"}
+        {name: "Series", emoji: "📺"},
+        {name: "Cooking", emoji: "🍳"},
+        {name: "Comedy", emoji: "🤣"},
+        {name: "News", emoji: "📰"},
+        {name: "Technology", emoji: "💽"},
+        {name: "Story", emoji: "📚"},
+        {name: "Hobby", emoji: "🎭"},
+        {name: "Culture", emoji: "🌎"},
+        {name: "Hobby", emoji: "🎭"},
+        {name: "Children's", emoji: "👶"},
+        {name: "Religion", emoji: "🙏"},
+        {name: "Science", emoji: "🧪"},
+        {name: "Interviews/Podcasts", emoji: "🎙️"},
+        {name: "Linguistics", emoji: "💬"}
+    
+
+
+
 
 
     ]
