@@ -309,19 +309,6 @@
         align-items: center;
         justify-content: center;
     }
-
-    .yt-img,
-    .dd-img{
-        width: 15em;
-        border-radius: 0.75em;
-        margin: 0;
-        margin-top: 0.5em;
-    }
-
-    .dd-img{
-            height: auto;
-        padding: 0;   }
-
     .notice{
         background-color: #f7f7f7;
         padding: 1em 1em;
@@ -333,15 +320,5 @@
 
     .notice-text{
         margin: 0em;
-    }
-    .video-dd-stack{
-        display: flex;
-        flex-direction: column;
-    }
-
-    .image-guides{
-        display: flex;
-        flex-direction: row;
-        gap: 01em;
     }
 </style>
