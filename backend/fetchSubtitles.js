@@ -146,7 +146,7 @@ async function downloadAndUploadSubtitles(subtitleType, lang, url, id, level, au
         const subtitlesText = rawSubtitles.toString("utf-8")
         let subtitlesJSON = ''
         if (subtitleType != "--write-subs"){
-            subtitlesJSON = JSON.parse(subtitlesText)
+            subtitlesJSON = condenseJSONEvents(JSON.parse(subtitlesText))
         }
         else if (subtitleType != "--write-auto-subs"){
             subtitlesJSON = condenseJSONEvents(JSON.parse(subtitlesText))
@@ -164,6 +164,13 @@ async function downloadAndUploadSubtitles(subtitleType, lang, url, id, level, au
         catch (error){
             console.error(error)
             return 1
+        }
+        try{
+        fs.unlink(`./subtitles.${lang}.json3`)
+        }
+        catch (error) {
+            console.error("Error in deleting subtitle file")
+            console.error(error)
         }
         return 0
     }
