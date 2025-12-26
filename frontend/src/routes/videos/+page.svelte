@@ -8,7 +8,9 @@
     let videos = $state([]) // List to store fetched video data
     let availableLanguages = $state([]) // List to store fetched languages available
     let currentLanguage = $state("") // Current language to fetch media
-    
+    let mediumLang = $state("")
+    let mainLanguage = $state("")
+    let mainSubLanguage = $state("")
     // Fetch video data from Supabase
     async function fetchVideos(lang) {
         const { data, error } = await supabase
@@ -18,13 +20,18 @@
             .eq('media_type', 'video'); // Filter by media type
         if (!error) {
             console.log(videos)
-            videos = data || []; // If data is returned, assign it to videos
+            console.log(data)
+            data.forEach((video) => {
+                videos.push( video || []); // If data is returned, add it to videos
+            })
+            console.log(videos)
         } else {
             console.error('Error fetching videos:', error);
-            videos = []
         }
     }
-
+    $effect(() => {
+        console.log(videos)
+    })
      async function fetchLanguages(){
         const {data, error} = await supabase
             .from("languages")
@@ -42,10 +49,37 @@
     onMount(() => {
         fetchLanguages()
     })
+
     $effect(() => {
-        fetchVideos(currentLanguage) // Fetch video data when the component mounts
+        videos = []
+        if (Array.isArray(mediumLang)){
+            mediumLang.forEach((lang) => {
+                console.log(lang)
+                fetchVideos(lang) // Fetch video data when the component mounts
+            })
+    }
     })
 
+    let furtherLanguageOptionsRow = $state()
+    let furtherLanguageOptions = $state()
+    $effect(() => {
+            furtherLanguageOptionsRow = availableLanguages.find(r => r.short === mainLanguage)
+        furtherLanguageOptions = furtherLanguageOptionsRow?.sub_options
+        console.log(furtherLanguageOptions)
+        })
+
+
+        $effect(() => {
+        if (mainLanguage.length === 1){
+            mediumLang = mainLanguage
+        }
+        else{
+            mediumLang = mainSubLanguage
+        }
+    })
+    $effect(() => {
+        console.log(mediumLang)
+    })
 
 </script>
 
@@ -55,16 +89,27 @@
     <h1 class="page-header">Videos</h1>
         <!-- Main content section for styles to be applied -->
     <section class="main-content">
-    <select bind:value={currentLanguage}>
+    <select bind:value={mainLanguage}>
         {#each availableLanguages as language}
             <option value={language.short}>{language.emoji} {language.name}</option>
         {/each}
     </select>
+        {#if mainLanguage.length > 1}
+            <span>          
+            <label for="language">Select further detail:</label>
+            <select class="language" required bind:value={mainSubLanguage}>
+                <option value="">--Select--</option>
+                {#each furtherLanguageOptions as option}                 
+                    <option value={option.codes}>{option.name}</option>
+                {/each}
+            </select>
+            </span>
+        {/if}
      <section class="media-container">
         {#if !videos[0] && currentLanguage}
         <p class="not-found">:/ Oops! No videos found; try uploading your own or try again later.</p>
         {/if}
-        {#if !currentLanguage}
+        {#if !mainLanguage}
             <p>Try selecting a language to show media. If no languages show up, come back later as the servers may be down.
             </p>
         {/if}
