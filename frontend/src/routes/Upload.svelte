@@ -9,13 +9,23 @@
     let error = $state({name: "", type: ""});
     let mediumType = "";
     let mediumURL = "";
-    let mediumLang = "";
+    let mediumLang = $state("");
+    let mediumLangFurther = $state("");
     let mediumLevel = "";
     let mediumCategory = "";
     let availableLanguages = $state([]);
     let availableCategories = $state([])
     let userID = $state("")
     let username = $state("")
+
+
+    let furtherLanguageOptionsRow = $state()
+    let furtherLanguageOptions = $state()
+    $effect(() => {
+            furtherLanguageOptionsRow = availableLanguages.find(r => r.short === mediumLang)
+        furtherLanguageOptions = furtherLanguageOptionsRow?.sub_options
+        console.log(furtherLanguageOptions)
+        })
 
     availableCategories = [
         {name: "Comedy", emoji: "🤣"},
@@ -202,6 +212,17 @@
                 {/each}
             </select>
             </span>
+            {#if mediumLang.length > 1}
+            <span>          
+            <label for="language">* Select further detail:</label>
+            <select class="language" required bind:value={mediumLangFurther}>
+                <option value="">--Select--</option>
+                {#each furtherLanguageOptions as option}                 
+                    <option value={option.codes}>{option.name}</option>
+                {/each}
+            </select>
+            </span>
+            {/if}
             <span>          
             <label for="level">* Select level of content:</label>
             <select class="level" required bind:value={mediumLevel}> 
