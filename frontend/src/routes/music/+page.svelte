@@ -2,27 +2,37 @@
     import { supabase } from "../../../lib/supabaseClient";
     import Sidebar from "../../../lib/Sidebar.svelte"; 
     import MediaBox from "../../../lib/MediaBox.svelte";
-    import { onMount } from "svelte";
-
+  import { onMount } from "svelte";
+  
+    let language = 'ko'; // Default language for music for now until user selection function is implemented
     let songs = $state([]) // List to store fetched music data
     let availableLanguages = $state([]) // List to store fetched languages available
     let currentLanguage = $state("") // Current language to fetch media
-    
+    let mediumLang = $state("")
+    let mainLanguage = $state("")
+    let mainSubLanguage = $state("")
     // Fetch music data from Supabase
-    async function fetchMusic(lang) {
+    async function fetchSongs(lang) {
         const { data, error } = await supabase
             .from('media') // From the 'media' table
             .select('*') // Select all columns
             .eq('language', lang) // Filter by language
             .eq('media_type', 'music'); // Filter by media type
         if (!error) {
-            songs = data || []; // If data is returned, assign it to songs
+            console.log(songs)
             console.log(data)
+            data.forEach((song) => {
+                songs.push( song || []); // If data is returned, add it to songs
+            })
+            console.log(songs)
         } else {
-            console.error('Error fetching music:', error);
+            console.error('Error fetching songs:', error);
         }
     }
-    async function fetchLanguages(){
+    $effect(() => {
+        console.log(songs)
+    })
+     async function fetchLanguages(){
         const {data, error} = await supabase
             .from("languages")
             .select("*")
@@ -35,44 +45,84 @@
             throw error
     }
 }
+
     onMount(() => {
         fetchLanguages()
     })
 
     $effect(() => {
-         fetchMusic(currentLanguage)
+        songs = []
+        if (Array.isArray(mediumLang)){
+            mediumLang.forEach((lang) => {
+                console.log(lang)
+                fetchSongs(lang) // Fetch song data when the component mounts
+            })
+    }
     })
+
+    let furtherLanguageOptionsRow = $state()
+    let furtherLanguageOptions = $state()
+    $effect(() => {
+            furtherLanguageOptionsRow = availableLanguages.find(r => r.short === mainLanguage)
+        furtherLanguageOptions = furtherLanguageOptionsRow?.sub_options
+        console.log(furtherLanguageOptions)
+        })
+
+
+        $effect(() => {
+        if (mainLanguage.length === 1){
+            mediumLang = mainLanguage
+        }
+        else{
+            mediumLang = mainSubLanguage
+        }
+    })
+    $effect(() => {
+        console.log(mediumLang)
+    })
+
 </script>
 
 <main class="route">
-    <Sidebar currentPage="/music"/> 
+    <Sidebar currentPage="/songs"/> 
     <section class="main-page">
-    <h1 class="page-header">Music</h1>
+    <h1 class="page-header">Songs</h1>
         <!-- Main content section for styles to be applied -->
     <section class="main-content">
-    <select bind:value={currentLanguage}>
+    <select bind:value={mainLanguage}>
         {#each availableLanguages as language}
             <option value={language.short}>{language.emoji} {language.name}</option>
         {/each}
     </select>
-    <section class="media-container">
-        {#if !currentLanguage}
-            <p>Try selecting a language to show media. If no languages show up, come back later as the servers may be down.
-                Also, please note that the music catalogue is currently very scarce and recommend checking out the videos instead!
-            </p>
+        {#if mainLanguage.length > 1}
+            <span>          
+            <label for="language">Select further detail:</label>
+            <select class="language" required bind:value={mainSubLanguage}>
+                <option value="">--Select--</option>
+                {#each furtherLanguageOptions as option}                 
+                    <option value={option.codes}>{option.name}</option>
+                {/each}
+            </select>
+            </span>
         {/if}
-        {#if !songs[0] && currentLanguage}
-        <p class="not-found">:/ Oops! No music found; try uploading your own or try again later.</p>
+     <section class="media-container">
+        {#if !songs[0] && mediumLang}
+        <p class="not-found">:/ Oops! No songs found; try uploading your own or try again later.</p>
+        {/if}
+        {#if !mainLanguage}
+            <p>Try selecting a language to show media. If no languages show up, come back later as the servers may be down.
+            </p>
         {/if}
         <!-- For each song, create a MediaBox component -->
         {#each songs as song} 
         <MediaBox 
-            name={song.name} 
-            artist={song.artist} 
-            cover={song.cover} 
-            level={song.level} 
-            rating={song.rating}
-            link={`#/app/music/${song.id}`} />
+        name={song.name} 
+        artist={song.artist} 
+        cover={song.cover} 
+        level={song.level} 
+        rating={song.rating}
+        link={`#/app/songs/${song.id}`} 
+        type="song"/>
     {/each}
     </section>
     </section>
