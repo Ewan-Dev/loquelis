@@ -193,5 +193,5 @@ async function downloadAndUploadSubtitles(subtitleType, lang, url, id, level, au
 
 
         }
-        return condensed
+        return {"wireMagic":"pb3","pens":[{}],"wsWinStyles":[{}],"wpWinPositions":[{}],"events":condensed}
     }
