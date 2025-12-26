@@ -56,7 +56,7 @@
       const song = data
       name = song.name
       artist = song.artist 
-      author = song.author 
+      author = song.author_username 
       cover = song.cover 
       level = song.level 
       rating = song.rating 
@@ -127,7 +127,9 @@
             song={name}
             artist={artist}
           />
-        </span>
+          </span>
+          
+          <AuthorTag author={author} />
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
           <Subtitles
               currentLine={currentLine}

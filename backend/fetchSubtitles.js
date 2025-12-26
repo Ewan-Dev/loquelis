@@ -122,7 +122,7 @@ async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink,
     console.log(level)
     const { error } = await supabase
         .from("media")
-        .insert({ name: title, artist: channel, cover: cover, content: sub, media_type: type, embed_link: embedLink, video_link: videoLink, language: lang, level: level, category: category}) // Update the content, media_type and updated_at columns
+        .insert({ name: title, artist: channel, cover: cover, content: sub, media_type: type, embed_link: embedLink, video_link: videoLink, language: lang, level: level, category: category, author_username: authorUsername}) // Update the content, media_type and updated_at columns
     if (error) {
         console.error("Error uploading subtitles:", error) // Print error if upload fails
     }

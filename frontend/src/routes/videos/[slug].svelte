@@ -4,6 +4,7 @@
   import MediaHeader from "../../../lib/MediaHeader.svelte"
   import Subtitles from "../../../lib/Subtitles.svelte"
   import { location } from 'svelte-spa-router'
+  import AuthorTag from "../../../lib/AuthorTag.svelte";
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
   let player
 
@@ -48,7 +49,7 @@
       const video = data
       name = video.name
       artist = video.artist
-      author = video.author
+      author = video.author_username
       authorUsername = video.author_username
       cover = video.cover
       level = video.level
@@ -125,6 +126,7 @@
             artist={artist}
           />
         </span>
+        <AuthorTag author={author} />
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
           {#if link === "https://youtu.be/zabswqP6xEM"}
             <p>Oops. Loquelis is struggling to the media - it may be invalid or unavailable.</p>
