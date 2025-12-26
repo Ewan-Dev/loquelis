@@ -42,7 +42,7 @@ async function listenAndDownloadSubtitles() {
     // Listen for broadcasts from channel "subtitles"
     channel.on("broadcast", { event: "subtitle-update" }, async (broadcast) => {
     console.log("Received subtitles:", broadcast) // Print the broadcast
-    const lang = broadcast.payload.lang // Get language
+    const lang = (broadcast.payload.lang).toString() // Get language
     const url = broadcast.payload.url // Get URL
     const id = broadcast.payload.id // Get ID
     const type = broadcast.payload.type // Get type
@@ -53,6 +53,7 @@ async function listenAndDownloadSubtitles() {
     console.log(`Language: ${lang}`) // Print language
     console.log(`URL: ${url}`)  // Print URL
     console.log(languages.includes(lang))
+    console.log(languages)
     if(languages.includes(lang) && url.startsWith("https://www.youtube.com")){
     // Execute yt-dlp command to fetch subtitles
 
@@ -65,6 +66,8 @@ async function listenAndDownloadSubtitles() {
         }
     }
     else if (!languages.includes(lang)) {
+        console.log(languages)
+        console.log(lang.toString())
         console.error(`Language ${lang} is not available.`) // Print error if language is not available
     }
     else if (!url.startsWith("https://www.youtube.com")) {
@@ -92,8 +95,12 @@ async function availableLanguages(){
             console.log("Available languages:", data) // Print available languages
             // Add each language to languages 
             data.forEach((language)=> {
-                languages.push(language.short) 
-            })
+                console.log(language)
+                    language.short.forEach((langshort) => {
+                        languages.push(langshort)
+                    })
+                }
+            )
             console.log("Languages array:", languages) // Print languages array
         }
         else{

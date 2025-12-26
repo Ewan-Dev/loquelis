@@ -193,7 +193,7 @@
             <p class='notice-text'>Please ensure video has subtitles enabled by creator!</p>
         </section>
     <section class="main-content">
-        <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLang, mediumLevel, mediumCategory); }}>
+        <form onsubmit={event => { event.preventDefault(); videoExists(mediumURL, mediumType, mediumLangFurther, mediumLevel, mediumCategory); }}>
             <div class="vertical-container">
             <span>
                 <label for="media">* Select media type:</label>
