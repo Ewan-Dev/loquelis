@@ -8,13 +8,16 @@
   import { preventDefault } from "svelte/legacy";
 
     const { occupation = "Knight", image = "https://image.pollinations.ai/prompt/Generate%20a%20pixar-style%20image%20of%20a%20knight%20called%20Hansel%20with%20traits%20of%20brave,%20adventurous%20who%20is%20dressed%20in%20traditional%20attire%20of%20German", firstName = "Hansel", trait = "Friendly", lang = "de" } = $props()
-    let { characterName, characterLang, characterTrait, characterOccupation } = $state("")
+    let { characterName, characterTrait, characterOccupation } = $state("")
+    let characterLang = $state([])
     let availableLanguages = $state([])
     let dialog = $state(null)
     let characterFields = $state([])
     let allCharacterOccupations = $state([])
     let allCharacterTraits = $state([])
     let availableCharacters = $state([])
+    let mediumLang = $state([])
+    let mediumLangFurther = $state([])
     let { characterCreateStatus, characterCreateMessage } = $state("")
 
     onMount(async () => {
@@ -111,7 +114,28 @@
             throw error
     }
 
+
 }
+    let furtherLanguageOptionsRow = $state()
+    let furtherLanguageOptions = $state()
+    let countryCode = $state("")
+    $effect(() => {
+            furtherLanguageOptionsRow = availableLanguages.find(r => r.short === characterLang)
+        furtherLanguageOptions = furtherLanguageOptionsRow?.sub_options
+        countryCode = furtherLanguageOptionsRow?.country_code
+        console.log(countryCode)
+        })
+
+
+        $effect(() => {
+            
+        if (characterLang.length === 1){
+            mediumLang = characterLang
+        }
+        else{
+            mediumLang = mediumLangFurther
+        }
+        console.log(mediumLang)})
 </script>
 
 <main class="route">
@@ -137,7 +161,7 @@
     <dialog bind:this={dialog}>
         <div class="dialog-container">
                 <h2 class="dialog-header">Create AI Character</h2>
-                <form onsubmit={(event) => { event.preventDefault(); createAICharacter(characterName, characterTrait, characterOccupation, availableLanguages[characterLang].short, availableLanguages[characterLang].country_code);}}>
+                <form onsubmit={(event) => { event.preventDefault(); createAICharacter(characterName, characterTrait, characterOccupation, mediumLang, countryCode);}}>
                         <label>🪪 Character name:</label>
                         <input class="name" required bind:value={characterName}>      
                     <span class="label-input-container">
@@ -146,11 +170,22 @@
                         <option value="">--Select language--</option>
                         {#if availableLanguages}
                         {#each availableLanguages as language, i}                 
-                            <option value={i}>{language.emoji} {language.name}</option>
+                            <option value={language.short}>{language.emoji} {language.name}</option>
                         {/each}
                         {/if}
                     </select>
                     </span>
+                     {#if (characterLang.length > 1)}
+                            <span>          
+                            <label for="language">* Select further detail:</label>
+                            <select class="language" required bind:value={mediumLangFurther}>
+                                <option value="">--Select--</option>
+                                {#each furtherLanguageOptions as option}                 
+                                    <option value={option.codes}>{option.name}</option>
+                                {/each}
+                            </select>
+                            </span>
+                            {/if}
                     <span class="label-input-container">
                     <label>👔 Occupation:</label>
                     <select class="occupation"  required bind:value={characterOccupation}>
