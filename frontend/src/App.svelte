@@ -17,6 +17,7 @@
   import Welcome from './routes/Welcome.svelte'
   import { onMount } from 'svelte'
   import InlineStatus from '../lib/InlineStatus.svelte'
+  import { location } from "svelte-spa-router"
 
   // Setting the routes
   const routes = {
@@ -37,20 +38,35 @@
     '/app/home': Home,
   }
   let username = $state("")
-  let usernameStatus = $state(false)
   let usernameInputValue = $state("")
   let { statusMessage, statusType} = $state("")
   let uid = $state("")
   let dialog
+  let currentLocation = $state($location)
 
-  onMount(async () => {
-     await fetchUserSesson()
-  })
-  $effect(() => {
-    if(usernameStatus){
-      dialog.showModal()
-    }
-  })
+onMount(() => {
+  dialog?.close()
+  currentLocation = $location
+})
+
+$effect(() => {
+  currentLocation = $location
+})
+
+$effect( async () => {
+  console.log(currentLocation)
+  await fetchUserSesson()
+     handleDialog()
+})
+
+function handleDialog(){
+       if (!username && uid) {
+              dialog?.showModal()
+            } else {
+              dialog?.close()
+            }
+}
+
     // Fetch user session, get UID, then fetch from profiles table to get the username
     async function fetchUserSesson(){
         const { data, error } = await supabase.auth.getSession()
@@ -59,7 +75,7 @@
             console.error('Error fetching session:', error)
         } 
         else if(sessionData) { // If data exists
-            uid = sessionData.session.user.id // Get UID from session
+            uid = sessionData?.session?.user?.id // Get UID from session
             // Use the UID to fetch username
             const { data, error} = await supabase
                 .from("profiles")
@@ -70,13 +86,8 @@
                   console.log(data)
                   username = data.username
                   console.log("User: ", username)
-
-                  if (!username) {
-                    usernameStatus = true
-                  }
                 }
 
-            
         }
     }
 
@@ -115,6 +126,7 @@
         statusType = ""
         statusMessage = "success"
         statusType = "success"
+        username = user
       }
       }
       else{
@@ -140,6 +152,7 @@
           <p class="at-symbol">@</p><input placeholder="username" class="username-input" bind:value={usernameInputValue}/>
         </span>
         <input type="Submit">
+        <button class="close-button-username" onclick={handleDialog()}>Close</button>
         {#if statusMessage}
             <InlineStatus message={statusMessage} type={statusType} />
         {/if}
@@ -166,6 +179,19 @@
   }
     input[type=Submit]:hover{
     background-color: #1e379b;
+  }
+    button.close-button-username{
+    background-color: #ebebeb;
+    color: #000000;
+    border: #c7c7c7 2.5px solid;
+    font-size: 1.25em;
+    font-weight: bold;
+    padding: 0em;
+    height: 2.25em;
+    width: 100%;
+  }
+    button.close-button-username:hover{
+    background-color: #c7c7c7;
   }
   .username-input{
     width: 100%;

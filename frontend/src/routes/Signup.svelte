@@ -11,6 +11,7 @@ import confetti from 'canvas-confetti' // For confetti effect
     }
 
     async function handleAuth() {
+        console.log("Signing up...")
             let {data, error} = await supabase.auth.signUp({email, password,
             options: {
                 emailRedirectTo: "https://ewan.is-a.dev/#/app/login/"
