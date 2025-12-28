@@ -84,7 +84,7 @@
 </script>
 
 <main class="route">
-    <Sidebar currentPage="/songs"/> 
+    <Sidebar currentPage="/music"/> 
     <section class="main-page">
     <h1 class="page-header">Songs</h1>
         <!-- Main content section for styles to be applied -->
