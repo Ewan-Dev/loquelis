@@ -226,7 +226,7 @@
                 <label for="url">Link to medium:</label>
                 <input class="url" bind:value={mediumURL} type="url" placeholder="Enter media URL">
             </span>
-            <button type="submit">Upload</button>
+            <button type="submit"  class="push-btn"><span class="front-push-btn">Upload</span></button>
             {#if error.name}
                 <InlineStatus type={error.type} message={error.name} width="16em" />
             {/if}
@@ -333,5 +333,30 @@
 
     .notice-text{
         margin: 0em;
+    }
+        .push-btn{
+        background-color: #1e379b;
+        border: none;
+        padding: 0;
+        outline-offset: 5px;
+        border-radius: 0.65em;
+        width: 75%;
+        box-sizing:border-box;
+    }
+    .front-push-btn{
+        display: block;
+        background-color: #4364ea ;
+        transform: translateY(-5px);
+        border-radius: 0.5em;
+        width: 100%;
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.65em;
+        color: #ffffff;
+    }
+    .front-push-btn:active {
+        transform: translateY(-3px);
     }
 </style>
