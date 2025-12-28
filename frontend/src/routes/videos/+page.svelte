@@ -11,6 +11,21 @@
     let mediumLang = $state("")
     let mainLanguage = $state("")
     let mainSubLanguage = $state("")
+    let availableCategories = $state("")
+    let grouped = $state({})
+
+    async function fetchCategories() {
+        const { data, error } = await supabase
+            .from('categories')
+            .select('*')
+            availableCategories = data
+    }
+    onMount(() => {
+                fetchCategories()
+    })
+    $effect(() => {
+        console.log(availableCategories)
+    })
     // Fetch video data from Supabase
     async function fetchVideos(lang) {
         const { data, error } = await supabase
@@ -25,9 +40,37 @@
                 videos.push( video || []); // If data is returned, add it to videos
             })
             console.log(videos)
+            grouped = []
+            await categoriseVideos(videos)
         } else {
             console.error('Error fetching videos:', error);
         }
+    }
+
+function getCategoryEmoji(category){
+    const row = availableCategories.find(r => r.name === category)
+    if (row){
+        return row.emoji
+    }
+    else{
+        return "🏷️"
+    }
+}
+
+    async function categoriseVideos(videos){
+                videos.forEach((video) => {
+            if(video){
+            let category = video.category
+            if (!category){
+                category = "Uncategorised"
+            }
+            if (!grouped[category] && category){
+                grouped[category] = []
+            }
+            grouped[category].push(video)
+        }
+        console.log(grouped)
+        })
     }
     $effect(() => {
         console.log(videos)
@@ -77,9 +120,6 @@
             mediumLang = mainSubLanguage
         }
     })
-    $effect(() => {
-        console.log(mediumLang)
-    })
 
 </script>
 
@@ -114,8 +154,13 @@
             </p>
         {/if}
         <!-- For each video, create a MediaBox component -->
-        {#each videos as video} 
-        <MediaBox 
+    
+    <section class="categories-section">
+    {#each Object.entries(grouped) as [category, videos]}
+    <h1 class="category-title">{getCategoryEmoji(category)} {category}</h1>
+    <section class="category-section">
+    {#each videos as video}
+                <MediaBox 
         name={video.name} 
         artist={video.artist} 
         cover={video.cover} 
@@ -124,6 +169,9 @@
         link={`#/app/videos/${video.id}`} 
         type="video"/>
     {/each}
+    </section>
+    {/each}
+    </section>
     </section>
     </section>
     </section>
@@ -148,5 +196,23 @@
         .not-found{
         font-weight: bold;
         color: #c5c5c5;
+    }
+    .category-title{
+        width: 100%;
+        display: inline-flex;
+        margin: 0;
+    }
+    .category-section{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        margin-bottom: 1em;
+        width: 100%;
+    }
+    .categories-section{
+        display: flex;
+        flex-direction: column;
+        gap:1em;
+        padding: 1em 0 0 0;
     }
 </style>

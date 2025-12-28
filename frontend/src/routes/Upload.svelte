@@ -27,39 +27,14 @@
         console.log(furtherLanguageOptions)
         })
 
-    availableCategories = [
-        {name: "Comedy", emoji: "🤣"},
-        {name: "Cartoon", emoji: "🖌️"},
-        {name: "Documentary", emoji: "📑"},
-        {name: "Sport", emoji: "⚽️"},
-        {name: "History", emoji: "🏰"},
-        {name: "Politics", emoji: "🇺🇳"},
-        {name: "Action", emoji: "⚡️"},
-        {name: "Reviews/Unboxings", emoji: "📦"},
-        {name: "Gaming", emoji: "🎮"},
-        {name: "Vlogs", emoji: "📷"},
-        {name: "Movie/ Film", emoji: "🍿"},
-        {name: "Series", emoji: "📺"},
-        {name: "Cooking", emoji: "🍳"},
-        {name: "Comedy", emoji: "🤣"},
-        {name: "News", emoji: "📰"},
-        {name: "Technology", emoji: "💽"},
-        {name: "Story", emoji: "📚"},
-        {name: "Hobby", emoji: "🎭"},
-        {name: "Culture", emoji: "🌎"},
-        {name: "Hobby", emoji: "🎭"},
-        {name: "Children's", emoji: "👶"},
-        {name: "Religion", emoji: "🙏"},
-        {name: "Science", emoji: "🧪"},
-        {name: "Interviews/Podcasts", emoji: "🎙️"},
-        {name: "Linguistics", emoji: "💬"}
-    
 
-
-
-
-
-    ]
+    async function fetchCategories() {
+        const { data, error } = await supabase
+            .from('categories')
+            .select('*')
+            availableCategories = data
+    }
+    fetchCategories()
     function launchConfetti() {
         confetti({
             particleCount: 600,
