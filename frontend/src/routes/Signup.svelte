@@ -58,6 +58,7 @@ import confetti from 'canvas-confetti' // For confetti effect
     <label for="password">Password:</label>
     <input class="password" bind:value={password} type="password" > 
     <button class="sign-up" type="submit">Sign up</button>
+    
     {#if statusError && statusType}
         <InlineStatus type={statusType} message={statusError} />
     {/if}

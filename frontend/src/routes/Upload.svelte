@@ -157,6 +157,15 @@
             console.error('Error fetching userID:', error)
         }
         }
+    $effect(() => {
+        if (mediumLangFurther){
+                    mediumLangFurther =  mediumLangFurther
+        }
+        else{
+            mediumLangFurther = mediumLang
+        }
+
+    })
 </script>
 
 <main class="route ">

@@ -126,8 +126,8 @@
             song={name}
             artist={artist}
           />
+          <AuthorTag author={author} />
         </span>
-        <AuthorTag author={author} />
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
           {#if link === "https://youtu.be/zabswqP6xEM"}
             <p>Oops. Loquelis is struggling to the media - it may be invalid or unavailable.</p>
