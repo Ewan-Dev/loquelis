@@ -18,7 +18,6 @@
   import { onMount } from 'svelte'
   import InlineStatus from '../lib/InlineStatus.svelte'
   import { location } from "svelte-spa-router"
-
   // Setting the routes
   const routes = {
     '/': Login,
@@ -137,6 +136,19 @@ function handleDialog(){
       }
   }
 
+async function aiCall() {
+  const res = await fetch('/api/ai', {
+    method: 'POST',
+    body: JSON.stringify({
+      prompt: 'What is the capital of Peru?',
+    }),
+  })
+
+  const { text } = await res.json()
+  return text
+}
+
+console.log(aiCall())
 </script>
 
 <head>

@@ -1,7 +1,9 @@
 {
   "type": "module",
   "dependencies": {
+    "@openrouter/ai-sdk-provider": "^1.5.4",
     "@supabase/supabase-js": "^2.50.2",
+    "ai": "^5.0.118",
     "dotenv": "^17.2.1",
     "execa": "^9.6.0",
     "supabase": "^2.26.9",

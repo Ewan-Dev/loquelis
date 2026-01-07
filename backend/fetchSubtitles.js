@@ -6,8 +6,6 @@ const currentPath = "../backend"
 let languages = ["en", "zh"]
 
 import dotenv from 'dotenv' // Load environment variables .env file
-import { isTypedArray } from "util/types";
-import { experimentalSetDeliveryMetricsExportedToBigQueryEnabled } from "firebase/messaging/sw";
 dotenv.config({ path: '../backend/.env' }) // Load environment variables from.env file
 
 const email = process.env.EMAIL // Email from environment variables
