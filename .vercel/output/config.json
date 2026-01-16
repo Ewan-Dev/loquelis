@@ -1,0 +1,25 @@
+{
+  "version": 3,
+  "routes": [
+    {
+      "src": "^/api/(.*)$",
+      "dest": "backend/api/$1.js"
+    },
+    {
+      "src": "^/(.*)$",
+      "dest": "frontend/$1"
+    },
+    {
+      "handle": "error"
+    },
+    {
+      "status": 404,
+      "src": "^(?!/api).*$",
+      "dest": "/404.html"
+    }
+  ],
+  "framework": {
+    "version": "4.5.14"
+  },
+  "crons": []
+}

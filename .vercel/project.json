@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_050orujkXkPKQEi9nNjlxJXq9AWk",
+  "orgId": "team_aQOh8xPiRlNHNqS7QBLTgnH3",
+  "projectName": "loquelis",
+  "settings": {
+    "createdAt": 1766442989026,
+    "framework": null,
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": "frontend",
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
