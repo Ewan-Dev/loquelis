@@ -51,6 +51,10 @@ onMount(() => {
 
 $effect(() => {
   currentLocation = $location
+  if (user && (currentLocation === '/app/login' || currentLocation === '/app/signup')){
+    window.open("/#/app/home")
+
+  }
 })
 
 $effect( async () => {
