@@ -56,14 +56,14 @@
         transition: background-color 0.2s, border-color 0.2s;
     }
     a.selected {
-        background-color: #CADDFF;
-        border-color: #99B4E6;
+        background-color: #8FABD4;
+        border-color: #4A70A9;
     }
     a:hover {
-        background-color: #f0f0f0;
+        background-color: #dcd5bf;
     }
     a.selected:hover {
-        background-color: #B8D0FF;
+        background-color: #4a70a9af;
     }
     .material-symbols-rounded{
         font-size: 1.15em;
@@ -71,9 +71,10 @@
     .sidebar{
         height: 100vh;
         padding: 0.25em;
-        background-color: #fff;
-        width: 9em;    }
-
+        background-color: #EFECE3;
+        width: 10em;
+        
+    }
     .sidebar-header{
         margin: 0;
         margin-bottom: 0.5em;
