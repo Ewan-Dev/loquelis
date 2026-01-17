@@ -63,9 +63,6 @@ import confetti from 'canvas-confetti' // For confetti effect
         <InlineStatus type={statusType} message={statusError} />
     {/if}
     </form>
-        <p style="color:red;">
-    Please use a well established mail client such as Outlook or Gmail as temporary email services don't allow the link to work properly.
-    </p>
 </main>
 
 <style>

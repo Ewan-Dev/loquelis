@@ -42,6 +42,7 @@
   let { statusMessage, statusType} = $state("")
   let uid = $state("")
   let dialog
+  let dialogAuthNotice
   let currentLocation = $state($location)
 
 onMount(() => {
@@ -49,13 +50,14 @@ onMount(() => {
   currentLocation = $location
 })
 
-$effect(() => {
-  currentLocation = $location
-  if (user && (currentLocation === '/app/login' || currentLocation === '/app/signup')){
-    window.open("/#/app/home")
-
-  }
-})
+ $effect(() => {
+    currentLocation = $location
+  if (uid && (currentLocation === '/app/login' || currentLocation === '/app/signup')){
+    dialogAuthNotice?.showModal()} 
+    else {
+    dialogAuthNotice?.close()
+}
+ })
 
 $effect( async () => {
   console.log(currentLocation)
@@ -148,7 +150,7 @@ function handleDialog(){
 </head>
 
 <main>
-    <!-- Show dialog -->
+    <!-- Set username dialog -->
     <dialog bind:this={dialog}>
       <form onsubmit={(event) => {event.preventDefault(); addUsername(usernameInputValue);}}>
         <label class="username-header">👤 Set a username:</label>
@@ -162,6 +164,14 @@ function handleDialog(){
         {/if}
         </form>
     </dialog>
+
+  <!-- Auth notice dialog-->
+  <dialog open class="auth-notice" bind:this={dialogAuthNotice}>
+    <h2>Already logged in</h2>
+  <p>You already have a user session saved.</p>
+  <button onclick={()=> {dialogAuthNotice?.close()}} class="dialog-auth-btn"> Continue anyway</button>
+  <button onclick={()=> {window.open("#/app/home")}} class="dialog-auth-btn"> Go to user homepage</button>
+</dialog>
   <!-- Import router component to allow for routing -->
   <Router {routes} /> 
 </main>
@@ -246,5 +256,9 @@ function handleDialog(){
     display: flex;
     gap:0.25em;
     flex-direction: column;
+  }
+
+  .auth-notice{
+    text-align: center;
   }
 </style>
