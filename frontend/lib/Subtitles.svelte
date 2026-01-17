@@ -5,6 +5,7 @@
     let {term, definition, partOfSpeech, original, translated, romanisation} = $state("")
     let fullTranslationVisibility = true
     let subtitlesArray = $state([])
+ 
     $effect(() => {
         const segmenter = new Intl.Segmenter('zh', {granularity: 'word'})
         subtitlesArray = [...segmenter.segment(currentLine)].map(s => s.segment)
@@ -56,6 +57,8 @@
 
 
 </script>
+
+<img src="././static/load.gif">
 <Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation} language={targetLanguage}/>
 <span>
 <span class="main-subtitles">

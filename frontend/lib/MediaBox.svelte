@@ -9,6 +9,10 @@
     export let rating = null;
     export let link = null;
     export let type = null; // § Type of media, e.g., "video" or "music"
+
+    if (name.length > 45) {
+        name = name.slice(0, 42) + '...'
+    }
 </script>
 
 <div class={type}>
