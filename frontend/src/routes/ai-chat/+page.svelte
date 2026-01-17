@@ -32,6 +32,7 @@
         const { data, error } = await supabase
             .from("ai_characters")
             .select("*")
+            .limit(20)
         if (data) {
             availableCharacters = data
         }
