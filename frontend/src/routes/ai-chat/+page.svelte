@@ -265,9 +265,21 @@
         gap: 1em;
     }
     .create-ai-character{
-        background-color: #4364ea;
-        color: #F4F4F4;
-        border: #1e379b 2.5px solid;
+        background-color: #4A70A9;
+        border: 2.5px solid #345079;
+        color: #fff;
+        font-weight: bold;
+        float: left;
+        display: flex; 
+        align-items: center;
+        justify-content: center;
+        width: 99%;
+        gap: 0.5em;
+    }
+    .create-ai-character:hover{
+        background-color: #345079;
+        border: 2.5px solid #345079;
+        color: #fff;
         font-weight: bold;
         float: left;
         display: flex; 
@@ -296,10 +308,10 @@
         width: 100%;
     }
     .submit-btn{
-        background-color: #4364ea;
+        background-color: #4A70A9;
+        border: 2.5px solid #345079;
         color: #F4F4F4;
         font-weight: bold;
-        border: #1e379b 2px solid;
         margin: 0.45em auto 0.45em;
     }
     .close-dialog-btn{

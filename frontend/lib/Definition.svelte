@@ -127,8 +127,8 @@
     section{
         height: fit-content;
         width: 12.5em;
-        background-color: #fff ;
-        border: #DBDBDB solid 2.5px ;
+        background-color: #eeeadd ;
+        border: #e4decb solid 2.5px ;
         padding: 0.5em 0.5em 0;
         border-radius: 1em;
         z-index: 1;
@@ -145,7 +145,7 @@
     .part-of-speech{
         font-weight: bold;
         color: #ffffff;
-        background-color: #2c67fa;
+        background-color: #4A70A9;
         width: fit-content;
         padding: 0.15em 0.2em;
         border-radius: 0.4em;
@@ -213,6 +213,15 @@
         justify-content: center;
         text-align: center;
         border: #545454 2px solid;
+    }
+    .flashcard-upload{
+        background-color: #e4dec9;
+    }
+    .flashcard-btn{
+        background-color: #eee7d2;
+    }
+    select{
+        background-color: #eee7d2;
     }
 
 </style>

@@ -21,6 +21,9 @@
         </div>
         </section>
 <style>
+    section{
+        background-color: #f9f9f9;
+    }
     img{
         width: 3.5em;
         border-radius: 25em;
@@ -74,7 +77,7 @@
         margin-right: 0.2em;
     }
     .trait-tag {
-        background-color: #80a5ed;
+        background-color: #8FABD4;
         padding: 0.15em 0.5em;
         border-radius: 1em;
         color: #fff;

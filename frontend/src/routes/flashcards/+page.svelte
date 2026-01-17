@@ -136,16 +136,16 @@
         flex-direction: column;
     }
     .create-flashcard-deck{
-        background-color: #4364ea;
-        color: #F4F4F4;
-        border: #1e379b 2.5px solid;
+        background-color: #4A70A9;
+        border: 2.5px solid #345079;
+    color: #fff;
         font-weight: bold;
         float: left;
     }
     .create-flashcard-deck:hover{
-        background-color: #1e379b;
+        background-color: #345079;
         color: #F4F4F4;
-        border: #1e379b 2.5px solid;
+        border: #345079 2.5px solid;
     }
     .flashcard-decks{
         display: flex;

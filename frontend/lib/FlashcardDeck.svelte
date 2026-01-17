@@ -249,7 +249,6 @@ progress {
 }
 .title-author-container{
     margin: 0.25em 0 0.5em;
-    background-color: #ffffff;
     padding: 0.4em 0.25em;
     border-radius: 0.25em;
 }

@@ -149,4 +149,7 @@
         font-weight: bold;
         color: #c5c5c5;
     }
+        select {
+        background-color: inherit;
+    }
 </style>

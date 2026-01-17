@@ -20,7 +20,7 @@
         height: fit-content;
         width: 12em;
         padding: 0.5em;
-        background-color: #F5F5F5;
+        background-color: #f9f9f9;
         border: #DBDBDB 0.2em solid;
         border-radius: 1em;
         display: flex;
@@ -47,7 +47,7 @@
         display: block;
     }
     .terms{
-        background-color: #80a5ed;
+        background-color: #8FABD4;
         width: fit-content;
         padding: 0.15em 0.5em;
         border-radius: 1em;

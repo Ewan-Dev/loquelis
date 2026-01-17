@@ -265,6 +265,7 @@
         box-sizing: border-box;
         border-radius: 0.55em;
         text-align: center;
+        background-color: inherit;
     }
     input,
     select{
@@ -275,6 +276,7 @@
         width: 95%;
         font-size: 2em;
         font-weight: bold;
+        background-color: hsla(0, 0, 0, 0.02);
     }
     select{
         height: 2em;
@@ -287,9 +289,9 @@
         width: 100%;
     }
     button{
-        background-color: #4364ea;
-        color: #F4F4F4;
-        border: #1e379b 2.5px solid;
+        background-color: #4A70A9;
+        border: 2.5px solid #345079;
+        color: #fff;
         font-size: 1.25em;
         font-weight: bold;
         padding: 0em;
@@ -304,8 +306,8 @@
         gap: 0.5em;
         width: fit-content;
     }
-    button:hover{
-        background-color: #1e379b;
+     .front-push-btn:hover{
+        background-color:  #40649a;;
         color: #F4F4F4;
     }
     .main-content{
@@ -332,7 +334,7 @@
         justify-content: center;
     }
     .notice{
-        background-color: #f7f7f7;
+        background-color: #f0efe9;
         padding: 1em 1em;
         border-radius: 0.75em;
         border: #eee 1px solid;
@@ -344,7 +346,7 @@
         margin: 0em;
     }
         .push-btn{
-        background-color: #1e379b;
+        background-color: #345079;
         border: none;
         padding: 0;
         outline-offset: 5px;
@@ -354,7 +356,7 @@
     }
     .front-push-btn{
         display: block;
-        background-color: #4364ea ;
+        background-color: #4A70A9 ;
         transform: translateY(-5px);
         border-radius: 0.5em;
         width: 100%;
@@ -367,5 +369,6 @@
     }
     .front-push-btn:active {
         transform: translateY(-3px);
+        background-color: #345079;
     }
 </style>

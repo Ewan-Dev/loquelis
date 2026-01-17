@@ -215,4 +215,7 @@ function getCategoryEmoji(category){
         gap:1em;
         padding: 1em 0 0 0;
     }
+    select {
+        background-color: inherit;
+    }
 </style>
