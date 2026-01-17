@@ -78,7 +78,7 @@
             background-color: transparent; 
             height: 3em;
             width: 20em;
-            border: 0.15em  solid #e5e5e5;
+            border: 0.15em  solid rgb(0, 0, 0);
             border-radius: 0.75em;
             box-sizing: border-box;
         }
@@ -103,7 +103,7 @@
         .log-in{
             height: 3em;
             width: 20em;
-            background-color: #151515;
+            background-color: #021533;
             color: #fff;
             box-shadow: #414141 0 0 0.5em; 
             border: none;

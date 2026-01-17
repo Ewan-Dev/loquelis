@@ -66,44 +66,44 @@ import confetti from 'canvas-confetti' // For confetti effect
 </main>
 
 <style>
-    input{
-        background-color: transparent; 
-        height: 3em;
-        width: 20em;
-        border: 0.15em  solid #e5e5e5;
-        border-radius: 0.75em;
-        box-sizing: border-box;
-    }
-    main{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    form{
-        width: fit-content;
-        margin: 1em auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5em;
-    }
-    label{
-        text-align: left;
-        width: 18em;
-        display: inline-block;
-    }
-    .sign-up{
-        height: 3em;
-        width: 20em;
-        background-color: #151515;
-        color: #fff;
-        box-shadow: #414141 0 0 0.5em; 
-        border: none;
-        border-radius: 0.75em;
-    }
-    .sign-up:hover{
-
-        box-shadow: #414141 0 0 1em; 
-        transition: box-shadow 0.2s;
-    }
-</style>
+     input{
+            background-color: transparent; 
+            height: 3em;
+            width: 20em;
+            border: 0.15em  solid rgb(0, 0, 0);
+            border-radius: 0.75em;
+            box-sizing: border-box;
+        }
+        main{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        form{
+            width: fit-content;
+            margin: 1em auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5em;
+        }
+        label{
+            text-align: left;
+            width: 18em;
+            display: inline-block;
+        }
+        .log-in{
+            height: 3em;
+            width: 20em;
+            background-color: #021533;
+            color: #fff;
+            box-shadow: #414141 0 0 0.5em; 
+            border: none;
+            border-radius: 0.75em;
+        }
+        .log-in:hover{
+    
+            box-shadow: #414141 0 0 1em; 
+            transition: box-shadow 0.2s;
+        }
+    </style>
