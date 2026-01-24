@@ -12,6 +12,7 @@
         fetchSentenceTranslation(currentLine)
     })
     async function fetchDefinition(word, contextArray) {
+        console.log("Fetching definition for ", word)
         const contextString = contextArray.join(" ")
         const prompt = `you are being used as an AI to give a definition of a word based of context for a language learning software the language of the word and context is ${targetLanguage} and the user's native language is ${nativeLanguage} the word is ${word} and the context is ${contextString} so give your definition in ${nativeLanguage} and as part of your just definition NOT the partOfSpeech add helpful notes such as if its plural and its singular or its case/tense and its infintive etc. but keep it simple and short return as raw json with no backtick MD markers as your respone will be directly parsed into json respond with attributes word, partOfSpeech, romanisation and definition but do NOT return romanisation where it is not necessary`
         const response = await fetch(`https://text.pollinations.ai/${prompt}`)
@@ -74,6 +75,17 @@
 <style>
     .show-translations-btn{
         display: none;
+        border: none;
+        box-shadow: inset 0 1px 2px #ffffff30,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
+    }
+    .show-translations-btn:hover{
+        display: none;
+        border: none;
+        box-shadow: inset 0 1px 2px #ffffff30,
+                0 1px 2px #00000030,
+                0 2px 4px #00000035;
     }
     .full-translate{
         width: 100%;

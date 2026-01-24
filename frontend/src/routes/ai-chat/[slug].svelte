@@ -267,12 +267,11 @@ function handleDeckSubmit(){
         gap: 1em;
         align-items: flex-start;
         height: 100%;
-        background-color: inherit;
+        background-color: #f7f7f7;
         padding: 0;
     }
     .main-page{
          background-color: inherit;
-         height: 40em;
          width: 100%;
     }
     .analysis-character-container{
@@ -296,6 +295,8 @@ function handleDeckSubmit(){
     .send-container{
         display: flex;
         flex-wrap: wrap;
+        padding: 0 0.25em;
+        box-sizing: border-box;
         gap:0.25em;
         justify-content: center;
         align-items: center;
@@ -312,13 +313,17 @@ function handleDeckSubmit(){
     }
     .chat-container{
         width: 50%;
-        height: 100%;
+        height: fit-content;
+        min-height: 50em;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-start;
         background-color: #fff;
         border-radius: 1em;
+        box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
     }
     .deck-select{
         width: 100%;
@@ -327,15 +332,26 @@ function handleDeckSubmit(){
         width: 2.5em;
         height: 2.5em;
         margin: 0;
+        padding: 0;
         display: flex;
         justify-content: center;
         align-items: center;
         background-color: #5274ff;
         color: #ffffff;
-        border: #3855ca 2px solid;
         font-weight: bold;
         float: left;
-        border-radius: 50%;
+        border-radius: 25%;
+        border: none;
+        box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
+    }
+
+        .send-message-btn:hover{
+        background-color: #4664da;
+        box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000030,
+                0 2px 4px #00000035;
     }
     .close-deck-btn{
         border: #c8c8c8 1.5px solid;
@@ -390,12 +406,16 @@ function handleDeckSubmit(){
         height: fit-content;
         border-radius: 1em 1em 0 0;
         padding: 0.35em 0.5em;
+        padding-bottom: 0.5em;
         display: flex;
         flex-wrap: wrap;
         box-sizing: border-box;
         justify-content: space-between;
         align-items: center;
-        gap:0.5em;
+        gap:0.25em;
+        box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
     }
     h3{
         height: fit-content;
@@ -417,19 +437,22 @@ function handleDeckSubmit(){
         margin: 0;
     }
     .send-message-input{
-        height: 2em;
+        height: 2.25em;
         width: 87.5%;
         margin: 0.7em 0em;
-        border-width: 2px;
-        border-radius: 100em;
+        border:none;
+        border-radius: 10px;
         box-sizing: content-box;
+        box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
     }
     .message{
         background-color: #e2e2e2;
         max-width: 18em;
         width: fit-content;
         padding: 0.5em 0.75em;
-        border-radius: 12.5px;
+        border-radius: 9px;
         display: flex;
         flex-wrap: wrap;
         gap: 0em 0.1em;
@@ -437,14 +460,21 @@ function handleDeckSubmit(){
         align-items: flex-start;
     }
     .test-deck-btn{
+        padding: 0.25em 0.5em;
         border: 0;
         background-color: rgb(224, 224, 224);
         border-radius: 0 0 0.5em;
+        box-shadow: inset 0 1px 2px #ffffff70,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
     }
     .test-deck-btn:hover{
         border: 0;
         background-color: rgb(210, 210, 210);
         border-radius: 0 0 0.5em;
+        box-shadow: inset 0 1px 2px #ffffff70,
+                0 1px 2px #00000020,
+                0 2px 4px #00000025;
     }
     .messages-container{
         display: flex;
@@ -462,6 +492,7 @@ function handleDeckSubmit(){
 
     .header-messages-container{
         width: 100%;
+        height: fit-content;
     }
     .user-sent{
         background-color: #5978f4;
@@ -485,7 +516,18 @@ function handleDeckSubmit(){
     .ai-analysis-btn{
         color: #fff;
         border: none;
+        border-radius: 5px;
+        padding: 0.25em 0.5em;
         background: linear-gradient(90deg, #2d5eff, #5e46fa, #c971ff);
+        box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
+    }
+
+    .ai-analysis-btn:hover{
+        box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 2px #00000030,
+                0 2px 4px #00000035;
     }
         .trait-tag {
         background-color: #80a5ed;

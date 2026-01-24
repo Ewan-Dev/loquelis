@@ -148,6 +148,10 @@ button{
     align-items: center;
     justify-content:center;
     gap: 0.5em;
+    box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
+    border: none;
 }
 progress {
     width: 100%;
@@ -159,7 +163,6 @@ progress {
 .dont-know{
     background-color: #f96d6d;
     color: #631818;
-    border-color: #631818;
 }
 .know{
     background-color: #A4F8BD;
@@ -169,10 +172,14 @@ progress {
     border: 1px solid #ccc;
     padding: 1em;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     width: 17.5em;
     margin: 0.25em 0 0.5em;
     text-align: center;
+    box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000005,
+                0 2px 4px #00000005;
+    border: none;
 }
 .word{
     font-size: 2.5em;
@@ -199,6 +206,7 @@ progress {
     display: flex;
     justify-content: space-between;
     width: 19.75em;
+    
 }
 .material-symbols-rounded{
     font-size: 1.5em;
@@ -218,16 +226,28 @@ progress {
     display: inline-block;
     text-align: center;
     border-radius: 30px;
+    box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000005,
+                0 2px 4px #00000005;
+    border: none;
 }
 .unsure-count{
     border-color: #f96d6d;
     background-color: #ffa4a4;
-    border-color: #ff8383;
+    height: 1.5em;
+    width: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .known-count{
     border-color: #A4F8BD;
     background-color: #A4F8BD;
-    border-color: #71df9b;
+    height: 1.5em;
+    width: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .known-percentage { 
     font-size: 1.5em;
@@ -237,8 +257,11 @@ progress {
 .flashcard-continue{
     width:12em;
     margin: 1em auto 0;
-    border: rgb(197, 197, 197) 1px solid;
     color: #7a7a7a;
+    box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
+    border: none;
 }
 .deck-name-heading{
     font-size: 2em;

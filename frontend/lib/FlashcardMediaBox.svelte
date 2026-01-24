@@ -20,14 +20,22 @@
         height: fit-content;
         width: 12em;
         padding: 0.5em;
-        background-color: #f9f9f9;
-        border: #DBDBDB 0.2em solid;
+                box-shadow: inset 0 1px 2px #ffffff30,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
+        border: none;
         border-radius: 1em;
         display: flex;
         flex-direction: row;
         justify-content:space-between;
         gap:0.25em;
         overflow: hidden;
+    }
+    section:hover{
+        padding: 0.5em;
+                box-shadow: inset 0 1px 2px #ffffff30,
+                0 1px 2px #00000030,
+                0 2px 4px #00000035;
     }
     a,
     p,

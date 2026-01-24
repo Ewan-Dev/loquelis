@@ -129,7 +129,7 @@ function getCategoryEmoji(category){
     <h1 class="page-header">Videos</h1>
         <!-- Main content section for styles to be applied -->
     <section class="main-content">
-    <select bind:value={mainLanguage}>
+    <select bind:value={mainLanguage} class="language-select">
         {#each availableLanguages as language}
             <option value={language.short}>{language.emoji} {language.name}</option>
         {/each}
@@ -181,17 +181,25 @@ function getCategoryEmoji(category){
    main{
         display: flex;
         gap: 1em;
-        align-items: flex-start;
+        align-content: flex-start;
+        background-color:inherit;
     }
     .main-content{
         display: flex;
         flex-direction: column;
+        align-content: flex-start;
+        justify-content: flex-start;
+        overflow: scroll;
+        height: fit-content;
+
     }
     .media-container{
         display: flex;
         gap: 1em;
         flex-wrap: wrap;
         width: 100%;
+        background-color: inherit;
+        overflow: scroll;
     }
         .not-found{
         font-weight: bold;
@@ -201,6 +209,7 @@ function getCategoryEmoji(category){
         width: 100%;
         display: inline-flex;
         margin: 0;
+        font-size: 2em;
     }
     .category-section{
         display: flex;
@@ -208,14 +217,32 @@ function getCategoryEmoji(category){
         gap: 1em;
         margin-bottom: 1em;
         width: 100%;
+        padding: 0.5em 0.25em;
+        height: fit-content;
+        overflow: auto;
+        justify-content: flex-start;
+        align-content: flex-start;
+        background-color: inherit;
+
     }
     .categories-section{
         display: flex;
         flex-direction: column;
         gap:1em;
         padding: 1em 0 0 0;
+        background-color: inherit;
     }
     select {
         background-color: inherit;
+    }
+    .language-select{
+        background-color: #fff;
+        box-shadow: inset 0 1px 2px #ffffff30,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
+        border: none;
+    }
+    .route{
+      height: 100% !important;
     }
 </style>

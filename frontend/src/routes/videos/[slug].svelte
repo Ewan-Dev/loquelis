@@ -168,6 +168,10 @@
       gap: 1em;
       align-items: flex-start;
   }
+  .main-content{
+              align-content: flex-start;
+        justify-content: flex-start;
+  }
   @media (max-width: 1200px){
     iframe{
       width: 100% !important;

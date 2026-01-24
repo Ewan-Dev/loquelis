@@ -37,7 +37,8 @@
             <span class="material-symbols-rounded">chat</span>
             AI Chat
         </a>
-    </nav>
+
+
 </aside>
 
 <style>
@@ -57,22 +58,33 @@
     }
     a.selected {
         background-color: #8FABD4;
-        border-color: #4A70A9;
+        box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
+        border: none;
+        box-sizing: border-box;
+        padding: 0.25em;
     }
     a:hover {
-        background-color: #dcd5bf;
+        background-color: #e9e9e9;
     }
-    a.selected:hover {
+    a.selected:hover{
+        background-color: #3c5a87;
+    }
+        a.selected:hover {
         background-color: #4a70a9af;
     }
+
     .material-symbols-rounded{
         font-size: 1.15em;
     }
     .sidebar{
-        height: 100vh;
+        height: 100%;
         padding: 0.25em;
-        background-color: #EFECE3;
+        background-color: #f2f2f2;
         width: 10em;
+        margin: 0;
+        overflow: hidden;
         
     }
     .sidebar-header{
@@ -141,5 +153,14 @@
         .close-sidebar-icon{
             visibility: visible;
         }
+    }
+
+    .theme-toggle{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2em;
+        height: 2em;
+        border: none;
     }
 </style>

@@ -35,20 +35,27 @@
 <style>
     p {
         font-size: 0.75em;
-        margin: 0.5em;
+        margin: 0;
         font-weight: 500;
     }
     section{
-        height: 3em;
+        height: fit-content;
+        min-width: 7em;
         margin: 0.5em;
         margin-left: 0;
-        padding: 0.15em;
+        padding: 0.5em;
         border-radius: 0.5em;
         box-sizing: border-box;
         overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
+        align-content: center;
+        border: none;
+        gap: 0.5em;
+        box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000005,
+                0 2px 4px #00000005;
     }
 
     .info {

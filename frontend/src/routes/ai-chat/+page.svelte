@@ -229,8 +229,15 @@
         align-items: flex-start;
     }
     dialog{
+        background-color: #f7f7f7;
         border-radius: 1em;
+        padding: 0 1em;
         padding-bottom: 0.5em;
+        border: none;
+        box-shadow: inset 0 1px 2px #ffffff90,
+        0 1px 2px #00000020,
+        0 2px 4px #00000025;
+        width: 25em;
     }
     input{
         height: 2em;
@@ -240,14 +247,22 @@
         text-align: left;
     }
     select,
-    input{
+    input, button{
         width: 100%;
+        box-shadow: inset 0 1px 2px #ffffff90,
+        0 1px 2px #00000010,
+        0 2px 4px #00000010;
+        border: none;
+    }
+    button,
+    .submit-btn{
+        font-size: 1em;
     }
     .name{
         font-size: 125%;
         font-weight: bold;
         height: 2em;
-        padding: 0em;
+        padding: 0em 0.2em;
     }
     .dialog-header{
         margin: 0.5em 0;
@@ -264,31 +279,48 @@
         display: flex;
         flex-direction: column;
         gap: 1em;
+        height: 100%;
+        width: 90%;
+        overflow: auto;
     }
     .create-ai-character{
         background-color: #4A70A9;
-        border: 2.5px solid #345079;
+        box-shadow: inset 0 1px 2px #ffffff90,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
+        border: none;
         color: #fff;
         font-weight: bold;
         float: left;
         display: flex; 
         align-items: center;
         justify-content: center;
-        width: 99%;
+        height:5em;
+        font-size: 1.25em;
+        width: 100%;
         gap: 0.5em;
     }
     .create-ai-character:hover{
-        background-color: #345079;
-        border: 2.5px solid #345079;
+                background-color: #3c5a87;
+        box-shadow: inset 0 1px 2px #ffffff90,
+                0 1px 2px #00000030,
+                0 2px 4px #00000035;
+        border: none;
         color: #fff;
         font-weight: bold;
         float: left;
         display: flex; 
         align-items: center;
         justify-content: center;
-        width: 99%;
+        height:5em;
+        font-size: 1.25em;
+        width: 100%;
         gap: 0.5em;
     }
+
+
+    
+    
     .material-symbols-rounded{
         font-size: 1.25em;
     }
@@ -310,7 +342,6 @@
     }
     .submit-btn{
         background-color: #4A70A9;
-        border: 2.5px solid #345079;
         color: #F4F4F4;
         font-weight: bold;
         margin: 0.45em auto 0.45em;
@@ -319,23 +350,22 @@
         background-color: #F4F4F4;
         color: #1d1d1d;
         font-weight: bold;
-        border: #c0c0c0 2px solid;
         margin: auto;
+        border: none;
     }
     .submit-btn:hover{
-        background-color: #1e379b;
-        color: #F4F4F4;
-        font-weight: bold;
-        border: #1e379b 2px solid;
+        box-shadow: inset 0 1px 2px #ffffff90,
+                0 1px 2px #00000050,
+                0 2px 4px #00000015;
     }
     .close-dialog-btn:hover{
-        background-color: #c0c0c0;
-        color: #1d1d1d;
-        font-weight: bold;
-        border: #c0c0c0 2px solid;
+        box-shadow: inset 0 1px 2px #ffffff90,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
     }
          .not-found{
         font-weight: bold;
         color: #c5c5c5;
     }
+
 </style>

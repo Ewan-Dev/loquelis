@@ -95,11 +95,13 @@ import confetti from 'canvas-confetti' // For confetti effect
         .log-in{
             height: 3em;
             width: 20em;
-            background-color: #021533;
+            background-color: #000000;
             color: #fff;
-            box-shadow: #414141 0 0 0.5em; 
             border: none;
             border-radius: 0.75em;
+            box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
         }
         .log-in:hover{
     

@@ -19,7 +19,6 @@
     <img src={cover} alt="Album cover" class={type}>
     <span>
         <MediaTag type="level" message={level}/>
-        <MediaTag type="rating" message={rating} symbol="thumb_up"/>
     </span>
     <a href={ link }><b>{ name }</b></a>
     <a>{ artist }</a>
@@ -29,8 +28,11 @@
     div {
         height: fit-content;
         width: 10em;
-        background-color: #F5F5F5;
-        border: #DBDBDB 0.2em solid;
+        background-color: #fff;
+        box-shadow: inset 0 1px 2px #ffffff30,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
+        border: none;
         padding: 0.3em;
         border-radius: 1em;
     }

@@ -180,6 +180,7 @@ function handleDialog(){
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
   }
   input[type=Submit]{
     background-color: #4364ea;
@@ -261,4 +262,5 @@ function handleDialog(){
   .auth-notice{
     text-align: center;
   }
+
 </style>

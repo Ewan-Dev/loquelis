@@ -67,7 +67,7 @@
             const isUploaded = await isAlreadyUploaded(mediumURL);
             
             if (isUploaded) {
-                error = { type: "warn", name: "This has already been uploaded to Loquela" };
+                error = { type: "warn", name: "This has already been uploaded" };
                 return;
             }
             
@@ -237,7 +237,7 @@
             </span>
             <button type="submit"  class="push-btn"><span class="front-push-btn">Upload</span></button>
             {#if error.name}
-                <InlineStatus type={error.type} message={error.name} width="16em" />
+                <InlineStatus type={error.type} message={error.name} width="17em" />
             {/if}
         </form>
     </section>
@@ -249,7 +249,7 @@
         display: flex;
         gap: 1em;
         align-items: flex-start;
-        justify-content: center;
+        justify-content: start;
     }
     form{
         width: 100%;
@@ -269,7 +269,10 @@
     }
     input,
     select{
-        border: #c8c8c8 2.5px solid;
+        border: none;
+        box-shadow: inset 0 1px 2px #ffffff90,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
     }
     input{
         height: 4rem;
@@ -280,7 +283,8 @@
     }
     select{
         height: 2em;
-        width: 95%;
+        min-width: 95%;
+        width: fit-content;
         font-size: 1.25em;
     }
 
@@ -313,8 +317,8 @@
     .main-content{
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        align-items: start;
+        justify-content: start;
         gap: 1em;
     }
     .media,
@@ -322,8 +326,16 @@
     .level{
         width: 10em;
         height: 2em;
-        border: #c8c8c8 2px solid;
     }
+
+    .media,
+    .language,
+    .level,
+    .category,
+    .url{
+        background-color: #fff;
+    }
+
 
     .vertical-container{
         width: 100%;
@@ -334,12 +346,17 @@
         justify-content: center;
     }
     .notice{
-        background-color: #f0efe9;
+        background-color: #f0f0f0;
         padding: 1em 1em;
         border-radius: 0.75em;
         border: #eee 1px solid;
         width: 89.5%;
         margin: 0.5em;
+        height: fit-content;
+            border: none;
+        box-shadow: inset 0 1px 2px #ffffff90,
+                0 1px 2px #00000005,
+                0 2px 4px #00000010;
     }
 
     .notice-text{
@@ -353,6 +370,8 @@
         border-radius: 0.65em;
         width: 75%;
         box-sizing:border-box;
+        box-shadow: 0 1px 2px #00000030,
+                0 2px 4px #00000015;
     }
     .front-push-btn{
         display: block;
@@ -364,11 +383,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 0.65em;
         color: #ffffff;
+        box-shadow: inset 0 1px 2px #ffffff90;
     }
     .front-push-btn:active {
         transform: translateY(-3px);
         background-color: #345079;
+ 
     }
 </style>

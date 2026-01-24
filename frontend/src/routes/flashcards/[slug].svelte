@@ -56,6 +56,7 @@
         display: flex;
         gap: 1em;
         align-items: flex-start;
+        background-color: #fff;
     }
     .main-content {
         flex: 1; /* Allow main content to take available space */

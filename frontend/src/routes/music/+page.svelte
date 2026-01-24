@@ -144,12 +144,13 @@
         gap: 1em;
         flex-wrap: wrap;
         width: 100%;
+        background-color: inherit;
     }
         .not-found{
         font-weight: bold;
         color: #c5c5c5;
     }
         select {
-        background-color: inherit;
+        background-color: #fff;
     }
 </style>
