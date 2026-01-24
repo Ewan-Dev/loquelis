@@ -1,5 +1,8 @@
 <script>
     let { author = "Loading..."} = $props()
+    if (author){
+        author = author.slice(0, 17) + '...'
+    }
 </script>
 <span class="author-tag">
     <span class="material-symbols-rounded">person</span>
