@@ -246,7 +246,11 @@ function handleDialog(){
     border-radius: 1em;
     padding: 1em;
     gap:0.5em;
-    border: #ababab solid 1.5px;
+    background-color: #F4F4F4;
+    border: none;
+    box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
   }
   dialog::backdrop {
     background-color: rgba(59, 59, 59, 0.198);
@@ -262,5 +266,16 @@ function handleDialog(){
   .auth-notice{
     text-align: center;
   }
-
+  .dialog-auth-btn{
+    padding: 0.1em 1em;
+    height: 2em;
+    border-radius: 0.5em;
+    border: none;
+    background-color: #fff;
+  }
+    .dialog-auth-btn:hover{
+        box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000020,
+                0 2px 4px #00000025;
+  }
 </style>
