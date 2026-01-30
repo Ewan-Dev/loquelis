@@ -127,8 +127,13 @@
     section{
         height: fit-content;
         width: 12.5em;
-        background-color: #eeeadd ;
-        border: #e4decb solid 2.5px ;
+        background-color: #ececec ;
+        padding: 0.5em;
+                box-shadow: inset 0 1px 2px #ffffff30,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
+        border: none;
+        border-radius: 1em;
         padding: 0.5em 0.5em 0;
         border-radius: 1em;
         z-index: 1;
@@ -215,13 +220,25 @@
         border: #545454 2px solid;
     }
     .flashcard-upload{
-        background-color: #e4dec9;
+        background-color: #ffffff;
+        width: fit-content;
+        display: flex;
+        justify-content: center;
+        align-content: center;
     }
     .flashcard-btn{
-        background-color: #eee7d2;
+        background-color: #f0f0f0;
+        margin: 0;
+        border: none;
+        padding: 0.5em;
+                box-shadow: inset 0 1px 2px #ffffff30,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
+
     }
     select{
-        background-color: #eee7d2;
+        background-color: #ffffff;
+        margin: 0;
     }
 
 </style>
