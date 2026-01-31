@@ -14,15 +14,14 @@
   import VideoSlug from './routes/videos/[slug].svelte'
   import AIChat from './routes/ai-chat/+page.svelte'
   import AIChatSlug from './routes/ai-chat/[slug].svelte'
-  import Welcome from './routes/Welcome.svelte'
+  import Index from './routes/Index.svelte'
   import { onMount } from 'svelte'
   import InlineStatus from '../lib/InlineStatus.svelte'
   import { location } from "svelte-spa-router"
 
   // Setting the routes
   const routes = {
-    '/': Login,
-    '/welcome': Welcome,
+    '/app/welcome': Index,
     '/app/ai-chat/:slug': AIChatSlug,
     '/app/ai-chat': AIChat,
     '/app/videos/:slug': VideoSlug,
@@ -54,8 +53,17 @@ onMount(() => {
     currentLocation = $location
   if (uid && (currentLocation === '/app/login' || currentLocation === '/app/signup')){
     dialogAuthNotice?.showModal()} 
-    else {
+  else if (uid && currentLocation === '/'){
+      window.location.replace("/#/app/home")
+  }
+  else if (!uid && currentLocation === '/'){
+      window.location.replace("/#/app/welcome")
+  }
+  else if (uid && !(currentLocation === '/app/login' || currentLocation === '/app/signup')){
     dialogAuthNotice?.close()
+}
+else{
+      dialogAuthNotice?.close() 
 }
  })
 
@@ -180,7 +188,7 @@ function handleDialog(){
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+
   }
   input[type=Submit]{
     background-color: #4364ea;
