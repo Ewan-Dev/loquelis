@@ -283,11 +283,6 @@
         align-items: center;
         background-color: #290c0c;
         border-radius: 0.5em;
-        border: #12121200 2px solid;
-    }
-    .media-box:hover{
-       border: #121212 2px solid;
-        
     }
     .welcome-message{
         text-align: center;
@@ -503,7 +498,6 @@
         padding: 0;
         font-size: 1em;
         background-color: #2e2e2e;
-        border: 2px solid #121212;
         color: #ffffff;
         font-weight: bold;
         border-radius: 1em;
@@ -518,7 +512,6 @@
         padding: 0;
         font-size: 1em;
         background-color: rgb(226, 226, 226);
-        border: 2px solid #c1c1c1;
         color: #202020;
         font-weight: bold;
         border-radius: 1em;
