@@ -59,7 +59,7 @@
 
 </script>
 
-<img src="././static/load.gif">
+<img src="././static/throbber.gif">
 <Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation} language={targetLanguage}/>
 <span>
 <span class="main-subtitles">
