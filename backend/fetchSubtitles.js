@@ -3,6 +3,7 @@ import { execa } from "execa" // Allows executing terminal commands but safe
 import fs from "fs/promises" // Alows reading file contents for subtitiles
 
 const currentPath = "../backend"
+let uploaded = false
 let languages = ["en", "zh"]
 
 import dotenv from 'dotenv' // Load environment variables .env file
@@ -50,36 +51,42 @@ async function listenAndDownloadSubtitles() {
     const author = broadcast.payload.author // Get author
     const category = broadcast.payload.category // Get author
     const authorUsername = broadcast.payload.author_username // Get author username
+    uploaded = false
     console.log(`Language: ${lang}`) // Print language
     console.log(`URL: ${url}`)  // Print URL
     console.log(languages.includes(lang))
     console.log(languages)
-    if(languages.includes(lang) && url.startsWith("https://www.youtube.com")){
-    // Execute yt-dlp command to fetch subtitles
+    const languagesList = lang.split(",")
+    for (const lang of languagesList) {
+        if (!uploaded){
+        if(languages.includes(lang) && url.startsWith("https://www.youtube.com")){
+        // Execute yt-dlp command to fetch subtitles
 
-        console.log("Trying manual subs...")
-        const downloadUploadStatus = await downloadAndUploadSubtitles("--write-subs", lang, url, id, level, author, authorUsername, category, type)
-        console.log(downloadUploadStatus)
-        if (downloadUploadStatus == 1){
-            console.log("Trying auto subs...")
-            downloadAndUploadSubtitles("--write-auto-subs",  lang, url, id, level, author, authorUsername, category, type)
+            console.log("Trying manual subs...")
+            const downloadUploadStatus = await downloadAndUploadSubtitles("--write-subs", lang, url, id, level, author, authorUsername, category, type)
+            console.log(downloadUploadStatus)
+            if (downloadUploadStatus == 1){
+                console.log("Trying auto subs...")
+                await downloadAndUploadSubtitles("--write-auto-subs",  lang, url, id, level, author, authorUsername, category, type)
+            }
+            
         }
-    }
-    else if (!languages.includes(lang)) {
-        console.log(languages)
-        console.log(lang.toString())
-        console.error(`Language ${lang} is not available.`) // Print error if language is not available
-    }
-    else if (!url.startsWith("https://www.youtube.com")) {
-        console.error(`${url} is not a valid youtube.com URL.`) // Print error if URL is not valid
-    }
-})
-    const { error } = await channel.subscribe() // Subscribe to the channel and if anything is returned it is stored as error
-    if (error) {
-        console.error("Error:", error) // Print error if subscription fails
-    } else {
-        console.log("Listening...") // Print message while channel is being listened to
-    }
+        else if (!languages.includes(lang)) {
+            console.log(languages)
+            console.log(lang.toString())
+            console.error(`Language ${lang} is not available.`) // Print error if language is not available
+        }
+        else if (!url.startsWith("https://www.youtube.com")) {
+            console.error(`${url} is not a valid youtube.com URL.`) // Print error if URL is not valid
+        }
+    }}
+    })
+        const { error } = await channel.subscribe() // Subscribe to the channel and if anything is returned it is stored as error
+        if (error) {
+            console.error("Error:", error) // Print error if subscription fails
+        } else {
+            console.log("Listening...") // Print message while channel is being listened to
+        }
 
 }
 
@@ -126,6 +133,10 @@ async function uploadMedia(id, title, channel, cover, sub, embedLink, videoLink,
     if (error) {
         console.error("Error uploading subtitles:", error) // Print error if upload fails
     }
+    else{
+        uploaded = true
+        console.log("Uploaded!")
+    }
 }
 
 async function downloadAndUploadSubtitles(subtitleType, lang, url, id, level, author, authorUsername, category, mediaType){
@@ -141,7 +152,7 @@ async function downloadAndUploadSubtitles(subtitleType, lang, url, id, level, au
             ], {
                 cwd: currentPath // Where to run command 
             })
-        console.log("stdout")
+        console.log(stdout)
         const videoData = JSON.parse(stdout) // Parse the JSON output
         const title = videoData.title
         const channel = videoData.channel
