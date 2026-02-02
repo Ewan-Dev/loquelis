@@ -57,11 +57,13 @@
     }
 
     async function fetchUserFlashcardDecks(user) {
+        language = "language"
         const { data, error } = await supabase
-            .from("flashcard_decks")
-            .select("*")
-            .eq("author", user)
-            .eq("language", language)
+        .from("flashcard_decks")
+        .select("*")
+        .eq("author", user)
+        .contains("language", [language])
+
         if (error) {
             console.error(error)
             definitionStatus = {type: "error", message: error.message}

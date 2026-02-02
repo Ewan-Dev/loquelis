@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@openrouter/sdk": "^0.5.1",
     "@supabase/supabase-js": "^2.50.2",
     "dotenv": "^17.2.1",
     "execa": "^9.6.0",
