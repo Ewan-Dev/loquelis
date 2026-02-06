@@ -1,4 +1,5 @@
 <script >
+  import { resolveDefaultFetch } from "@fal-ai/serverless-client/src/config";
     import Definition from "./Definition.svelte";
 
     const { currentLine = "Play the video to see live subtitles. Click on an individual word for a definition!", targetLanguage = "", nativeLanguage = "en"} = $props() 
@@ -14,27 +15,55 @@
     async function fetchDefinition(word, contextArray) {
         isDefinitionFetched = false
         console.log("Fetching definition for ", word)
+        try{
         const contextString = contextArray.join(" ")
-        const prompt = `you are being used as an AI to give a definition of a word based of context for a language learning software the language of the word and context is ${targetLanguage} and the user's native language is ${nativeLanguage} the word is ${word} and the context is ${contextString} so give your definition in ${nativeLanguage} and as part of your just definition NOT the partOfSpeech add helpful notes such as if its plural and its singular or its case/tense and its infintive etc. but keep it simple and short return as raw json with no backtick MD markers as your respone will be directly parsed into json respond with attributes word, partOfSpeech, romanisation and definition but do NOT return romanisation where it is not necessary`
-        const response = await fetch(`https://text.pollinations.ai/${prompt}`)
-        const responseJSON = await response.json()
-        isDefinitionFetched = true
+
+        const response = await fetch("/.netlify/functions/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            prompt: "Translate this word based of context. Return no tags, no markup, just raw JSON with keys `word` (original), `partOfSpeech`, `romanisation` and `definition` (meaning based off context and also simple, normal person-readable info about conjugation) but ONLY return `romanisation` where it is not necessary. For example non-Latin scripts",
+            word: word,
+            context: contextString,
+            originalWordLanguageISO6391: targetLanguage,
+            translatedWordLanguageISO6391: nativeLanguage,
+        })      
+        })      
+        const data = await response.json()
+        const responseJSON = JSON.parse(data.reply)
         console.log(responseJSON)
+        isDefinitionFetched = true
         term = responseJSON.word
         definition = responseJSON.definition
         partOfSpeech = responseJSON.partOfSpeech
         romanisation = responseJSON.romanisation
+        }
+        catch (error){
+
+        }
     }
 
-    async function fetchSentenceTranslation(sentence) {
-        const prompt = `Translate from ISO 639-2 ${targetLanguage} to ${nativeLanguage}. Sentence: "${sentence}". Respond only with raw JSON: { "original": "...", "translated": "..." }. No comments, markdown, or extra text`
-        const response = await fetch(`https://text.pollinations.ai/${prompt}`)
-        console.log(response)
-        const responseJSON = await response.json()
-        console.log(responseJSON)
-        original = responseJSON.original
-        translated = responseJSON.translated
-    }
+    async function fetchSentenceTranslation(targetLanguage, nativeLanguage, sentence) {
+        try {
+            const response = await fetch("/.netlify/functions/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            prompt: "Translate this sentence and return no tags, no markup, just raw JSON with keys `original` and `translated` }",
+            originalSentence: sentence,
+            originalSentenceLanguageISO6391: targetLanguage,
+            translatedSentenceLanguageISO6391: nativeLanguage,
+        })      
+    })
+    const data = await response.json()
+    const responseJSON = JSON.parse(data.reply)
+    console.log(responseJSON)
+    original = responseJSON.original
+    translated = responseJSON.translated
+}
+catch(error){
+    console.error(error)
+}}
 
     async function toggleFullTranslationVisibility() {
         const fullTranslateEl = document.getElementsByClassName("full-translate")
