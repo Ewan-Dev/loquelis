@@ -107,7 +107,7 @@
         <h1 class="welcome">Welcome to Loquelis!!!</h1>
         <p class="welcome-message">🤗 Happy to see you!</p>
     </section>
-    <button class="get-started-btn"><a href="./#/app/signup/">Let's get started! →</a></button>
+    <a href="./#/app/signup/"  class="get-started-btn shadow" >Let's get started! →</a>
 </section>
 <section class="page-2 page" >
     <h1>Let's get started with a language-learning favourite - Peppa Pig! 🐷</h1>
@@ -174,8 +174,8 @@
 <section class="page-5 page" >
     <h1>Start your journey. <p class="blue">Today.</p></h1>
     <div class="sign-up-contact-container">
-        <button class="big-get-started-btn"><a href="./#/app/signup/">Get started! →</a></button>
-        <button class="big-contact-btn"><span class="material-symbols-rounded">login</span><a href="./#/app/login/" class="contact-p">Sign in</a></button>
+        <a href="./#/app/signup/" class="big-get-started-btn shadow">Get started! →</a>
+        <a class="big-contact-btn shadow" href="./#/app/login/"> <span class="material-symbols-rounded"  >login</span>Sign in</a>
     </div>
 </section>
 </main>
@@ -309,8 +309,12 @@
         border-radius: 2em;
     }
     .get-started-btn{
-        height: 3em;
+        height: 2.5em;
         width: 12em;
+        display: flex;
+        align-items: center;
+        justify-content:center ;
+        padding: 0;
         background-color: rgb(33, 32, 32);
         color: #ffffff;
         font-weight: bold;
@@ -320,8 +324,6 @@
         animation-timing-function: ease-out;
     }
     .get-started-btn:hover{
-        height: 3em;
-        width: 12em;
         background-color: rgb(83, 83, 83);
         color: #ffffff;
         font-weight: bold;
@@ -541,5 +543,13 @@
         align-items: flex-start;
         justify-content: flex-start;
         padding: 0;
+    }
+    .shadow{
+              box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
+    }
+    span{
+        margin: 0;
     }
 </style>
