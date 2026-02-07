@@ -62,7 +62,6 @@
         .from("flashcard_decks")
         .select("*")
         .eq("author", user)
-        .contains("language", [language])
 
         if (error) {
             console.error(error)
