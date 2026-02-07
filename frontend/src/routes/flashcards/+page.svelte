@@ -148,7 +148,7 @@
                 0 2px 4px #00000015;
         border: none;
         font-size: 1.25em;
-        height: 1.75em;
+        height: 2em;
         width: 100%;
         color: #fff;
         font-weight: bold;
@@ -156,7 +156,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 0.5em;
+        border-radius: 2em;
     }
     .create-flashcard-deck:hover{
         background-color: #3c5a87;

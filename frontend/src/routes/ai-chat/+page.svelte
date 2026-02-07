@@ -295,10 +295,11 @@
         display: flex; 
         align-items: center;
         justify-content: center;
-        height:5em;
+        height:2em;
         font-size: 1.25em;
         width: 100%;
         gap: 0.5em;
+        border-radius: 2em;
     }
     .create-ai-character:hover{
                 background-color: #3c5a87;
@@ -312,7 +313,6 @@
         display: flex; 
         align-items: center;
         justify-content: center;
-        height:5em;
         font-size: 1.25em;
         width: 100%;
         gap: 0.5em;
