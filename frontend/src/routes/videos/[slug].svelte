@@ -72,7 +72,15 @@
       subtitles = video.content.events
       console.log(subtitles)
       console.log(`${link}?enablejsapi=1`)
-      addToRecents(slug)
+      const videoObjectForHistory = {
+        name,
+        artist,
+        cover,
+        level,
+        rating,
+        id : slug
+      }
+      addToRecents(videoObjectForHistory)
     }
     else {
       // Error/ invalid slug
@@ -124,7 +132,7 @@
       
     }
 
-async function addToRecents(mediaID){
+async function addToRecents(video){
   const {data, readError} = await supabase
     .from('profiles') 
     .select('recent_videos')
@@ -132,13 +140,13 @@ async function addToRecents(mediaID){
     .single()
   console.log(data.recent_videos)
   const originalArray = data.recent_videos
-  if (originalArray.includes(mediaID)){
-      originalArray.pop(mediaID)
+  if (originalArray.includes(video)){
+      originalArray.pop(video)
   }
   if (originalArray.length === 10){
     originalArray.splice(0, 1)
   }
-  originalArray.push(mediaID)
+  originalArray.push(video)
   console.log(originalArray)
 
   const {updateData, updateError} = await supabase
