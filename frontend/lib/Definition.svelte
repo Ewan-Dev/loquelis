@@ -85,9 +85,9 @@
     }
 </script>
 
-
-{#if word} 
-    <section>
+<section class="definition-container">
+    {#if word}
+        <section class="definition">
         <h1>{word}</h1>
         {#if romanisation}
             <i><p class="romanisation">{romanisation}</p></i>     
@@ -115,17 +115,13 @@
         </dialog>
         {/if}
             <InlineStatus type={definitionStatus.type} message={definitionStatus.message}/>
-
         </section>
-{/if}
+        {/if}
+</section>
 <style>
 
-    /**
-    TODO:
-    - Style dialog box
-    */
 
-    section{
+    .definition{
         height: fit-content;
         width: 12.5em;
         background-color: #ececec ;
@@ -242,4 +238,31 @@
         margin: 0;
     }
 
+.definition {
+  position: fixed;
+  top: 100px;
+  right: 100px;
+  z-index: 9999;
+  color: black;
+  height: fit-content;
+  margin: 5em;
+}
+
+.definition-container{
+    position: relative;
+    width: 15em;
+    height: fit-content;
+    background-color: transparent;
+    overflow:visible;
+}
+@media (min-width: 1200px) {
+     .definition{
+        position:unset;
+        top: unset;
+        margin: 0;
+     }
+     .definition-container{
+        width: 15em;
+     }
+    }
 </style>

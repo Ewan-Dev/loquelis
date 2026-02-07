@@ -66,4 +66,5 @@
         display: flex;
         gap: 0.2em;
     }
+    
 </style>

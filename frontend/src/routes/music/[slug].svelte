@@ -127,9 +127,9 @@
             song={name}
             artist={artist}
           />
+          <AuthorTag author={author} />
           </span>
           
-          <AuthorTag author={author} />
           <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
           <Subtitles
               currentLine={currentLine}
@@ -173,7 +173,7 @@
   }
   .heading {
     display: flex;
-    flex-direction: row;
+    flex-direction: column ;
     gap: 0.5em;
   }
 </style>
