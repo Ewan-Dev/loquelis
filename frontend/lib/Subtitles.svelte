@@ -39,7 +39,7 @@
         romanisation = responseJSON.romanisation
         }
         catch (error){
-
+            console.error(error)
         }
     }
 

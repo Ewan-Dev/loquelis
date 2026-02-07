@@ -6,6 +6,7 @@
     import { onMount } from "svelte";
     import Definition from "../../../lib/Definition.svelte";
 
+    let nativeLanguage = 'en'
     let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
     let characterData = $state(Object) //Stores character data from Supabase
     let messageInput = $state("")
@@ -17,6 +18,7 @@
     let deckIndex = $state()
     let {term, definition, partOfSpeech, romanisation} = $state("")
     let userID = $state("")
+    let isDefinitionFetched = true
 
     onMount(async () => {
         await fetchUserSesson()
@@ -56,49 +58,38 @@ async function sendAIMessage(inputContent, chatHistory) {
     let prompt = ""
     // ADD MESSAGE TO HISTORY
     chatHistory.push({sender: "User", content: inputContent}) // Add user response
-    if (flashcardDecks != []){
-        print(flashcardDecks)
-        prompt = `You are an AI chatbot for a language learning app. 
-                your name is ${characterData.name} - but you dont need to append that before your response
-        Give short and simple responses and only respond in ISO CODE ${characterData.language} 
-        Your job is a ${characterData.occupation} Even if the user gets something wrong, try to interperet it and don't give corrections 
-        Base all your response lightly on the selected flashcard deck as the user selected the deck for you, the AI character to test me on. You dont need all words in one response. You can see which words you've used and haven't in chat history. Take it slow and but the words in at any order but they must make sense in context
-        only respond in ISO ${characterData.language}
-        your personality is ${characterData.trait} for character engagement reasons.
-        Here is the deck content:
-        ${flashcardDecks[deckIndex]}
-        Here is the user response: 
-        ${inputContent}. 
-        Here is the chat history:
-       ${chatHistory.map(msg => `SENT BY ${msg.sender}: ${msg.content}`)}`
-    }
-    else{
-        prompt = `You are an AI chatbot for a language learning app. 
-        your name is ${characterData.name} - but you dont need to append that before your response
-        Give short and simple responses and only respond in ISO ${characterData.language} and and your personality is very exaggerated ${characterData.trait} . 
-        Your job is a ${characterData.occupation} Even if the user gets something wrong, try to interperet it and don't give corrections 
-        only respond in ISO ${characterData.language}
-        Here is the user response: 
-        ${inputContent}. 
-        Here is the chat history:
-        ${chatHistory.map(msg => `SENT BY ${msg.sender}: ${msg.content}`)}`
-    }
-    console.log(prompt)
-    const response = await fetch(`https://text.pollinations.ai/prompt/${prompt}`)
-    
+        console.log(prompt)
+        const response = await fetch("/.netlify/functions/chat", {  
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            prompt: "You are an AI chatbot roleplaying a character for a language learning app. Keep it chat-like and follow the character trait. Return just your response. No formatting. If a flashcard deck is submitted, relate your answers off that",
+            characterName: characterData.name,
+            characterLanguageISO6391: characterData.language,
+            characterTrait: characterData.trait,
+            characterOccupation: characterData.occupation,
+            latestUserResponse: inputContent,
+            chatHistory: chatHistory.map(msg => { return {user : msg.sender, message: msg.content}}),
+            flashcardDecks: flashcardDecks[deckIndex],
+        })      
+        })      
+
     // If reponse fails
     if (!response.ok) {
         console.error("AI API error:", response.statusText)
     }
+    else{
+        console.log(response)
+    }
 
-    const aiResponseString = await response.text()
+    const aiResponseString = await response.json()
     
     // ADD MESSAGE O HISTORY
-    chatHistory.push({sender: "AI", content: aiResponseString})// Add AI response
+    chatHistory.push({sender: "AI", content: aiResponseString.reply})// Add AI response
 
     console.log("AI Response:", aiResponseString)
-}
 
+}
 async function getAIAnalysis() {
     const prompt =  `
     You are an AI for a language learning app. The user and AI are having a conversation in ${characterData.language}. The user's messages are marked with "User :". Your task is to return a pure JSON object as your response will be directly parsed into JSON and use no markdown annotates and the response has two fields:
@@ -152,19 +143,34 @@ function handleDeckSubmit(){
     dialogBox.close()
 }
 
-    async function fetchDefinition(word, context) {
-        let contextString = context // Set context string to context 
-        if (Array.isArray(context)){ // If it's an array
-             contextString = context.join(" ") // Turn it to a string
-        }
-        const prompt = `you are being used as an AI to give a definition of a word based of context for a language learning software the language of the word and context is ISO code ${characterData.language} and the user's native language is english the word is ${word} and the context is ${contextString} so give your definition in ENGLISH and as part of your just definition NOT the partOfSpeech add helpful notes such as if its plural and its singular or its case/tense and its infintive etc. but keep it simple and short return as raw json with no backtick MD markers as your respone will be directly parsed into json respond with attributes word, partOfSpeech, romanisation and definition but do NOT return romanisation where it is not necessary`
-        const response = await fetch(`https://text.pollinations.ai/${prompt}`)
-        const responseJSON = await response.json()
-        console.log(response)
+    async function fetchDefinition(word, contextString) {
+        isDefinitionFetched = false
+        console.log(contextString)
+        console.log("Fetching definition for ", word)
+        try{
+        const response = await fetch("/.netlify/functions/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            prompt: "Translate this word based of context. Return no tags, no markup, just raw JSON with keys `word` (original), `partOfSpeech`, `romanisation` and `definition` (meaning based off context and also simple, normal person-readable info about conjugation) but ONLY return `romanisation` where it is not necessary. For example non-Latin scripts",
+            word: word,
+            context: contextString,
+            originalWordLanguageISO6391: characterData.language,
+            translatedWordLanguageISO6391: nativeLanguage,
+        })      
+        })      
+        const data = await response.json()
+        const responseJSON = JSON.parse(data.reply)
+        console.log(responseJSON)
+        isDefinitionFetched = true
         term = responseJSON.word
         definition = responseJSON.definition
         partOfSpeech = responseJSON.partOfSpeech
         romanisation = responseJSON.romanisation
+        }
+        catch (error){
+            console.error(error)
+        }
     }
 
 </script>
@@ -194,7 +200,7 @@ function handleDeckSubmit(){
                     {#if message.sender === "AI"}
                         <div class="message ai-sent">
                             {#each message.content.split(" ") as word}
-                                <p class="ai-word" onclick={() => fetchDefinition(word, message)}>{word}</p>
+                                <p class="ai-word" onclick={() => fetchDefinition(word, message.content)}>{word}</p>
                             {/each}
                         </div>
                     {/if}
