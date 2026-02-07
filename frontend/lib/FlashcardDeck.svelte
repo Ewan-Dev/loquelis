@@ -255,7 +255,7 @@ progress {
     color:  #69be81;
 }
 .flashcard-continue{
-    width:12em;
+    width:fit-content;
     margin: 1em auto 0;
     color: #7a7a7a;
     box-shadow: inset 0 1px 2px #ffffff,
