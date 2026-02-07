@@ -5,6 +5,7 @@
   import Subtitles from "../../../lib/Subtitles.svelte"
   import { location } from 'svelte-spa-router'
   import AuthorTag from "../../../lib/AuthorTag.svelte";
+  import { onMount } from "svelte";
   let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
   let player
 
@@ -20,9 +21,12 @@
   let subtitles = $state([])
   let currentLine = $state()
   let link = $state("https://youtu.be/zabswqP6xEM")
+  let uid = undefined
+
+
 
   // Whenever page reloads this runs
-  $effect(() => {
+  $effect(async () => {
     const currentSlug = $location.split('/').pop() // Gets slug from current path
     if (currentSlug != slug){ // If slug if different to page to last before reload
       slug = currentSlug // Update slug
@@ -36,6 +40,15 @@
       window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady // Once iframe loads onYouTubeIframeAPIReady() 
     }
     })
+
+        const { data, error } =  await supabase.auth.getSession()
+    const sessionData = data // Store session data
+    if (error) { //Id error fetching user
+        console.error('Error fetching session:', error)
+    } 
+    else if(sessionData) { // If data exists
+        uid = sessionData?.session?.user?.id // Get UID from session
+    }
 })
   async function loadVideo (){
     const {data, error} = await supabase
@@ -59,6 +72,7 @@
       subtitles = video.content.events
       console.log(subtitles)
       console.log(`${link}?enablejsapi=1`)
+      addToRecents(slug)
     }
     else {
       // Error/ invalid slug
@@ -110,7 +124,36 @@
       
     }
 
+async function addToRecents(mediaID){
+  const {data, readError} = await supabase
+    .from('profiles') 
+    .select('recent_videos')
+    .eq('user_id', uid)
+    .single()
+  console.log(data.recent_videos)
+  const originalArray = data.recent_videos
+  if (originalArray.includes(mediaID)){
+      originalArray.pop(mediaID)
+  }
+  if (originalArray.length === 10){
+    originalArray.splice(0, 1)
+  }
+  originalArray.push(mediaID)
+  console.log(originalArray)
 
+  const {updateData, updateError} = await supabase
+  .from('profiles')
+  .update({recent_videos: originalArray})
+  .eq('user_id', uid)
+
+  if (updateError){
+    console.error(updateError)
+  }
+  if(updateData){
+    console.log(updateData)
+  }
+
+}
 </script>
 <svelte:head>
   <script src="https://www.youtube.com/iframe_api"></script> <!-- For getting the current time on YT iframe embed -->
