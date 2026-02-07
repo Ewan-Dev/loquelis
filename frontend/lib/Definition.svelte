@@ -239,26 +239,21 @@
     }
 
 .definition {
-  position: fixed;
-  top: 100px;
-  right: 100px;
   z-index: 9999;
   color: black;
   height: fit-content;
-  margin: 5em;
+  margin: 0;
+  width:  fit-content;
 }
 
 .definition-container{
-    position: relative;
-    width: 15em;
+    width: fit-content;
     height: fit-content;
     background-color: transparent;
     overflow:visible;
 }
 @media (min-width: 1200px) {
      .definition{
-        position:unset;
-        top: unset;
         margin: 0;
      }
      .definition-container{
