@@ -65,6 +65,15 @@
       subtitles = song.content.events
       console.log(subtitles)
       console.log(`${link}?enablejsapi=1`)
+        const musicObjectForHistory = {
+        name,
+        artist,
+        cover,
+        level,
+        rating,
+        id : slug
+      }
+      addToRecents(musicObjectForHistory)
     }
     else {
       // Error/ invalid slug
@@ -111,7 +120,36 @@
       
     }
 
+async function addToRecents(music){
+  const {data, readError} = await supabase
+    .from('profiles') 
+    .select('recent_music')
+    .eq('user_id', uid)
+    .single()
+  console.log(data.recent_music)
+  const originalArray = data.recent_music
+  if (originalArray.includes(music)){
+      originalArray.pop(music)
+  }
+  if (originalArray.length === 10){
+    originalArray.splice(0, 1)
+  }
+  originalArray.push(music)
+  console.log(originalArray)
 
+  const {updateData, updateError} = await supabase
+  .from('profiles')
+  .update({recent_music: originalArray})
+  .eq('user_id', uid)
+
+  if (updateError){
+    console.error(updateError)
+  }
+  if(updateData){
+    console.log(updateData)
+  }
+
+}
 </script>
 <svelte:head>
   <script src="https://www.youtube.com/iframe_api"></script> <!-- For getting the current time on YT iframe embed -->

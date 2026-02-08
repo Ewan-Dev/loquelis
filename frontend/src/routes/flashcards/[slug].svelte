@@ -42,7 +42,7 @@
     <h1 class="page-header">Flashcards</h1>
     <section class="main-content">
         {#if flashcardsContent && flashcardsContent.length > 0}
-            <FlashcardDeck content={flashcardsContent}  backContent={["part-of-speech", "definition"]} deckName={flashcardDeckName} author={flashcardDeckAuthor}/>
+            <FlashcardDeck content={flashcardsContent}  backContent={["romanisation", "part-of-speech", "definition"]} deckName={flashcardDeckName} author={flashcardDeckAuthor}/>
         {/if}
         {#if !flashcardsContent.length > 0}
             <h3>Oops! Looks like there are no cards in this deck. Try going to a video, song or AI Chat and add some!</h3>
