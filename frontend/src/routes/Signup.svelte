@@ -30,7 +30,7 @@ import confetti from 'canvas-confetti' // For confetti effect
             statusError = error.message
         }
         else if (data && !error){
-            statusError = "Signup successful! Check your email to confirm."
+            statusError = "Signup successful! Try logging in with your details!."
             statusType = "success"
             console.log("User signed up successfully", data)
             launchConfetti() // Launching confetti effect when signup is successful 
