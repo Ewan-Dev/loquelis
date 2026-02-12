@@ -19,6 +19,7 @@
     let {term, definition, partOfSpeech, romanisation} = $state("")
     let userID = $state("")
     let isDefinitionFetched = true
+    let isWaitingForAnalysis = $state(false)
 
     onMount(async () => {
         await fetchUserSesson()
@@ -91,6 +92,7 @@ async function sendAIMessage(inputContent, chatHistory) {
 
 }
 async function getAIAnalysis() {
+    isWaitingForAnalysis = true
     const prompt =  `
     You are an AI for a language learning app. The user and AI are having a conversation in ${characterData.language}. The user's messages are marked with "User :". Your task is to return a pure JSON object as your response will be directly parsed into JSON and use no markdown annotates and the response has two fields:
 
@@ -114,6 +116,7 @@ async function getAIAnalysis() {
     const response = await fetch(`https://text.pollinations.ai/prompt/${encodedPrompt}`)
     const json = await response.json()
     chatAnalysisAI =  json
+    isWaitingForAnalysis = false
     console.log(chatAnalysisAI)
 }
 
@@ -193,6 +196,9 @@ function handleDeckSubmit(){
                          <p class="trait-tag">{characterData.trait}</p>            
                 </span>
                     <button class="ai-analysis-btn" onclick={async () => await getAIAnalysis()}> Get AI analysis of chat</button>
+                    {#if isWaitingForAnalysis}
+                    <p>Loading...</p>
+                    {/if}
             </span>
             <button class="test-deck-btn" onclick={() => {dialogBox.showModal(); fetchFlashcardDecks();}}>Get tested on a deck</button>
             <div class="messages-container" bind:this={messagesContainer}>
