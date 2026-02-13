@@ -181,6 +181,9 @@ function getCategoryEmoji(category){
       h1{
       margin: 0 0.35em 0.5em;
   }
+  .main-page{
+    background-color: transparent;
+  }
    main{
         display: flex;
         gap: 1em;
@@ -199,7 +202,7 @@ function getCategoryEmoji(category){
         gap: 1em;
         flex-wrap: wrap;
         width: 100%;
-        background-color: inherit;
+        background-color: transparent;
     }
         .not-found{
         font-weight: bold;
@@ -213,9 +216,23 @@ function getCategoryEmoji(category){
     main{
       display: flex;
       flex-direction: column !important;
+      background-color: transparent;
     }
   }
       .main-page{
         margin: auto 0.25em;
+              background-color: transparent;
+    }
+    .category-section{
+        display: flex;
+        flex-wrap: wrap;
+                    gap: 1em;
+              background-color: transparent;
+    }
+    .categories-section{
+        background-color: transparent;
+    }
+    .page-header{
+        margin-top: 0;
     }
 </style>
