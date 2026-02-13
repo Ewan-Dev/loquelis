@@ -197,7 +197,7 @@ async function addToRecents(video){
       border-radius: 0.5em;
       margin: 0;
     aspect-ratio: 16 / 9;
-    width: 80% !important;
+    width: 70% !important;
   }
       h1{
       margin: 0 0.35em 0.5em;
@@ -233,6 +233,8 @@ async function addToRecents(video){
     }
   .main-content{
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
   }
 }
       .main-page{

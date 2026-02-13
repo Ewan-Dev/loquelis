@@ -7,6 +7,7 @@
     let currentDeckID = $state() // Current dec ID
     let flashcardDecks = $state([]) // Stores flashcard decks
     let infoDialog = $state(HTMLObjectElement) // The dialog box with deck info
+    let definitionBox = $state(HTMLObjectElement)
     let userID = $state("")
 
     onMount( async () => {
@@ -86,9 +87,12 @@
 </script>
 
 <section class="definition-container">
+    <section class="definition">
     {#if word}
-        <section class="definition">
+    <div class="header">
         <h1>{word}</h1>
+        <button class="close-btn" on:click={word = ''}>X</button>
+    </div>
         {#if romanisation}
             <i><p class="romanisation">{romanisation}</p></i>     
         {/if}
@@ -115,8 +119,8 @@
         </dialog>
         {/if}
             <InlineStatus type={definitionStatus.type} message={definitionStatus.message}/>
-        </section>
-        {/if}
+{/if}
+</section>
 </section>
 <style>
 
@@ -124,7 +128,7 @@
     .definition{
         height: fit-content;
         width: 12.5em;
-        background-color: #ececec ;
+        background-color: #ffffff ;
         padding: 0.5em;
                 box-shadow: inset 0 1px 2px #ffffff30,
                 0 1px 2px #00000030,
@@ -260,4 +264,17 @@
         width: 15em;
      }
     }
+    .header{
+    display: flex;
+    justify-content: space-between;
+}
+.close-btn{
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    border-radius: 50%;
+
+}
 </style>
