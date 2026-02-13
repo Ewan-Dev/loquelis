@@ -65,13 +65,18 @@ import confetti from 'canvas-confetti' // For confetti effect
     </form>
 </main>
 
-<style>
-     input{
-            background-color: transparent; 
-            height: 3em;
-            width: 20em;
-            border: 0.15em  solid rgb(0, 0, 0);
-            border-radius: 0.75em;
+    <style>
+        input{
+            background-color: #fff; 
+            height: fit-content;
+            font-size: 1.5em;
+            padding: 0.2em 0.35em;
+            width: 15em;
+            border: none;
+            box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
+            border-radius: 0.35em;
             box-sizing: border-box;
         }
         main{
@@ -80,11 +85,11 @@ import confetti from 'canvas-confetti' // For confetti effect
             align-items: center;
         }
         form{
-            width: fit-content;
+            width: 22em;
             margin: 1em auto;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             gap: 0.5em;
         }
         label{
@@ -92,20 +97,39 @@ import confetti from 'canvas-confetti' // For confetti effect
             width: 18em;
             display: inline-block;
         }
-        .log-in{
+        .sign-up{
             height: 3em;
-            width: 20em;
-            background-color: #000000;
+            width: 27em;
+            font-weight:bold; 
+            background-color:#4A70A9;
             color: #fff;
             border: none;
             border-radius: 0.75em;
-            box-shadow: inset 0 1px 2px #ffffff,
+      box-shadow: inset 0 1px 2px #ffffff80,
                 0 1px 2px #00000010,
                 0 2px 4px #00000015;
         }
-        .log-in:hover{
-    
-            box-shadow: #414141 0 0 1em; 
-            transition: box-shadow 0.2s;
+        .sign-up:hover{
+            background-color: #3c5a87;
+            box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 2px #00000030,
+                0 2px 4px #00000035;
         }
+        .continue{
+            background-color: #e5e5e5;
+            padding: 0.15em 0.25em;
+            color: #222222;
+            box-sizing: border-box;
+            width: 8em;
+            text-align: center;
+            text-decoration: none;
+                border-radius: 7.5px;
+                box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 1px #00000030,
+                0 2px 2px #00000035;       }
+        .continue:hover{
+                box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 4px #00000030,
+                0 2px 2px #00000035;       }
+        
     </style>

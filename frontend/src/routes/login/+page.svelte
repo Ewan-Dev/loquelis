@@ -62,11 +62,11 @@
                 <input class="password" bind:value={password} type="password" > 
                 <button class="log-in" type="submit">Sign in</button>
                 {#if statusError}
-                    <InlineStatus type="error" message={statusError} />
+                    <InlineStatus type="error" message={statusError}  width="100%" />
                 {/if}   
                 {#if !statusError && result}
-                    <InlineStatus type="success" message="Login successful!" width="15em"/>
-                    <p>Continue <a href="./#/app/home">here</a></p>
+                    <InlineStatus type="success" message="Login successful!" width="100%"/>
+                    <a class="continue" href="./#/app/home">Continue here</a>
                 {/if}
                 </form>
                 </section>
@@ -76,13 +76,15 @@
     <style>
         input{
             background-color: #fff; 
-            height: 3em;
-            width: 20em;
+            height: fit-content;
+            font-size: 1.5em;
+            padding: 0.2em 0.35em;
+            width: 15em;
             border: none;
             box-shadow: inset 0 1px 2px #ffffff,
                 0 1px 2px #00000010,
                 0 2px 4px #00000015;
-            border-radius: 0.75em;
+            border-radius: 0.35em;
             box-sizing: border-box;
         }
         main{
@@ -91,11 +93,11 @@
             align-items: center;
         }
         form{
-            width: fit-content;
+            width: 22em;
             margin: 1em auto;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             gap: 0.5em;
         }
         label{
@@ -105,7 +107,8 @@
         }
         .log-in{
             height: 3em;
-            width: 20em;
+            width: 27em;
+            font-weight:bold; 
             background-color:#4A70A9;
             color: #fff;
             border: none;
@@ -120,6 +123,21 @@
                 0 1px 2px #00000030,
                 0 2px 4px #00000035;
         }
-
+        .continue{
+            background-color: #e5e5e5;
+            padding: 0.15em 0.25em;
+            color: #222222;
+            box-sizing: border-box;
+            width: 8em;
+            text-align: center;
+            text-decoration: none;
+                border-radius: 7.5px;
+                box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 1px #00000030,
+                0 2px 2px #00000035;       }
+        .continue:hover{
+                box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 4px #00000030,
+                0 2px 2px #00000035;       }
         
     </style>
