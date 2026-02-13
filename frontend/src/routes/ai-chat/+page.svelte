@@ -226,10 +226,12 @@
         gap:0.5em;
     }
     main{
+        width: 100%;
         display: flex;
         gap: 1em;
         align-items: flex-start;
         background-color: #fff;
+        padding-right: 1em;
     }
     dialog{
         background-color: #f7f7f7;
@@ -281,6 +283,7 @@
     .main-content{
         display: flex;
         flex-direction: column;
+        width: 90%;
         gap:1em;
     }
     .create-ai-character{
@@ -328,6 +331,7 @@
         display: flex;
         flex-direction: column;
         gap: 1em;
+        width: 100%;
     }
     .label-input-container{
         text-align: center;
@@ -367,14 +371,13 @@
         font-weight: bold;
         color: #c5c5c5;
     }
- @media (max-width: 500px){
+        @media (max-width: 500px){
     main{
       display: flex;
       flex-direction: column !important;
     }
   }
       .main-page{
-        margin-left: 1em;
-        margin-top: 1em;
+        margin: auto 0.25em;
     }
 </style>

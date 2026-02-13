@@ -109,7 +109,7 @@ import confetti from 'canvas-confetti' // For confetti effect
                 0 1px 2px #00000010,
                 0 2px 4px #00000015;
         }
-        .sign-up:hover{
+        .log-in:hover{
             background-color: #3c5a87;
             box-shadow: inset 0 1px 2px #ffffff80,
                 0 1px 2px #00000030,

@@ -45,9 +45,11 @@
         display: flex;
         gap: 1em;
         align-items: flex-start;
+                margin-right: 1em;
     }
     .main-content{
         flex-direction: column;
+        width: 90%;
     }
     .home-page-main-section-head{
         margin-bottom: 0.5em;
@@ -63,7 +65,7 @@
       flex-direction: column !important;
     }
   }
-    .main-page{
-        margin-left: 1em;
+      .main-page{
+        margin: auto 0.25em;
     }
 </style>

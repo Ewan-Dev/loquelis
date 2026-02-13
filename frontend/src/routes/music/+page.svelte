@@ -137,10 +137,14 @@
         display: flex;
         gap: 1em;
         align-items: flex-start;
+            margin-right: 1em;
     }
     .main-content{
         display: flex;
         flex-direction: column;
+        width: 90%;
+        gap:1em;
+        align-items: flex-start;
     }
     .media-container{
         display: flex;
@@ -155,6 +159,7 @@
     }
         select {
         background-color: #fff;
+        width: 100%;
     }
         @media (max-width: 500px){
     main{
@@ -163,7 +168,6 @@
     }
   }
       .main-page{
-        margin-left: 1em;
-        margin-top: 1em;
+        margin: auto 0.25em;
     }
 </style>

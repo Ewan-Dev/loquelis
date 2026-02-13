@@ -184,17 +184,15 @@ function getCategoryEmoji(category){
    main{
         display: flex;
         gap: 1em;
-        align-content: flex-start;
-        background-color:inherit;
+        align-items: flex-start;
+            margin-right: 1em;
     }
     .main-content{
         display: flex;
         flex-direction: column;
-        align-content: flex-start;
-        justify-content: flex-start;
-        overflow: scroll;
-        height: fit-content;
-
+        width: 90%;
+        gap:1em;
+        align-items: flex-start;
     }
     .media-container{
         display: flex;
@@ -202,60 +200,22 @@ function getCategoryEmoji(category){
         flex-wrap: wrap;
         width: 100%;
         background-color: inherit;
-        overflow: scroll;
     }
         .not-found{
         font-weight: bold;
         color: #c5c5c5;
     }
-    .category-title{
-        width: 100%;
-        display: inline-flex;
-        margin: 0;
-        font-size: 2em;
-    }
-    .category-section{
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1em;
-        margin-bottom: 1em;
-        width: 100%;
-        padding: 0.5em 0.25em;
-        height: fit-content;
-        overflow: auto;
-        justify-content: flex-start;
-        align-content: flex-start;
-        background-color: inherit;
-
-    }
-    .categories-section{
-        display: flex;
-        flex-direction: column;
-        gap:1em;
-        padding: 1em 0 0 0;
-        background-color: inherit;
-    }
-    select {
-        background-color: inherit;
-    }
-    .language-select{
+        select {
         background-color: #fff;
-        box-shadow: inset 0 1px 2px #ffffff30,
-                0 1px 2px #00000030,
-                0 2px 4px #00000015;
-        border: none;
+        width: 100%;
     }
-    .route{
-      height: 100% !important;
-    }
-    @media (max-width: 500px){
+        @media (max-width: 500px){
     main{
       display: flex;
       flex-direction: column !important;
     }
   }
       .main-page{
-        margin-left: 1em;
-        margin-top: 1em;
+        margin: auto 0.25em;
     }
 </style>

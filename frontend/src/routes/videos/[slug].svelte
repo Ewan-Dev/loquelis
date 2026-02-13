@@ -194,15 +194,12 @@ async function addToRecents(video){
   </section>
 </main>
 
-
-
-
 <style>
   iframe {
       border-radius: 0.5em;
       margin: 0;
     aspect-ratio: 16 / 9;
-    width: 70% !important;
+    width: 80% !important;
   }
       h1{
       margin: 0 0.35em 0.5em;
@@ -216,30 +213,32 @@ async function addToRecents(video){
   }
   main{
       display: flex;
-      flex-direction: row;
       gap: 1em;
       align-items: flex-start;
-  }
-  .main-content{
-              align-content: flex-start;
-        justify-content: flex-start;
   }
   @media (max-width: 1200px){
     iframe{
       width: 100% !important;
     }
-    main{
-      display: flex;
-      flex-direction: column !important;
-    }
   }
   .heading {
     display: flex;
-    flex-direction: column;
+    flex-direction: column ;
     gap: 0.5em;
   }
+      @media (max-width: 500px){
+    main{
+      display: flex;
+      flex-direction: column !important;
+      align-items: flex-start;
+      margin: 0 !important;
+    }
+  .main-content{
+    margin: 0;
+  }
+}
       .main-page{
-        margin-left: 1em;
-        margin-top: 1em;
+        margin: auto 0.25em;
+        padding: 0;
     }
 </style>

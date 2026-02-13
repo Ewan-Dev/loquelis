@@ -128,6 +128,7 @@
         gap: 1em;
         align-items: flex-start;
         background-color: #fff;
+        padding-right: 1em;
     }
     button{
         display: block;
@@ -139,8 +140,8 @@
     .main-content{
         display: flex;
         flex-direction: column;
-        gap:1em;
-    }
+        width: 90%;
+        gap:1em;}
     .create-flashcard-deck{
         background-color: #4A70A9;
         box-shadow: inset 0 1px 2px #ffffff90,
@@ -275,7 +276,6 @@
     }
   }
       .main-page{
-        margin-left: 1em;
-        margin-top: 1em;
+        margin: auto 0.25em;
     }
 </style>

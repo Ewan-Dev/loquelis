@@ -253,6 +253,8 @@
         gap: 1em;
         align-items: flex-start;
         justify-content: start;
+        padding-right: 1em;
+        width: 100%;
     }
     form{
         width: 100%;
@@ -320,9 +322,9 @@
     .main-content{
         display: flex;
         flex-direction: column;
-        align-items: start;
-        justify-content: start;
-        gap: 1em;
+        width: 90%;
+        padding-right: 1em;
+        gap:1em;
     }
     .media,
     .language,
@@ -353,8 +355,9 @@
         padding: 1em 1em;
         border-radius: 0.75em;
         border: #eee 1px solid;
-        width: 89.5%;
-        margin: 0.5em;
+        width: fit-content;
+        box-sizing: border-box;
+        margin: 0.5em 1em;
         height: fit-content;
             border: none;
         box-shadow: inset 0 1px 2px #ffffff90,
@@ -401,7 +404,6 @@
     }
   }
       .main-page{
-        margin-left: 1em;
-        margin-top: 1em;
+        margin: auto 0.25em;
     }
 </style>

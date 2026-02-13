@@ -396,7 +396,7 @@ function handleDeckSubmit(){
         justify-content: flex-start;
         gap: 1em;
         height: 100%;
-        width: 100%;
+        width: 90%;
         background-color: inherit;
     }
     img {
@@ -649,8 +649,7 @@ function handleDeckSubmit(){
     }
   }
       .main-page{
-        margin-left: 1em;
-        margin-top: 1em;
+        margin: auto 0.25em;
     }
     .ai-analysis-page{
         display: flex;

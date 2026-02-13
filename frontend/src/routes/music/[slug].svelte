@@ -187,7 +187,7 @@ async function addToRecents(music){
       border-radius: 0.5em;
       margin: 0;
     aspect-ratio: 16 / 9;
-    width: 70% !important;
+    width: 80% !important;
   }
       h1{
       margin: 0 0.35em 0.5em;
@@ -218,10 +218,15 @@ async function addToRecents(music){
     main{
       display: flex;
       flex-direction: column !important;
+      align-items: flex-start;
+      margin: 0 !important;
     }
+  .main-content{
+    margin: 0;
   }
+}
       .main-page{
-        margin-left: 1em;
-        margin-top: 1em;
+        margin: auto 0.25em;
+        padding: 0;
     }
 </style>
