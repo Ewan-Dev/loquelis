@@ -178,6 +178,9 @@ function getCategoryEmoji(category){
 </main>
 
 <style>
+      h1{
+      margin: 0 0.35em 0.5em;
+  }
    main{
         display: flex;
         gap: 1em;
@@ -244,5 +247,14 @@ function getCategoryEmoji(category){
     }
     .route{
       height: 100% !important;
+    }
+    @media (max-width: 1200px){
+    main{
+      display: flex;
+      flex-direction: column !important;
+    }
+  }
+      .main-page{
+        margin-left: 1em;
     }
 </style>

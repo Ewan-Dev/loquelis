@@ -85,6 +85,7 @@
         width: 10em;
         margin: 0;
         overflow: hidden;
+        z-index: 1;
         
     }
     .sidebar-header{

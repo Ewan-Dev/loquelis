@@ -552,4 +552,13 @@
     span{
         margin: 0;
     }
+        @media (max-width: 1200px){
+    main{
+      display: flex;
+      flex-direction: column !important;
+    }
+        .main-page{
+        margin-left: 1em;
+    }
+  }
 </style>

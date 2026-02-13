@@ -216,6 +216,9 @@
     </dialog>
 
 <style>
+    h1{
+      margin: 0 0.35em 0.5em;
+  }
     form{
         width:100%;
         display: flex;
@@ -366,5 +369,13 @@
         font-weight: bold;
         color: #c5c5c5;
     }
-
+    @media (max-width: 1200px){
+    main{
+      display: flex;
+      flex-direction: column !important;
+    }
+  }
+      .main-page{
+        margin-left: 1em;
+    }
 </style>

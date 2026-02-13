@@ -57,4 +57,13 @@
         flex-wrap: wrap;
         gap:1em;
     }
+        @media (max-width: 1200px){
+    main{
+      display: flex;
+      flex-direction: column !important;
+    }
+  }
+    .main-page{
+        margin-left: 1em;
+    }
 </style>

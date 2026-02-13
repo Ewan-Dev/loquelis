@@ -263,9 +263,18 @@
     }
     h2,
     h1{
-        margin: 0.2em 0;
+      margin: 0 0.35em 0.5em;
     }
     h2{
         text-align: center;
+    }
+        @media (max-width: 1200px){
+    main{
+      display: flex;
+      flex-direction: column !important;
+    }
+  }
+      .main-page{
+        margin-left: 1em;
     }
 </style>

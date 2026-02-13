@@ -245,6 +245,9 @@
 </main>
 
 <style>
+          h1{
+      margin: 0 0.35em 0.5em;
+  }
     main{
         display: flex;
         gap: 1em;
@@ -390,5 +393,14 @@
         transform: translateY(-3px);
         background-color: #345079;
  
+    }
+        @media (max-width: 1200px){
+    main{
+      display: flex;
+      flex-direction: column !important;
+    }
+  }
+      .main-page{
+        margin-left: 1em;
     }
 </style>

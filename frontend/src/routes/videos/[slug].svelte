@@ -204,8 +204,8 @@ async function addToRecents(video){
     aspect-ratio: 16 / 9;
     width: 70% !important;
   }
-  h1{
-      margin-bottom: 0;
+      h1{
+      margin: 0 0.35em 0.5em;
   }
   section {
       display: flex;
@@ -216,6 +216,7 @@ async function addToRecents(video){
   }
   main{
       display: flex;
+      flex-direction: row;
       gap: 1em;
       align-items: flex-start;
   }
@@ -227,10 +228,17 @@ async function addToRecents(video){
     iframe{
       width: 100% !important;
     }
+    main{
+      display: flex;
+      flex-direction: column !important;
+    }
   }
   .heading {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
   }
+      .main-page{
+        margin-left: 1em;
+    }
 </style>
