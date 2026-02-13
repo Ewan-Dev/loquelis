@@ -7,6 +7,8 @@
     let fullTranslationVisibility = true
     let subtitlesArray = $state([])
     let isDefinitionFetched = $state(true)
+    let fetchSubtitles = true
+
     $effect(() => {
         const segmenter = new Intl.Segmenter('zh', {granularity: 'word'})
         subtitlesArray = [...segmenter.segment(currentLine)].map(s => s.segment)
@@ -44,6 +46,7 @@
     }
 
     async function fetchSentenceTranslation(targetLanguage, nativeLanguage, sentence) {
+        if (fetchSubtitles){
         try {
             const response = await fetch("/.netlify/functions/chat", {
         method: "POST",
@@ -64,6 +67,9 @@
 catch(error){
     console.error(error)
 }}
+else{
+    console.log("Subtitle translations turned off!")
+}}
 
     async function toggleFullTranslationVisibility() {
         const fullTranslateEl = document.getElementsByClassName("full-translate")
@@ -71,9 +77,11 @@ catch(error){
         fullTranslationVisibility = !fullTranslationVisibility
         Array.from(fullTranslateEl).forEach((element) => {
             if(fullTranslationVisibility === true){
+                fetchSubtitles = true
                 element.style.display = "block"
             }
             else{
+                fetchSubtitles = false
                 element.style.display = "none"
             }
         })
