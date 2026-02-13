@@ -394,7 +394,7 @@
         background-color: #345079;
  
     }
-        @media (max-width: 1200px){
+        @media (max-width: 500px){
     main{
       display: flex;
       flex-direction: column !important;
@@ -402,5 +402,6 @@
   }
       .main-page{
         margin-left: 1em;
+        margin-top: 1em;
     }
 </style>

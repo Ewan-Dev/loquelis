@@ -240,5 +240,6 @@ async function addToRecents(video){
   }
       .main-page{
         margin-left: 1em;
+        margin-top: 1em;
     }
 </style>

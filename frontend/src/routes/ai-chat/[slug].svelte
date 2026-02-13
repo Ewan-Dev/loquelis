@@ -281,6 +281,7 @@ function handleDeckSubmit(){
         display: flex;
         gap: 1em;
         align-items: flex-start;
+
         height: 100%;
         background-color: #f7f7f7;
         padding: 0;
@@ -642,7 +643,7 @@ function handleDeckSubmit(){
     .ai-word:hover{
         background-color: #b9b9b9;
     }
-        @media (max-width: 1200px){
+        @media (max-width: 500px){
     main{
       display: flex;
       flex-direction: column !important;
@@ -650,5 +651,6 @@ function handleDeckSubmit(){
   }
       .main-page{
         margin-left: 1em;
+        margin-top: 1em;
     }
 </style>

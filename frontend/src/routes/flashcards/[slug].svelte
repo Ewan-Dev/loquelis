@@ -64,7 +64,7 @@
         flex-direction: column;
         align-items: center; /* Center the flashcard deck */
     }
-        @media (max-width: 1200px){
+        @media (max-width: 500px){
     main{
       display: flex;
       flex-direction: column !important;
@@ -72,6 +72,7 @@
   }
       .main-page{
         margin-left: 1em;
+        margin-top: 1em;
     }
           h1{
       margin: 0 0.35em 0.5em;

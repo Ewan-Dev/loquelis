@@ -214,7 +214,7 @@ async function addToRecents(music){
     flex-direction: column ;
     gap: 0.5em;
   }
-      @media (max-width: 1200px){
+      @media (max-width: 500px){
     main{
       display: flex;
       flex-direction: column !important;
@@ -222,5 +222,6 @@ async function addToRecents(music){
   }
       .main-page{
         margin-left: 1em;
+        margin-top: 1em;
     }
 </style>

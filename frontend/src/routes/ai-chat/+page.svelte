@@ -229,6 +229,7 @@
         display: flex;
         gap: 1em;
         align-items: flex-start;
+        background-color: #fff;
     }
     dialog{
         background-color: #f7f7f7;
@@ -280,10 +281,7 @@
     .main-content{
         display: flex;
         flex-direction: column;
-        gap: 1em;
-        height: 100%;
-        width: 90%;
-        overflow: auto;
+        gap:1em;
     }
     .create-ai-character{
         background-color: #4A70A9;
@@ -369,7 +367,7 @@
         font-weight: bold;
         color: #c5c5c5;
     }
-    @media (max-width: 1200px){
+ @media (max-width: 500px){
     main{
       display: flex;
       flex-direction: column !important;
@@ -377,5 +375,6 @@
   }
       .main-page{
         margin-left: 1em;
+        margin-top: 1em;
     }
 </style>

@@ -57,7 +57,7 @@
         flex-wrap: wrap;
         gap:1em;
     }
-        @media (max-width: 1200px){
+        @media (max-width: 500px){
     main{
       display: flex;
       flex-direction: column !important;
