@@ -93,31 +93,27 @@ async function sendAIMessage(inputContent, chatHistory) {
 }
 async function getAIAnalysis() {
     isWaitingForAnalysis = true
-    const prompt =  `
-    You are an AI for a language learning app. The user and AI are having a conversation in ${characterData.language}. The user's messages are marked with "User :". Your task is to return a pure JSON object as your response will be directly parsed into JSON and use no markdown annotates and the response has two fields:
 
-    1. "analysis" — A strict critique in English aimed at helping the user improve. Also if flashcards deck is valid it means teh user wants to use or see all those deck words. So take that into your anaylisis account - pw well did they respond or did they use any flashcard words?
-    2. "mistakes" — An array of objects. Each object must include:
-
-    {
-    "original_sentence": <user sentence>,
-    "corrected_sentence": <correct version, even if its the same as original if no issues found>
-    }
-
-    ⚠️ Include **every single sentence** spoken by the user — even if it's 100% correct — so we can evaluate all usage. Do not skip or omit any. Assume all are full sentences. Do not return markdown, just raw JSON.
-
-    Here is the deck content:
-    ${flashcardDecks[deckIndex]}
-    Conversation:
-    ${chatHistory.map(msg => `SENT BY ${msg.sender}: ${msg.content}`)}`
-
-    const encodedPrompt = encodeURIComponent(prompt);
-    console.log(prompt)
-    const response = await fetch(`https://text.pollinations.ai/prompt/${encodedPrompt}`)
-    const json = await response.json()
-    chatAnalysisAI =  json
-    isWaitingForAnalysis = false
-    console.log(chatAnalysisAI)
+    try{
+        const response = await fetch("/.netlify/functions/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            prompt: "You are an AI for a language learning app. The user and AI are having a conversation. Return no tags, no markup, just raw JSON with keys `analysis` — A strict critique in English aimed at helping the user improve. Also if the flashcardDeck is truthy then tell the user how well he used the cards in the flashcard deck - and also return `mistakes` — An array of objects. Each mistakes object must include `original_sentence` and `corrected_sentence`",
+            flashcardDeck: flashcardDecks,
+            chatLanguageISO6391: characterData.language,
+            chatHistory: chatHistory.map(msg => { return {user : msg.sender, message: msg.content}}),
+            flashcardDecks: flashcardDecks[deckIndex],
+        })      
+        })      
+        const json = await response.json()
+        chatAnalysisAI =  JSON.parse(json.reply)
+        isWaitingForAnalysis = false
+        console.log(chatAnalysisAI)
+        }
+        catch (error){
+            console.error(error)
+        }
 }
 
 // Fetches flashcards for ability to have AI test you on a deck
