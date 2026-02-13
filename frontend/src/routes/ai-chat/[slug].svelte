@@ -227,6 +227,7 @@ function handleDeckSubmit(){
 
     <!--AI analysis page-->
     {#if chatAnalysisAI}
+    <section class="ai-analysis-page">
     <span class="analysis-character-container">
         <img src={characterData.image} class="analysis-image" alt={characterData.name}>
         <h1 class="analysis-header">{characterData.name}</h1>
@@ -247,6 +248,7 @@ function handleDeckSubmit(){
         </span>
         {/each}
     </div>
+    </section>
     {/if}
     </section>
     </section>
@@ -276,7 +278,7 @@ function handleDeckSubmit(){
     main{
         display: flex;
         gap: 1em;
-        align-items: flex-start;
+        align-items:flex-start ;
 
         height: 100%;
         background-color: #f7f7f7;
@@ -594,6 +596,7 @@ function handleDeckSubmit(){
     .ai-chat-analysis{
         margin: 0;
         width: 95%;
+        min-width: 10em;
         padding: 0.25em  0.5em;
         border-radius: 0.75em;
     }
@@ -648,5 +651,9 @@ function handleDeckSubmit(){
       .main-page{
         margin-left: 1em;
         margin-top: 1em;
+    }
+    .ai-analysis-page{
+        display: flex;
+        flex-direction: column;
     }
 </style>
