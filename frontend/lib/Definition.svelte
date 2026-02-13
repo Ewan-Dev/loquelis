@@ -91,7 +91,7 @@
     {#if word}
     <div class="header">
         <h1>{word}</h1>
-        <button class="close-btn" on:click={word = ''}>X</button>
+        <button class="close-btn" on:click={word = ''}>✕</button>
     </div>
         {#if romanisation}
             <i><p class="romanisation">{romanisation}</p></i>     
@@ -275,6 +275,5 @@
     align-items: center;
     justify-self: center;
     border-radius: 50%;
-
 }
 </style>
