@@ -12,6 +12,7 @@
     .from("profiles")
     .select('recent_videos')
     recentVideos = data[0].recent_videos
+
         console.log(recentVideos)
         })
 

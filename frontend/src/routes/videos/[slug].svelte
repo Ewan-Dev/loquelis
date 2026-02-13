@@ -140,18 +140,16 @@ async function addToRecents(video){
     .single()
   console.log(data.recent_videos)
   const originalArray = data.recent_videos
-  if (originalArray.includes(video)){
-      originalArray.pop(video)
+  let updatedArray = originalArray.filter(v => v.id !== video.id)
+  if (updatedArray.length === 10){
+    updatedArray.splice(0, 1)
   }
-  if (originalArray.length === 10){
-    originalArray.splice(0, 1)
-  }
-  originalArray.push(video)
-  console.log(originalArray)
+  updatedArray.push(video)
+  console.log(updatedArray)
 
   const {updateData, updateError} = await supabase
   .from('profiles')
-  .update({recent_videos: originalArray})
+  .update({recent_videos: updatedArray})
   .eq('user_id', uid)
 
   if (updateError){
