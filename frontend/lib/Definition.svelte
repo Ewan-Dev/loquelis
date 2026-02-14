@@ -87,8 +87,8 @@
 </script>
 
 <section class="definition-container">
-    <section class="definition">
     {#if word}
+    <section class="definition">
     <div class="header">
         <h1>{word}</h1>
         <button class="close-btn" on:click={word = ''}>✕</button>
@@ -119,8 +119,8 @@
         </dialog>
         {/if}
             <InlineStatus type={definitionStatus.type} message={definitionStatus.message}/>
-{/if}
 </section>
+{/if}
 </section>
 <style>
 
