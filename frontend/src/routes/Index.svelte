@@ -104,8 +104,8 @@
         </div> 
     </div>
     <section class="hero-1">
-        <h1 class="welcome">Welcome to Loquelis!!!</h1>
-        <p class="welcome-message">🤗 Happy to see you!</p>
+        <h1 class="welcome">Welcome to Loquelis!</h1>
+        <p class="welcome-message">💬 Learn languages from live subtitles, videos, music, AI characters & flashcards</p>
     </section>
     <a href="./#/app/signup/"  class="get-started-btn shadow" >Let's get started! →</a>
 </section>
@@ -255,11 +255,11 @@
     }
     .welcome {
         color: #ffffff; 
-        width: 80%;
         font-weight: 90%;
         font-size: 4em;
+
         text-align: center;
-        margin: 0;
+        margin: 0 0.5em;
         animation-name: fadeUp;
         animation-duration: 1s;
         animation-timing-function: ease-out;
@@ -302,6 +302,7 @@
         flex-direction: column;
         gap: 1em;
         width: 90%;
+        min-width: 1em;
         height: 100%;
         padding: 1em;
         margin: 1em;
