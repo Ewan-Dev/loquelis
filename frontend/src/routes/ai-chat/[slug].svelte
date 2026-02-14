@@ -281,7 +281,7 @@ function handleDeckSubmit(){
         align-items:flex-start ;
 
         height: 100%;
-        background-color: #f7f7f7;
+        background-color: #fff;
         padding: 0;
     }
     .main-page{
@@ -326,14 +326,14 @@ function handleDeckSubmit(){
         flex-direction: column;
     }
     .chat-container{
-        width: 50%;
+        width: 90%;
         height: fit-content;
         min-height: 50em;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-start;
-        background-color: #fff;
+        background-color: #fafafa;
         border-radius: 1em;
         box-shadow: inset 0 1px 2px #ffffff,
                 0 1px 2px #00000010,
@@ -366,6 +366,10 @@ function handleDeckSubmit(){
         box-shadow: inset 0 1px 2px #ffffff,
                 0 1px 2px #00000030,
                 0 2px 4px #00000035;
+    }
+
+    p{
+        font-size: 1.25em;
     }
     .close-deck-btn{
         border: #c8c8c8 1.5px solid;
@@ -410,8 +414,8 @@ function handleDeckSubmit(){
 
     }
     .character-header-image{
-        width:2.25em;
-        height: 2.25em;
+        width: 4em;
+        height:4em;
         margin: 0;
     }
     .chat-header{
@@ -434,6 +438,7 @@ function handleDeckSubmit(){
     h3{
         height: fit-content;
         margin: 0;
+        font-size: 1.5em;
 
     }
     dialog{ 
@@ -492,6 +497,7 @@ function handleDeckSubmit(){
     }
     .messages-container{
         display: flex;
+        background-color: transparent;
         flex-direction: column;
         gap:0.75em;
         margin: 1em;
@@ -507,6 +513,7 @@ function handleDeckSubmit(){
     .header-messages-container{
         width: 100%;
         height: fit-content;
+        background-color: transparent;
     }
     .user-sent{
         background-color: #5978f4;
@@ -550,7 +557,7 @@ function handleDeckSubmit(){
         color: #fff;
         font-weight: bold;
         height: fit-content;
-        font-size: 0.75em;
+        font-size: 1em;
     }
     .original_sentence,
     .corrected_sentence,
@@ -646,6 +653,9 @@ function handleDeckSubmit(){
     main{
       display: flex;
       flex-direction: column !important;
+    }
+    .chat-container{
+        width: 100%;
     }
   }
       .main-page{
