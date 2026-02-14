@@ -255,9 +255,9 @@
     }
     .welcome {
         color: #ffffff; 
-        width: 30rem;
-        font-weight: 900;
-        font-size: 5em;
+        width: 80%;
+        font-weight: 90%;
+        font-size: 4em;
         text-align: center;
         margin: 0;
         animation-name: fadeUp;
@@ -301,7 +301,7 @@
         align-items: center;
         flex-direction: column;
         gap: 1em;
-        width: 100%;
+        width: 90%;
         height: 100%;
         padding: 1em;
         margin: 1em;
@@ -433,6 +433,7 @@
         animation-name: fadeUp;
         animation-duration: 1.25s;
         animation-timing-function: ease-out;
+        background-color: transparent;
     }
     .info-box{
         height: fit-content;
@@ -465,8 +466,13 @@
         padding: 0;
     }
     .video-info-box{
-        align-self: flex-start;
         width: 25em;
+        border: none;
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
     }
     .media-img{
         height: 8em;
@@ -556,10 +562,6 @@
     main{
       display: flex;
       flex-direction: column !important;
-    }
-        .main-page{
-        margin-left: 1em;
-        margin-top: 1em;
     }
   }
 </style>
