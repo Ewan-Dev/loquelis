@@ -223,8 +223,9 @@ function handleDeckSubmit(){
         </div>
         </div>
     {/if}
+    <div class="definition">
      <Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation} language={characterData.language}/>
-
+</div>
     <!--AI analysis page-->
     {#if chatAnalysisAI}
     <section class="ai-analysis-page">
@@ -281,7 +282,7 @@ function handleDeckSubmit(){
         align-items:flex-start ;
 
         height: 100%;
-        background-color: #fff;
+        background-color: #ffffff;
         padding: 0;
     }
     .main-page{
@@ -308,7 +309,6 @@ function handleDeckSubmit(){
     }
     .send-container{
         display: flex;
-        flex-wrap: wrap;
         padding: 0 0.25em;
         box-sizing: border-box;
         gap:0.25em;
@@ -318,6 +318,9 @@ function handleDeckSubmit(){
         border-radius: 0  0 1em 1em;
         width: 100%;
     }
+    .page-header{
+        margin-top: .45em
+    }
     .stats-container{
         width: 100%;
         padding: 0em 1em 1.75em 1em;
@@ -326,7 +329,8 @@ function handleDeckSubmit(){
         flex-direction: column;
     }
     .chat-container{
-        width: 90%;
+        width: 100%;
+        max-height: 90%;
         height: fit-content;
         min-height: 50em;
         display: flex;
@@ -343,8 +347,8 @@ function handleDeckSubmit(){
         width: 100%;
     }
     .send-message-btn{
-        width: 2.5em;
-        height: 2.5em;
+        width: 2.75em;
+        height: 2.75em;
         margin: 0;
         padding: 0;
         display: flex;
@@ -354,7 +358,7 @@ function handleDeckSubmit(){
         color: #ffffff;
         font-weight: bold;
         float: left;
-        border-radius: 25%;
+        border-radius: 1em;
         border: none;
         box-shadow: inset 0 1px 2px #ffffff,
                 0 1px 2px #00000010,
@@ -400,7 +404,7 @@ function handleDeckSubmit(){
         justify-content: flex-start;
         gap: 1em;
         height: 100%;
-        width: 90%;
+        width: 100%;
         background-color: inherit;
     }
     img {
@@ -456,27 +460,35 @@ function handleDeckSubmit(){
         margin: 0;
     }
     .send-message-input{
-        height: 2.25em;
-        width: 87.5%;
-        margin: 0.7em 0em;
+        height: fit-content;
+        font-size: 2em;
+        border-radius: 0.45em;
+
+        width: 90%;
+        padding: 0 0.3em;
+        margin:  0.3em 0.1em 0.3em 0.15em;
         border:none;
-        border-radius: 10px;
         box-sizing: content-box;
         box-shadow: inset 0 1px 2px #ffffff,
                 0 1px 2px #00000010,
                 0 2px 4px #00000015;
     }
     .message{
-        background-color: #e2e2e2;
         max-width: 18em;
         width: fit-content;
+        height: auto;
+        overflow:visible !important;
         padding: 0.5em 0.75em;
         border-radius: 9px;
         display: flex;
         flex-wrap: wrap;
+        background-color: #e2e2e2;
         gap: 0em 0.1em;
         justify-content:flex-start;
         align-items: flex-start;
+                box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
     }
     .test-deck-btn{
         padding: 0.25em 0.5em;
@@ -501,7 +513,7 @@ function handleDeckSubmit(){
         flex-direction: column;
         gap:0.75em;
         margin: 1em;
-        overflow: scroll ;
+        overflow: visible ;
         height: 85.5%;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
@@ -519,6 +531,7 @@ function handleDeckSubmit(){
         background-color: #5978f4;
         color: #fff;
         align-self: flex-end;
+
         
     }
     .pfp-name-container{
@@ -653,13 +666,26 @@ function handleDeckSubmit(){
     main{
       display: flex;
       flex-direction: column !important;
+    }}
+
+     @media (max-width: 750px){
+        .definition{
+        width: 0;
+        position: absolute;
+        left: -50%;
+        min-width: 15em;
     }
     .chat-container{
-        width: 100%;
+        width: 90%;
     }
+
   }
       .main-page{
         margin: auto 0.25em;
+        width: 100%;
+    }
+    .definition{
+        margin-right: 2em;
     }
     .ai-analysis-page{
         display: flex;
