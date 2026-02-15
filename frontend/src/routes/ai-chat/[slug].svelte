@@ -178,7 +178,6 @@ function handleDeckSubmit(){
 <main class="route">
     <Sidebar currentPage="/ai-chat"/> 
     <section class="main-page">
-    <h1 class="page-header">AI Chat</h1>
         <!-- Main content section for styles to be applied -->
     <section class="main-content">
         {#if !chatAnalysisAI}
@@ -276,6 +275,9 @@ function handleDeckSubmit(){
           h1{
       margin: 0 0.35em 0.5em;
   }
+  button{
+    z-index: 1;
+  }
     main{
         display: flex;
         gap: 1em;
@@ -330,9 +332,7 @@ function handleDeckSubmit(){
     }
     .chat-container{
         width: 100%;
-        max-height: 90%;
-        height: fit-content;
-        min-height: 50em;
+        height: 90%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -403,7 +403,7 @@ function handleDeckSubmit(){
         flex-direction: row;
         justify-content: flex-start;
         gap: 1em;
-        height: 100%;
+        height: 70%;
         width: 100%;
         background-color: inherit;
     }
@@ -463,7 +463,7 @@ function handleDeckSubmit(){
         height: fit-content;
         font-size: 2em;
         border-radius: 0.45em;
-
+        z-index: 1;
         width: 90%;
         padding: 0 0.3em;
         margin:  0.3em 0.1em 0.3em 0.15em;
@@ -509,22 +509,23 @@ function handleDeckSubmit(){
     }
     .messages-container{
         display: flex;
+        height: 100%;
         background-color: transparent;
         flex-direction: column;
         gap:0.75em;
         margin: 1em;
-        overflow: visible ;
-        height: 85.5%;
+        overflow: scroll;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
     }
     .messages-container::-webkit-scrollbar {
         display: none;
+
     }
 
     .header-messages-container{
         width: 100%;
-        height: fit-content;
+        height: 80vh;
         background-color: transparent;
     }
     .user-sent{
@@ -677,6 +678,7 @@ function handleDeckSubmit(){
     }
     .chat-container{
         width: 90%;
+        height: 70vh;
     }
 
   }

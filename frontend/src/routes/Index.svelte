@@ -175,7 +175,7 @@
     <h1>Start your journey. <p class="blue">Today.</p></h1>
     <div class="sign-up-contact-container">
         <a href="./#/app/signup/" class="big-get-started-btn shadow">Get started! →</a>
-        <a class="big-contact-btn shadow" href="./#/app/login/"> <span class="material-symbols-rounded"  >login</span>Sign in</a>
+        <a class="big-contact-btn shadow" href="./#/app/login/"> <span class="material-symbols-rounded" >login</span>Sign in</a>
     </div>
 </section>
 </main>
@@ -564,5 +564,8 @@
       display: flex;
       flex-direction: column !important;
     }
+  }
+  a{
+            z-index: 1;
   }
 </style>
