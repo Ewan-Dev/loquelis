@@ -118,23 +118,25 @@ async function getAIAnalysis() {
 
 // Fetches flashcards for ability to have AI test you on a deck
 async function fetchFlashcardDecks() {
-    if (!flashcardDecks){ // Checks if the decks are already fetched
+    fetchUserSesson()
+    dialogBox.showModal();
+    if (flashcardDecks.length === 0){ // Checks if the decks are already fetched
             const { data, error } = await supabase
-                .from("flashcards")
+                .from("flashcard_decks")
                 .select("*")
                 .eq("author", userID) // By user
-                .eq("language", characterData.language) // Matching language decks to character
             if (error) {
                 // If error fetching flashcard decks
                 console.error('Error fetching flashcard decks:', error)
             }
             if (data){
             flashcardDecks = data
+            console.log("DECKS")
+            console.log(flashcardDecks)
             }
             else{
                 flashcardDecks= []
             }
-            console.log(flashcardDecks)
     }
     
 }
@@ -195,7 +197,7 @@ function handleDeckSubmit(){
                     <p>Loading...</p>
                     {/if}
             </span>
-            <button class="test-deck-btn" onclick={() => {dialogBox.showModal(); fetchFlashcardDecks();}}>Get tested on a deck</button>
+            <button class="test-deck-btn" onclick={() => {fetchFlashcardDecks();}}><span class="material-symbols-rounded get-tested-on-deck">cards_star</span></button>
             <div class="messages-container" bind:this={messagesContainer}>
                 {#each chatHistory as message}
                     {#if message.sender === "AI"}
@@ -376,8 +378,12 @@ function handleDeckSubmit(){
         font-size: 1.25em;
     }
     .close-deck-btn{
-        border: #c8c8c8 1.5px solid;
+        height: 2em;
+                box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
         width: 100%;
+        border-radius: 0.5em;
     }
     .close-deck-btn:hover{
         background-color: #c8c8c8;
@@ -385,16 +391,18 @@ function handleDeckSubmit(){
     .submit-deck-btn{
         width: 100%;
         height: 2em;
+        border: 0;
         background-color: #5274ff;
         color: #ffffff;
-        border: #3855ca 1.5px solid;
+                box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
     }
     .submit-deck-btn:hover{
         width: 100%;
         height: 2em;
         background-color: #3855ca;
         color: #ffffff;
-        border: #3855ca 1.5px solid;
     }
 
     .main-content{
@@ -406,6 +414,7 @@ function handleDeckSubmit(){
         height: 70%;
         width: 100%;
         background-color: inherit;
+        overflow: hidden;
     }
     img {
         border-radius: 100px;
@@ -448,7 +457,10 @@ function handleDeckSubmit(){
     dialog{ 
         padding: 0.75em 0.75em;
         border-radius: 0.5em;
-        border: #b2b2b2 1.5px solid;
+        border: 0;
+                        box-shadow: inset 0 1px 2px #ffffff80,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
     }
     .dialog-container{
         display: flex;
@@ -491,11 +503,14 @@ function handleDeckSubmit(){
                 0 2px 4px #00000015;
     }
     .test-deck-btn{
-        padding: 0.25em 0.5em;
+        padding: 0.3em;
         border: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: rgb(224, 224, 224);
         border-radius: 0 0 0.5em;
-        box-shadow: inset 0 1px 2px #ffffff70,
+        box-shadow:
                 0 1px 2px #00000010,
                 0 2px 4px #00000015;
     }
@@ -506,6 +521,9 @@ function handleDeckSubmit(){
         box-shadow: inset 0 1px 2px #ffffff70,
                 0 1px 2px #00000020,
                 0 2px 4px #00000025;
+            display: flex;
+            align-items: center;
+            justify-content: center;
     }
     .messages-container{
         display: flex;
@@ -527,6 +545,7 @@ function handleDeckSubmit(){
         width: 100%;
         height: 80vh;
         background-color: transparent;
+        overflow: hidden;
     }
     .user-sent{
         background-color: #5978f4;
@@ -644,7 +663,8 @@ function handleDeckSubmit(){
     .deck-label{
         background-color: #f1f1f1;
         margin: 0;
-        width: fit-content;
+        width: 100%;
+        box-sizing: border-box;
         padding: 0.15em 0.25em;
         border-top-right-radius: 0.5em;
         font-size: 1em;
@@ -654,6 +674,7 @@ function handleDeckSubmit(){
         flex-direction: column;
         gap:0;
         width: 100%;
+        background-color: transparent;
     }
     .ai-word{
         margin: 0;
@@ -667,14 +688,21 @@ function handleDeckSubmit(){
     main{
       display: flex;
       flex-direction: column !important;
-    }}
+    }
+        .definition{
+        right:0;
+    margin-left:2em ;}
+    }
 
      @media (max-width: 750px){
         .definition{
+        left: 5%;
+        top: 25%;
         width: 0;
         position: absolute;
-        left: -50%;
         min-width: 15em;
+        z-index: 2;
+        margin: 0;
     }
     .chat-container{
         width: 90%;
@@ -692,5 +720,10 @@ function handleDeckSubmit(){
     .ai-analysis-page{
         display: flex;
         flex-direction: column;
+    }
+    .get-tested-on-deck{
+        margin: 0;
+        color:#adadad;
+        font-size: 1.5em;
     }
 </style>
