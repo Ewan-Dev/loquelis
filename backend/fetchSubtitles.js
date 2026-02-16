@@ -147,6 +147,7 @@ async function downloadAndUploadSubtitles(subtitleType, lang, url, id, level, au
                 "--sub-lang", lang, // Language of the subtitles
                 "--sub-format", "json3", // Format of the subtitles
                 "-o", "subtitles",
+                "--extractor-args", "youtube:player-client=default,mweb",
                 "--print-json", // Print the subtitles in JSON format
                 url // Vid URL
             ], {
