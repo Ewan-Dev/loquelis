@@ -7,12 +7,14 @@
     let slug = $state($location.split('/').pop()) // Gets the last part of the path - the slug
     let flashcardsContent = $state([]) // State to hold the flashcard content
     let flashcardsLength = $state(0) // State to hold the length of the flashcards
-    let {flashcardDeckName, flashcardDeckAuthor} = $state("")
-    
+    let {flashcardDeckName, flashcardDeckAuthor, flashcardDeckAuthorUID} = $state("")
+    let userID = $state(undefined)
     onMount(async () => {
+        fetchUserSesson()
         const flashcards = await fetchFlashcard(slug)
         if (flashcards) {
             flashcardDeckName = flashcards.name
+            flashcardDeckAuthorUID = flashcards.author
             flashcardDeckAuthor = flashcards.author_username
             flashcardsContent = flashcards.content // Assuming 'content' is the field that holds the flashcard data
             flashcardsLength = flashcardsContent.length // Get the length of the flashcards
@@ -21,7 +23,16 @@
             console.error("Flashcards not found")
         }
     })
-
+    async function fetchUserSesson() {
+        const { data, error } = await supabase.auth.getSession()
+        const sessionData = data // Store session data
+        if (error) { //Id error fetching user
+            console.error('Error fetching session:', error)
+        } 
+        else if(sessionData) { // If data exists
+            userID = sessionData.session.user.id
+        }
+    }
     async function fetchFlashcard(id) {
         const { data, error } = await supabase
             .from("flashcard_decks") // From flashcards table
@@ -42,7 +53,7 @@
     <h1 class="page-header">Flashcards</h1>
     <section class="main-content">
         {#if flashcardsContent && flashcardsContent.length > 0}
-            <FlashcardDeck content={flashcardsContent}  backContent={["romanisation", "part-of-speech", "definition"]} deckName={flashcardDeckName} author={flashcardDeckAuthor}/>
+            <FlashcardDeck content={flashcardsContent} id={slug}  backContent={["romanisation", "part-of-speech", "definition"]} deckName={flashcardDeckName} author={flashcardDeckAuthor} isUsers={userID == flashcardDeckAuthorUID}/>
         {/if}
         {#if !flashcardsContent.length > 0}
             <h3>Oops! Looks like there are no cards in this deck. Try going to a video, song or AI Chat and add some!</h3>

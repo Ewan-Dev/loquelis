@@ -1,12 +1,24 @@
-<script>
+            <!-- svelte-ignore state_referenced_locally -->
+            <script>
     import { onMount } from "svelte";
     import confetti from "canvas-confetti";
-    const { content, backContent = [], deckName, author = "" } = $props()
+  import { supabase } from "./supabaseClient";
+  import InlineStatus from "./InlineStatus.svelte";
+    const { content, backContent = [], deckName, author = "", id, isUsers } = $props()
     let cardNumber = $state(0)
     let unsure = $state([])
     let known = $state([])
     let { word, definition, partOfSpeech, romanisation } = $state("")
+    let editCard = $state({})
     let percentKnown = $state(0)
+    let deckContent = content
+    let fullDeck = deckContent
+    let newWord = $state(word)
+    let newDefinition = $state(definition)
+    let newPartOfSpeech = $state(partOfSpeech)
+    let newRomanisation = $state(romanisation)
+    let editFlashcardDialog = $state(HTMLDialogElement)
+    let statusMessage = $state("")
     $effect(() => {
         percentKnown = Math.round((known.length / (unsure.length + known.length)) * 100)
     })
@@ -21,6 +33,10 @@
                 definition = flashcardContentJSON.definition
                 partOfSpeech = flashcardContentJSON.partOfSpeech
                 romanisation = flashcardContentJSON.romanisation
+                newWord =  (word)
+                newDefinition = (definition)
+                newPartOfSpeech = (partOfSpeech)
+                newRomanisation = romanisation
                 showFront()
             }
         })
@@ -84,6 +100,33 @@
             origin: { y: 0 }
         })
     }
+    async function updateFlashcard(){
+        const originalCard = content[cardNumber]
+        const originalIndex = fullDeck.indexOf(originalCard)
+        const newCard = JSON.stringify({word: newWord, definition: newDefinition, partOfSpeech: newPartOfSpeech, romanisation: newRomanisation})
+        fullDeck= [
+            ...fullDeck.slice(0, originalIndex),
+            newCard,
+            ...fullDeck.slice(originalIndex+1)
+        ]
+        console.log(originalCard)
+        console.log(newCard)
+        console.log(fullDeck)
+        try{
+        const {data, error} = await supabase
+            .from('flashcard_decks')
+            .update({content: (fullDeck)})
+            .eq("id", id)
+        .select()
+    if(data){
+        statusMessage = "success"
+    }}
+            catch(error){
+                console.error(error)
+                statusMessage = "error"
+            }
+        }
+    
     $inspect(content)
 </script>
 <main>
@@ -91,6 +134,9 @@
         <div class="title-author-container">
             <h1 class="deck-name-heading">{deckName}</h1>
             <p class="deck-name-author">Uploaded by: <b>@{author}</b></p>
+        {#if isUsers}
+            <button onclick={editFlashcardDialog.show()} class="edit-btn"><span class="material-symbols-rounded edit">edit</span> Edit card</button>
+        {/if}
         </div>
     {/if}
     {#if cardNumber !== content.length}
@@ -129,9 +175,33 @@
         </div>
     {/if}
 </main>
+<dialog bind:this={editFlashcardDialog}>
+    <h2>Editing card: <i>{newWord}</i></h2>
+    <div class="dialog-inputs">
+    <label>Term:</label>
+    <textarea bind:value={newWord} class="small-t-area">{word}</textarea>
+    <label>Romanisation (optional):</label>
+    <textarea bind:value={newRomanisation} class="small-t-area">{romanisation}</textarea>
+    <label>Part of speech:</label>
+    <textarea bind:value={newPartOfSpeech} class="small-t-area">{partOfSpeech}</textarea>
+    <label>Definition:</label>
+    <textarea bind:value={newDefinition} c>{definition}</textarea>
+</div>
+    <button class="update-btn dialog-btn" onclick={updateFlashcard}>Update</button>
+    <button class="cancel-btn dialog-btn" onclick={editFlashcardDialog.close()}>Cancel</button>
+{#if statusMessage == "success"}
+    <InlineStatus type="success" message="Card updated! Reload to see changes!" width="100%"/>
+{/if}
+{#if statusMessage == "error"}
+    <InlineStatus type="error" message="Error changing card." width="100%"/>
+{/if}
+</dialog>
 <style>
 main{
     width: fit-content
+}
+h2{
+    margin: 0em;
 }
 p {
     margin: 0.25em 0;
@@ -139,6 +209,37 @@ p {
 h1{
     height:fit-content;
     margin: 0.05em 0;
+}
+label{
+    margin-top: 0.5em;
+}
+input,
+textarea
+{
+    border: none;
+    font-size: 1.5em;
+    box-shadow: inset 0 1px 2px #ffffff,
+                0 1px 2px #00000010,
+                0 2px 4px #00000015;
+    border: none;
+    width: 90%;
+    height: fit-content;
+    overflow: scroll;
+    resize: none;
+}
+dialog{
+    background-color: #f8f8f8;
+    border: 0;
+    border-radius: 1em;
+            box-shadow: inset 0 1px 2px #ffffff90,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
+}
+.dialog-inputs{
+    display: flex;
+    gap: 0.2em;
+    flex-direction: column;
+    margin-bottom: 1em;
 }
 button{
     border-radius: 8px;
@@ -275,4 +376,58 @@ progress {
     padding: 0.4em 0.25em;
     border-radius: 0.25em;
 }
+    .edit-btn:hover{
+    background-color: #c0c0c0;
+    cursor: pointer;
+}
+.edit{
+    font-size: 1em;
+    margin: 0;
+    padding: 2em 0.5em;
+}
+.edit-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2em;
+    height: 1.75em;
+    background-color: #dcdcdc;
+    width:fit-content;
+    padding: 0.25em 0.75em 0.25em 0.2em;
+    margin-top: 0.5em;
+    border-radius: 15px;
+    box-shadow: inset 0 1px 1px #ffffff,
+                0 1px 1px #00000010,
+                0 1px 2px #00000015;
+    border: none;
+}
+.dialog-btn{
+    height: 2.5em;
+    width: 95%;
+    margin-bottom: 0.5em;
+}
+.update-btn{
+                    background-color: #4A70A9;
+        box-shadow: inset 0 1px 2px #ffffff90,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
+        border: none;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+}
+.dialog-btn:hover{
+    background-color: #d9d9d9;
+}
+.update-btn:hover{
+                    background-color: #33578e;
+}
+.small-t-area{
+    height: 1.25em;
+    resize: none;
+    overflow: hidden;
+}
 </style>
+

@@ -189,7 +189,7 @@
         flex-direction: column;
         justify-content: space-between;
         gap:0.5em;
-        height: 100%;
+        height: fit-content
     }
     .close-dialog-button,
     .submit-btn{
