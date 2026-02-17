@@ -23,8 +23,12 @@
     let addRomanisation = $state("")
     let editFlashcardDialog = $state(HTMLDialogElement)
     let addFlashcardDialog = $state(HTMLDialogElement)
+    let deleteFlashcardDialog = $state(HTMLDialogElement)
     let statusMessage = $state("")
     let modifyDeckState = $state("")
+    let waitingForSB = $state(false)
+    let deletingCard = $state(word)
+
     $effect(() => {
         percentKnown = Math.round((known.length / (unsure.length + known.length)) * 100)
     })
@@ -107,6 +111,7 @@
         })
     }
     async function updateFlashcard(){
+        statusMessage = ""
         modifyDeckState = "update"
         const originalCard = content[cardNumber]
         const originalIndex = fullDeck.indexOf(originalCard)
@@ -135,6 +140,7 @@
         }
 
     async function addFlashcard(){
+        statusMessage = ""
         modifyDeckState = "add"
         const newCard = JSON.stringify({word: addWord, definition: addDefinition, partOfSpeech: addPartOfSpeech, romanisation: addRomanisation})
         fullDeck.push(newCard)
@@ -153,7 +159,36 @@
             }
         }
     
-    $inspect(content)
+        async function deleteFlashcard(){
+        statusMessage = ""
+        waitingForSB = true
+        modifyDeckState = "delete"
+        const currentCard = content[cardNumber]
+        const currentCardIndex = fullDeck.indexOf(currentCard)
+        
+        deletingCard = word
+        console.log(deletingCard)
+        console.log(currentCard)
+        console.log(fullDeck)
+        fullDeck.splice(currentCardIndex, 1)
+        try{
+        const {data, error} = await supabase
+            .from('flashcard_decks')
+            .update({content: (fullDeck)})
+            .eq("id", id)
+        .select()
+    if(data){
+        statusMessage = "success"
+        waitingForSB = false
+    }}
+            catch(error){
+                console.error(error)
+                statusMessage = "error"
+                waitingForSB = false
+            }
+    waitingForSB = false
+        }
+    
 </script>
 <main>
     {#if author && deckName}
@@ -164,6 +199,7 @@
     <span class="deck-edit-buttons">
             <button onclick={() => {editFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span> Edit card</button>
             <button onclick={() => {addFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span>Add card</button>
+            <button onclick={() => {deleteFlashcardDialog.show(); deletingCard = (word);}} class="edit-btn delete"><span class="material-symbols-rounded edit">delete</span>Delete card</button>
     </span>
             {/if}
         </div>
@@ -243,6 +279,21 @@
     <button class="cancel-btn dialog-btn" onclick={() => {addFlashcardDialog.close()}}>Cancel</button>
     {#if statusMessage == "success"}
     <InlineStatus type="success" message="Card added! Reload to see changes!" width="100%"/>
+{/if}
+{#if statusMessage == "error"}
+    <InlineStatus type="error" message="Error changing card." width="100%"/>
+{/if}
+</dialog>
+<dialog bind:this={deleteFlashcardDialog}>
+    <h2>Delete</h2>
+    <p>Are you sure you want to delete the card <i>{word}</i>?</p>
+        {#if waitingForSB}
+    <img class="throbber" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif">
+    {/if}
+    <button class="update-btn dialog-btn" onclick={deleteFlashcard}>Delete</button>
+    <button class="cancel-btn dialog-btn" onclick={() => {deleteFlashcardDialog.close()}}>Cancel</button>
+    {#if statusMessage == "success"}
+    <InlineStatus type="success" message="Card {deletingCard} deleted! Reload to see changes!" width="100%"/>
 {/if}
 {#if statusMessage == "error"}
     <InlineStatus type="error" message="Error changing card." width="100%"/>
@@ -489,6 +540,20 @@ span{
     display: flex;
     flex-direction: row;
     gap:0.1em;
+}
+.delete{
+    background-color: #f68484;
+}
+.delete:hover{
+    background-color: #d76d6d;
+}
+.material-symbols-rounded{
+    margin: 0;
+}
+.throbber{
+    width: 2em;
+    margin: 0 auto;
+
 }
 </style>
 

@@ -10,7 +10,7 @@
         <p class="author">@{author}</p>
     </span>
     <span class="language-image-container">
-          <img src="https://hatscripts.github.io/circle-flags/flags/{country}.svg">
+       <img src="https://hatscripts.github.io/circle-flags/flags/{country}.svg">
     </span>
 
 </section>
