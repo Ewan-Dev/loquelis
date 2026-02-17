@@ -17,8 +17,14 @@
     let newDefinition = $state(definition)
     let newPartOfSpeech = $state(partOfSpeech)
     let newRomanisation = $state(romanisation)
+    let addWord = $state("")
+    let addDefinition = $state("")
+    let addPartOfSpeech = $state("")
+    let addRomanisation = $state("")
     let editFlashcardDialog = $state(HTMLDialogElement)
+    let addFlashcardDialog = $state(HTMLDialogElement)
     let statusMessage = $state("")
+    let modifyDeckState = $state("")
     $effect(() => {
         percentKnown = Math.round((known.length / (unsure.length + known.length)) * 100)
     })
@@ -101,6 +107,7 @@
         })
     }
     async function updateFlashcard(){
+        modifyDeckState = "update"
         const originalCard = content[cardNumber]
         const originalIndex = fullDeck.indexOf(originalCard)
         const newCard = JSON.stringify({word: newWord, definition: newDefinition, partOfSpeech: newPartOfSpeech, romanisation: newRomanisation})
@@ -126,6 +133,25 @@
                 statusMessage = "error"
             }
         }
+
+    async function addFlashcard(){
+        modifyDeckState = "add"
+        const newCard = JSON.stringify({word: addWord, definition: addDefinition, partOfSpeech: addPartOfSpeech, romanisation: addRomanisation})
+        fullDeck.push(newCard)
+        try{
+        const {data, error} = await supabase
+            .from('flashcard_decks')
+            .update({content: (fullDeck)})
+            .eq("id", id)
+        .select()
+    if(data){
+        statusMessage = "success"
+    }}
+            catch(error){
+                console.error(error)
+                statusMessage = "error"
+            }
+        }
     
     $inspect(content)
 </script>
@@ -135,8 +161,11 @@
             <h1 class="deck-name-heading">{deckName}</h1>
             <p class="deck-name-author">Uploaded by: <b>@{author}</b></p>
         {#if isUsers}
-            <button onclick={editFlashcardDialog.show()} class="edit-btn"><span class="material-symbols-rounded edit">edit</span> Edit card</button>
-        {/if}
+    <span class="deck-edit-buttons">
+            <button onclick={() => {editFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span> Edit card</button>
+            <button onclick={() => {addFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span>Add card</button>
+    </span>
+            {/if}
         </div>
     {/if}
     {#if cardNumber !== content.length}
@@ -175,6 +204,7 @@
         </div>
     {/if}
 </main>
+
 <dialog bind:this={editFlashcardDialog}>
     <h2>Editing card: <i>{newWord}</i></h2>
     <div class="dialog-inputs">
@@ -188,9 +218,31 @@
     <textarea bind:value={newDefinition} c>{definition}</textarea>
 </div>
     <button class="update-btn dialog-btn" onclick={updateFlashcard}>Update</button>
-    <button class="cancel-btn dialog-btn" onclick={editFlashcardDialog.close()}>Cancel</button>
+    <button class="cancel-btn dialog-btn" onclick={() => {editFlashcardDialog.close()}}>Cancel</button>
 {#if statusMessage == "success"}
     <InlineStatus type="success" message="Card updated! Reload to see changes!" width="100%"/>
+{/if}
+{#if statusMessage == "error"}
+    <InlineStatus type="error" message="Error changing card." width="100%"/>
+{/if}
+</dialog>
+
+<dialog bind:this={addFlashcardDialog}>
+    <h2>Creating card: <i>{addWord}</i></h2>
+    <div class="dialog-inputs">
+    <label>Term:</label>
+    <textarea bind:value={addWord} class="small-t-area"></textarea>
+    <label>Romanisation (optional):</label>
+    <textarea bind:value={addRomanisation} class="small-t-area"></textarea>
+    <label>Part of speech:</label>
+    <textarea bind:value={addPartOfSpeech} class="small-t-area"></textarea>
+    <label>Definition:</label>
+    <textarea bind:value={addDefinition}></textarea>
+</div>
+    <button class="update-btn dialog-btn" onclick={addFlashcard}>Add</button>
+    <button class="cancel-btn dialog-btn" onclick={() => {addFlashcardDialog.close()}}>Cancel</button>
+    {#if statusMessage == "success"}
+    <InlineStatus type="success" message="Card added! Reload to see changes!" width="100%"/>
 {/if}
 {#if statusMessage == "error"}
     <InlineStatus type="error" message="Error changing card." width="100%"/>
@@ -385,6 +437,9 @@ progress {
     margin: 0;
     padding: 2em 0.5em;
 }
+span{
+
+}
 .edit-btn{
     display: flex;
     align-items: center;
@@ -393,7 +448,7 @@ progress {
     height: 1.75em;
     background-color: #dcdcdc;
     width:fit-content;
-    padding: 0.25em 0.75em 0.25em 0.2em;
+    padding: 0.41em 0.75em 0.25em 0.2em;
     margin-top: 0.5em;
     border-radius: 15px;
     box-shadow: inset 0 1px 1px #ffffff,
@@ -428,6 +483,12 @@ progress {
     height: 1.25em;
     resize: none;
     overflow: hidden;
+}
+.deck-edit-buttons{
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    gap:0.1em;
 }
 </style>
 
