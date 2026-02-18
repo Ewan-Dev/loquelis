@@ -24,11 +24,12 @@
     let editFlashcardDialog = $state(HTMLDialogElement)
     let addFlashcardDialog = $state(HTMLDialogElement)
     let deleteFlashcardDialog = $state(HTMLDialogElement)
+    let deleteDeckDialog = $state(HTMLDialogElement)
     let statusMessage = $state("")
     let modifyDeckState = $state("")
     let waitingForSB = $state(false)
     let deletingCard = $state(word)
-
+$inspect(statusMessage)
     $effect(() => {
         percentKnown = Math.round((known.length / (unsure.length + known.length)) * 100)
     })
@@ -139,6 +140,24 @@
             }
         }
 
+    
+    async function deleteFlashcardDeck(){
+    statusMessage = ""
+        try{
+        const {data, error} = await supabase
+            .from('flashcard_decks')
+            .delete()
+            .eq("id", id)
+    if(!data){
+        statusMessage = "success"
+    }
+}
+            catch(error){
+                console.error(error)
+                statusMessage = "error"
+            }
+        }
+
     async function addFlashcard(){
         statusMessage = ""
         modifyDeckState = "add"
@@ -188,6 +207,8 @@
             }
     waitingForSB = false
         }
+
+        $inspect(content.length)
     
 </script>
 <main>
@@ -197,9 +218,10 @@
             <p class="deck-name-author">Uploaded by: <b>@{author}</b></p>
         {#if isUsers}
     <span class="deck-edit-buttons">
-            <button onclick={() => {editFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span> Edit card</button>
-            <button onclick={() => {addFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span>Add card</button>
-            <button onclick={() => {deleteFlashcardDialog.show(); deletingCard = (word);}} class="edit-btn delete"><span class="material-symbols-rounded edit">delete</span>Delete card</button>
+            <button onclick={() => {editFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span></button>
+            <button onclick={() => {addFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span></button>
+            <button onclick={() => {deleteFlashcardDialog.show(); deletingCard = (word);}} class="edit-btn delete"><span class="material-symbols-rounded edit">tab_close</span></button>
+                        <button onclick={() => {deleteDeckDialog.show()}} class="edit-btn delete"><span class="material-symbols-rounded edit">delete</span></button>
     </span>
             {/if}
         </div>
@@ -209,23 +231,32 @@
             <span class="unsure-count card-count">{unsure.length}</span>
             <span class="known-count card-count">{known.length}</span>
         </span>
+        {#if content}
         <div class="flashcard">
             <h1 class="word">{word}</h1>
             <span class="word-details">
                 {#if romanisation}
                     <i><p class="romanisation">{romanisation}</p></i>
-                {/if}
+              
+              
+                    {/if}
                 <p class="part-of-speech">{partOfSpeech}</p>
             </span>
             <p class="definition">{definition}</p>
         </div>
+        {/if}
         <span class="buttons">
             <button class="dont-know flashcard-button" onclick={handleUnknown}><span class="material-symbols-rounded">do_not_disturb</span>Unsure</button>
             <button class="flip flashcard-button" onclick={showBack}><span class="material-symbols-rounded">autorenew</span>Flip</button>
             <button class="know flashcard-button" onclick={markKnown}><span class="material-symbols-rounded">check_circle</span>Know</button>
         </span>
     {/if}
-    {#if cardNumber === content.length}
+    {#if content.length == 0}
+        <div class="flashcard">
+            <p>Deck is empty!</p>
+        </div>
+    {/if}
+    {#if cardNumber === content.length && content.length > 0}
         <div class="flashcard">
             <p class="known-percentage">Known: {percentKnown}%</p>
             {#if percentKnown !== 100}
@@ -294,6 +325,22 @@
     <button class="cancel-btn dialog-btn" onclick={() => {deleteFlashcardDialog.close()}}>Cancel</button>
     {#if statusMessage == "success"}
     <InlineStatus type="success" message="Card {deletingCard} deleted! Reload to see changes!" width="100%"/>
+{/if}
+{#if statusMessage == "error"}
+    <InlineStatus type="error" message="Error changing card." width="100%"/>
+{/if}
+</dialog>
+
+<dialog bind:this={deleteDeckDialog}>
+    <h2>Delete</h2>
+    <p>Are you sure you want to delete this deck?</p>
+        {#if waitingForSB}
+    <img class="throbber" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif">
+    {/if}
+    <button class="update-btn dialog-btn" onclick={deleteFlashcardDeck}>Delete</button>
+    <button class="cancel-btn dialog-btn" onclick={() => {deleteDeckDialog.close()}}>Cancel</button>
+    {#if statusMessage == "success"}
+    <InlineStatus type="success" message="Deck deleted! Reload to see changes!" width="100%"/>
 {/if}
 {#if statusMessage == "error"}
     <InlineStatus type="error" message="Error changing card." width="100%"/>
@@ -489,7 +536,7 @@ progress {
     padding: 2em 0.5em;
 }
 span{
-
+    margin: 0;
 }
 .edit-btn{
     display: flex;
@@ -498,8 +545,9 @@ span{
     gap: 0.2em;
     height: 1.75em;
     background-color: #dcdcdc;
-    width:fit-content;
-    padding: 0.41em 0.75em 0.25em 0.2em;
+    width:1.75em;
+    height: 1.75em;
+    padding: 0em;
     margin-top: 0.5em;
     border-radius: 15px;
     box-shadow: inset 0 1px 1px #ffffff,
@@ -548,12 +596,20 @@ span{
     background-color: #d76d6d;
 }
 .material-symbols-rounded{
-    margin: 0;
+    margin: 0.1em 0 0 0  ;
+    padding: 0;
 }
 .throbber{
     width: 2em;
     margin: 0 auto;
 
+}
+dialog{
+    padding-bottom: 0;
+}
+.dialog-btn{
+    position: relative;
+    z-index: 5 !important;
 }
 </style>
 
