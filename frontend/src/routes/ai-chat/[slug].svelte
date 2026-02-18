@@ -20,7 +20,7 @@
     let userID = $state("")
     let isDefinitionFetched = true
     let isWaitingForAnalysis = $state(false)
-
+    let chatArray = []
     onMount(async () => {
         await fetchUserSesson()
     })
@@ -143,6 +143,8 @@ async function fetchFlashcardDecks() {
 function handleDeckSubmit(){
     dialogBox.close()
 }
+        const segmenter = new Intl.Segmenter('zh', {granularity: 'word'})
+
 
     async function fetchDefinition(word, contextString) {
         isDefinitionFetched = false
@@ -203,7 +205,7 @@ function handleDeckSubmit(){
                 {#each chatHistory as message}
                     {#if message.sender === "AI"}
                         <div class="message ai-sent">
-                            {#each message.content.split(" ") as word}
+                            {#each [...segmenter.segment(message.content)].map(s => s.segment) as word}
                                 <p class="ai-word" onclick={() => fetchDefinition(word, message.content)}>{word}</p>
                             {/each}
                         </div>

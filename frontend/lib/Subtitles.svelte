@@ -24,7 +24,7 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-            prompt: "Translate this word based of context. Return no tags, no markup, simply just raw JSON with datatype string keys `word` (original), `partOfSpeech`, `phoneticAnnotation` (IMPORTANT: depsite the tag, return all possible readings as a string based of context in whatever is used for the language, such as phonetic-annotation, furigana etc. ) and `definition` (meaning based off context and also simple, normal person-readable info about conjugation) but ONLY return `phonetic-annotation` where it is not necessary. For example non-Latin scripts",
+            prompt: "Translate this word based on context. Return raw JSON only (no tags or extra characters, markdown) with string keys: `word`(original), `partOfSpeech`, `definition`, and `phoneticAnnotation` (include only when needed, e.g., non-Latin scripts; include all possible readings in context such as furigana for Japanese).",
             word: word,
             context: contextString,
             originalWordLanguageISO6391: targetLanguage,
