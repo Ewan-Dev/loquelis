@@ -3,7 +3,7 @@
     import Definition from "./Definition.svelte";
 
     const { currentLine = "Play the video to see live subtitles. Click on an individual word for a definition!", targetLanguage = "", nativeLanguage = "en"} = $props() 
-    let {term, definition, partOfSpeech, original, translated, romanisation} = $state("")
+    let {term, definition, partOfSpeech, original, translated, phoneticAnnotation} = $state("")
     let fullTranslationVisibility = true
     let subtitlesArray = $state([])
     let isDefinitionFetched = $state(true)
@@ -24,7 +24,7 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-            prompt: "Translate this word based of context. Return no tags, no markup, just raw JSON with keys `word` (original), `partOfSpeech`, `romanisation` (or nearest equivalent like furigana ) and `definition` (meaning based off context and also simple, normal person-readable info about conjugation) but ONLY return `romanisation` where it is not necessary. For example non-Latin scripts",
+            prompt: "Translate this word based of context. Return no tags, no markup, simply just raw JSON with datatype string keys `word` (original), `partOfSpeech`, `phoneticAnnotation` (IMPORTANT: depsite the tag, return all possible readings as a string based of context in whatever is used for the language, such as phonetic-annotation, furigana etc. ) and `definition` (meaning based off context and also simple, normal person-readable info about conjugation) but ONLY return `phonetic-annotation` where it is not necessary. For example non-Latin scripts",
             word: word,
             context: contextString,
             originalWordLanguageISO6391: targetLanguage,
@@ -38,7 +38,7 @@
         term = responseJSON.word
         definition = responseJSON.definition
         partOfSpeech = responseJSON.partOfSpeech
-        romanisation = responseJSON.romanisation
+        phoneticAnnotation = responseJSON.phoneticAnnotation
         }
         catch (error){
             console.error(error)
@@ -100,7 +100,7 @@ else{
 {#if !isDefinitionFetched}
 <img class="throbber" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif">
 {/if}
-<Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation} language={targetLanguage}/>
+<Definition word={term} definition={definition} partOfSpeech={partOfSpeech} phoneticAnnotation={phoneticAnnotation} language={targetLanguage}/>
 <span>
 <span class="main-subtitles">
     {#each subtitlesArray as subtitle}

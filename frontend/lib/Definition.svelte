@@ -2,7 +2,7 @@
    import { onMount } from "svelte";
     import { supabase } from "./supabaseClient"
     import InlineStatus from "./InlineStatus.svelte";
-    let {definition, word, partOfSpeech, romanisation, language} = $props() // Pass 
+    let {definition, word, partOfSpeech, phoneticAnnotation, language} = $props() // Pass 
     let definitionStatus = $state({message: "", type: ""}) // Object to store status from ayncronous request
     let currentDeckID = $state() // Current dec ID
     let flashcardDecks = $state([]) // Stores flashcard decks
@@ -40,7 +40,7 @@
     // Append the new word to existing content and update database
     async function updateFlashcard(id) {
         const flashcards = await fetchFlashcardData(id) // Existing flashcards in deck
-        flashcards.push({word, definition, partOfSpeech, romanisation}) // Push to array of existing flashcards
+        flashcards.push({word, definition, partOfSpeech, phoneticAnnotation}) // Push to array of existing flashcards
        // Update newly changed array to database
         const { error } = await supabase
             .from("flashcard_decks")
@@ -93,8 +93,8 @@
         <h1>{word}</h1>
         <button class="close-btn" on:click={word = ''}>✕</button>
     </div>
-        {#if romanisation}
-            <i><p class="romanisation">{romanisation}</p></i>     
+        {#if phoneticAnnotation}
+            <i><p class="phoneticAnnotation">{phoneticAnnotation}</p></i>     
         {/if}
         <p class="part-of-speech">{partOfSpeech}</p>
         <p>{definition}</p>

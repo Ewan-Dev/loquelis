@@ -16,7 +16,7 @@
     let chatAnalysisAI = $state("")
     let {messagesContainer, dialogBox} = $state(HTMLObjectElement)
     let deckIndex = $state()
-    let {term, definition, partOfSpeech, romanisation} = $state("")
+    let {term, definition, partOfSpeech, phoneticAnnotation} = $state("")
     let userID = $state("")
     let isDefinitionFetched = true
     let isWaitingForAnalysis = $state(false)
@@ -153,13 +153,14 @@ function handleDeckSubmit(){
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-            prompt: "Translate this word based of context. Return no tags, no markup, just raw JSON with keys `word` (original), `partOfSpeech`, `romanisation` and `definition` (meaning based off context and also simple, normal person-readable info about conjugation) but ONLY return `romanisation` where it is not necessary. For example non-Latin scripts",
+            prompt: "Translate this word based of context. Return no tags, no markup, simply just raw JSON with keys `word` (original), `partOfSpeech`, `phoneticAnnotation` (IMPORTANT: depsite the tag, return all possible readings as a string based of context in whatever is used for the language, such as phonetic-annotation, furigana etc. ) and `definition` (meaning based off context and also simple, normal person-readable info about conjugation) but ONLY return `phoneticAnnotation` where it is not necessary. For example non-Latin scripts",
             word: word,
             context: contextString,
             originalWordLanguageISO6391: characterData.language,
             translatedWordLanguageISO6391: nativeLanguage,
         })      
-        })      
+        })
+        console.log(response)
         const data = await response.json()
         const responseJSON = JSON.parse(data.reply)
         console.log(responseJSON)
@@ -167,7 +168,7 @@ function handleDeckSubmit(){
         term = responseJSON.word
         definition = responseJSON.definition
         partOfSpeech = responseJSON.partOfSpeech
-        romanisation = responseJSON.romanisation
+        phoneticAnnotation = responseJSON.phoneticAnnotation
         }
         catch (error){
             console.error(error)
@@ -225,7 +226,7 @@ function handleDeckSubmit(){
         </div>
     {/if}
     <div class="definition">
-     <Definition word={term} definition={definition} partOfSpeech={partOfSpeech} romanisation={romanisation} language={characterData.language}/>
+     <Definition word={term} definition={definition} partOfSpeech={partOfSpeech} phoneticAnnotation={phoneticAnnotation} language={characterData.language}/>
 </div>
     <!--AI analysis page-->
     {#if chatAnalysisAI}

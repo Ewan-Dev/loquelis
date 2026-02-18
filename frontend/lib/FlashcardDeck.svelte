@@ -8,7 +8,7 @@
     let cardNumber = $state(0)
     let unsure = $state([])
     let known = $state([])
-    let { word, definition, partOfSpeech, romanisation } = $state("")
+    let { word, definition, partOfSpeech, phoneticAnnotation } = $state("")
     let editCard = $state({})
     let percentKnown = $state(0)
     let deckContent = content
@@ -16,11 +16,11 @@
     let newWord = $state(word)
     let newDefinition = $state(definition)
     let newPartOfSpeech = $state(partOfSpeech)
-    let newRomanisation = $state(romanisation)
+    let newPhoneticAnnotation = $state(phoneticAnnotation)
     let addWord = $state("")
     let addDefinition = $state("")
     let addPartOfSpeech = $state("")
-    let addRomanisation = $state("")
+    let addPhoneticAnnotation = $state("")
     let editFlashcardDialog = $state(HTMLDialogElement)
     let addFlashcardDialog = $state(HTMLDialogElement)
     let deleteFlashcardDialog = $state(HTMLDialogElement)
@@ -43,11 +43,11 @@ $inspect(statusMessage)
                 word = flashcardContentJSON.word
                 definition = flashcardContentJSON.definition
                 partOfSpeech = flashcardContentJSON.partOfSpeech
-                romanisation = flashcardContentJSON.romanisation
+                phoneticAnnotation = flashcardContentJSON.phonetic-annotation
                 newWord =  (word)
                 newDefinition = (definition)
                 newPartOfSpeech = (partOfSpeech)
-                newRomanisation = romanisation
+                newPhoneticAnnotation = phonetic-annotation
                 showFront()
             }
         })
@@ -116,7 +116,7 @@ $inspect(statusMessage)
         modifyDeckState = "update"
         const originalCard = content[cardNumber]
         const originalIndex = fullDeck.indexOf(originalCard)
-        const newCard = JSON.stringify({word: newWord, definition: newDefinition, partOfSpeech: newPartOfSpeech, romanisation: newRomanisation})
+        const newCard = JSON.stringify({word: newWord, definition: newDefinition, partOfSpeech: newPartOfSpeech, phoneticAnnotation: newPhoneticAnnotation})
         fullDeck= [
             ...fullDeck.slice(0, originalIndex),
             newCard,
@@ -161,7 +161,7 @@ $inspect(statusMessage)
     async function addFlashcard(){
         statusMessage = ""
         modifyDeckState = "add"
-        const newCard = JSON.stringify({word: addWord, definition: addDefinition, partOfSpeech: addPartOfSpeech, romanisation: addRomanisation})
+        const newCard = JSON.stringify({word: addWord, definition: addDefinition, partOfSpeech: addPartOfSpeech, phoneticAnnotation: addPhoneticAnnotation})
         fullDeck.push(newCard)
         try{
         const {data, error} = await supabase
@@ -235,8 +235,8 @@ $inspect(statusMessage)
         <div class="flashcard">
             <h1 class="word">{word}</h1>
             <span class="word-details">
-                {#if romanisation}
-                    <i><p class="romanisation">{romanisation}</p></i>
+                {#if phoneticAnnotation}
+                    <i><p class="phonetic-annotation">{phoneticAnnotation}</p></i>
               
               
                     {/if}
@@ -277,8 +277,8 @@ $inspect(statusMessage)
     <div class="dialog-inputs">
     <label>Term:</label>
     <textarea bind:value={newWord} class="small-t-area">{word}</textarea>
-    <label>Romanisation (optional):</label>
-    <textarea bind:value={newRomanisation} class="small-t-area">{romanisation}</textarea>
+    <label>Phonetic Annotation (optional):</label>
+    <textarea bind:value={newPhoneticAnnotation} class="small-t-area">{phoneticAnnotation}</textarea>
     <label>Part of speech:</label>
     <textarea bind:value={newPartOfSpeech} class="small-t-area">{partOfSpeech}</textarea>
     <label>Definition:</label>
@@ -299,8 +299,8 @@ $inspect(statusMessage)
     <div class="dialog-inputs">
     <label>Term:</label>
     <textarea bind:value={addWord} class="small-t-area"></textarea>
-    <label>Romanisation (optional):</label>
-    <textarea bind:value={addRomanisation} class="small-t-area"></textarea>
+    <label>Phonetic Annotation (optional):</label>
+    <textarea bind:value={addPhoneticAnnotation} class="small-t-area"></textarea>
     <label>Part of speech:</label>
     <textarea bind:value={addPartOfSpeech} class="small-t-area"></textarea>
     <label>Definition:</label>
@@ -439,7 +439,7 @@ progress {
 .definition {
     color: #555;
 }
-.romanisation {
+.phonetic-annotation {
     font-style: italic;
     color: #888;
 }

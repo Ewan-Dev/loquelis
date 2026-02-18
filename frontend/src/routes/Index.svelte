@@ -112,7 +112,7 @@
 <section class="page-2 page" >
     <h1>Let's get started with a language-learning favourite - Peppa Pig! 🐷</h1>
     <span class="video-info-box info-box">
-        <p class="icon">💡</p>Click on a word for a definition based off context, part of speech and romanisation.
+        <p class="icon">💡</p>Click on a word for a definition based off context, part of speech and phonetic-annotation.
     </span>
      <span class="video-info-box info-box">
         <p class="icon">📍</p>Play the video and watch the live subtitles flow through!
