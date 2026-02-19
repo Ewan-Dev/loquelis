@@ -4,15 +4,15 @@
     import confetti from "canvas-confetti";
   import { supabase } from "./supabaseClient";
   import InlineStatus from "./InlineStatus.svelte";
-    const { content, backContent = [], deckName, author = "", id, isUsers } = $props()
+    const { content,originalDeck, backContent = [], deckName, author = "", id, isUsers } = $props()
     let cardNumber = $state(0)
     let unsure = $state([])
     let known = $state([])
     let { word, definition, partOfSpeech, phoneticAnnotation } = $state("")
     let editCard = $state({})
     let percentKnown = $state(0)
-    let deckContent = content
-    let fullDeck = deckContent
+    let fullDeckFetched = false
+    let fullDeck = $state(originalDeck)
     let newWord = $state(word)
     let newDefinition = $state(definition)
     let newPartOfSpeech = $state(partOfSpeech)
@@ -30,11 +30,13 @@
     let waitingForSB = $state(false)
     let deletingCard = $state(word)
 $inspect(statusMessage)
+
     $effect(() => {
         percentKnown = Math.round((known.length / (unsure.length + known.length)) * 100)
     })
-    console.log(content)
     onMount(() => {
+        console.log("DECK")
+        console.log(content)
         $inspect(cardNumber)
         $effect(() => {
             if(content && Array.isArray(content) && content[cardNumber]){
@@ -43,11 +45,11 @@ $inspect(statusMessage)
                 word = flashcardContentJSON.word
                 definition = flashcardContentJSON.definition
                 partOfSpeech = flashcardContentJSON.partOfSpeech
-                phoneticAnnotation = flashcardContentJSON.phonetic-annotation
+                phoneticAnnotation = flashcardContentJSON.phoneticAnnotation
                 newWord =  (word)
                 newDefinition = (definition)
                 newPartOfSpeech = (partOfSpeech)
-                newPhoneticAnnotation = phonetic-annotation
+                newPhoneticAnnotation = phoneticAnnotation
                 showFront()
             }
         })
@@ -114,13 +116,14 @@ $inspect(statusMessage)
     async function updateFlashcard(){
         statusMessage = ""
         modifyDeckState = "update"
+            console.log(content)
         const originalCard = content[cardNumber]
-        const originalIndex = fullDeck.indexOf(originalCard)
+        const originalIndex = originalDeck.indexOf(originalCard)
         const newCard = JSON.stringify({word: newWord, definition: newDefinition, partOfSpeech: newPartOfSpeech, phoneticAnnotation: newPhoneticAnnotation})
         fullDeck= [
-            ...fullDeck.slice(0, originalIndex),
+            ...originalDeck.slice(0, originalIndex),
             newCard,
-            ...fullDeck.slice(originalIndex+1)
+            ...originalDeck.slice(originalIndex+1)
         ]
         console.log(originalCard)
         console.log(newCard)
@@ -161,8 +164,13 @@ $inspect(statusMessage)
     async function addFlashcard(){
         statusMessage = ""
         modifyDeckState = "add"
+        console.log("cards", originalDeck)
         const newCard = JSON.stringify({word: addWord, definition: addDefinition, partOfSpeech: addPartOfSpeech, phoneticAnnotation: addPhoneticAnnotation})
-        fullDeck.push(newCard)
+        fullDeck= [
+            newCard,
+            ...originalDeck
+        ]
+        console.log(fullDeck)
         try{
         const {data, error} = await supabase
             .from('flashcard_decks')
@@ -183,12 +191,12 @@ $inspect(statusMessage)
         waitingForSB = true
         modifyDeckState = "delete"
         const currentCard = content[cardNumber]
-        const currentCardIndex = fullDeck.indexOf(currentCard)
-        
+        const currentCardIndex = originalDeck.indexOf(currentCard)
+        fullDeck = originalDeck
         deletingCard = word
         console.log(deletingCard)
         console.log(currentCard)
-        console.log(fullDeck)
+        console.log(originalDeck)
         fullDeck.splice(currentCardIndex, 1)
         try{
         const {data, error} = await supabase
@@ -237,8 +245,6 @@ $inspect(statusMessage)
             <span class="word-details">
                 {#if phoneticAnnotation}
                     <i><p class="phonetic-annotation">{phoneticAnnotation}</p></i>
-              
-              
                     {/if}
                 <p class="part-of-speech">{partOfSpeech}</p>
             </span>
@@ -316,7 +322,7 @@ $inspect(statusMessage)
 {/if}
 </dialog>
 <dialog bind:this={deleteFlashcardDialog}>
-    <h2>Delete</h2>
+    <h2>Delete</h2> 
     <p>Are you sure you want to delete the card <i>{word}</i>?</p>
         {#if waitingForSB}
     <img class="throbber" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif">

@@ -52,7 +52,8 @@
     <section class="main-page">
     <h1 class="page-header">Flashcards</h1>
     <section class="main-content">
-            <FlashcardDeck content={flashcardsContent} id={slug}  backContent={["phonetic-annotation", "part-of-speech", "definition"]} deckName={flashcardDeckName} author={flashcardDeckAuthor} isUsers={userID === flashcardDeckAuthorUID}/>
+        <p>{JSON.stringify(flashcardsContent)}</p>
+            <FlashcardDeck content={flashcardsContent} originalDeck={flashcardsContent} id={slug}  backContent={["phonetic-annotation", "part-of-speech", "definition"]} deckName={flashcardDeckName} author={flashcardDeckAuthor} isUsers={userID === flashcardDeckAuthorUID}/>
         {#if !flashcardsContent}
             <h3>Oops! Looks like there are no cards in this deck. Try going to a video, song or AI Chat and add some!</h3>
         {/if}
