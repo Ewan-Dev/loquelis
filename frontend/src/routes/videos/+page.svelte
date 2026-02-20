@@ -225,9 +225,11 @@ function getCategoryEmoji(category){
     }
     .category-section{
         display: flex;
-        flex-wrap: wrap;
                     gap: 1em;
+        flex-direction: row;
               background-color: transparent;
+        overflow: scroll;
+        height: 17.5em;
     }
     .categories-section{
         background-color: transparent;

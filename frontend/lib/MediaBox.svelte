@@ -11,10 +11,10 @@
     export let type = null; // § Type of media, e.g., "video" or "music"
 
     if (name.length > 45) {
-        name = name.slice(0, 42) + '...'
+        name = name.slice(0, 37) + '...'
     }
-    if (artist.length > 45) {
-        artist = artist.slice(0, 42) + '...'
+    if (artist.length > 23) {
+        artist = artist.slice(0, 20) + '...'
     }
 </script>
 
