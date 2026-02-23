@@ -425,6 +425,9 @@ progress {
     background-color: #A4F8BD;
     color: #437150;
 }
+.flashcard-button{
+    z-index: 5;
+}
 .flashcard {
     border: 1px solid #ccc;
     padding: 1em;
