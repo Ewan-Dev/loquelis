@@ -106,8 +106,16 @@
 <p class="description">Learn with flashcards, AI chats, flashcards, live subtitles on videos and music.</p>
 </section>
 <section class="flashcard-hero hero">
-<p class="description">Create your own flashcard decks</p>
-<img src="/static/flashcards.png" class="flashcards">
+<p class="description flashcards-desc">Create your own flashcard decks</p>
+<img src=" https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/flashcards.png?raw=true" class="flashcards">
+</section>
+<section class="video-hero hero">
+<p class="description video-desc">Upload videos/music from YouTube</p>
+<img src=" https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/videos.png?raw=true" class="videos">
+</section>
+<section class="characters-hero hero">
+<p class="description characters-desc">Chat with AI characters</p>
+<img src=" https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/characters.png?raw=true" class="characters">
 </section>
 <section class="page-5 page " >
     <h1>Start your journey. <p class="blue">Today.</p></h1>
@@ -131,42 +139,59 @@ header{
     border-bottom: #cccccc 1px solid;
 
 }
+.hero{
+    max-width: 50em;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 2em;
+}
+
+
+.description{
+    font-size: 2.5em;
+    font-style: italic;
+    margin: 0;
+}
 .description-hero{
     background-color: #F8F8F8;
     max-width: 50em;
     width: fit-content;
-    height: 15em;
+    height: 20%;
+    padding:  2em;
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
-.hero{
-    max-width: 50em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 2em;
+.video-hero{
+    background-color: #F8F8F8;
 }
+
 .flashcards{
     width: 19em;
     height: auto;
     margin: 1em;
     margin-left: 0;
 }
+.flashcard-hero{
+    display: flex;
+    width: fit-content;
+    max-width: 52em;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em 0;
+    padding-right: 1em;
+    gap:1em;
+}
+
 .unlocked-text{
     font-style: italic;
 }
 .text-button{
     margin-left: 2em ;
     width: 0;
-}
-.flashcard-hero{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 0 2em;
-    gap:1em;
 }
 .main-hero-button{
     width: 7.5em;
@@ -179,21 +204,50 @@ header{
     0 1px 2px #00000010,
     0 2px 4px #00000015;    
 }
-.description{
-    font-size: 2.5em;
-    font-style: italic;
-    margin: 0;
-}
 .main-hero{
     display: flex;
     flex-direction: row;
     align-items: center;
         justify-content:space-between;
-    max-width: 50em;
+    max-width: 54em;
+    padding: 0;
 }
+        @media (max-width: 600px){
+    main{
+      display: flex;
+      flex-direction: column !important;
+    }
+    .macbook{
+        height: 15em;
+        width: auto !important;
+        position: relative;
+        left: 4.5em;
+    }
+    .main-hero{
+    height: 15em;
+    }
+    .description{
+    font-size: 2em;
+}
+.description-hero{
+    padding: 1em;
+}
+.flashcards{
+    width: 11em;
+    height: auto;
+    margin: 0;
+}
+.flashcard-hero{
+
+        gap:0;
+}
+  }
 .macbook{
     width: 20em;
     z-index: 0;
+}
+.flashcards-desc{
+    margin-left: 0.75em;
 }
 .main-hero-text{
 position: relative;
@@ -564,12 +618,7 @@ height: 1em;
     span{
         margin: 0;
     }
-        @media (max-width: 500px){
-    main{
-      display: flex;
-      flex-direction: column !important;
-    }
-  }
+
   a{
             z-index: 1;
   }
