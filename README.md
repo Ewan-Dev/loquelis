@@ -92,6 +92,10 @@ Success!
 {...}
 C1
 ```
+
+### Note about AI APIs
+If you want to use your own AI API adjust the Netlify chat.js function to use your own API. Make sure your site is deployed on Netlify for it to work.
+
 ## ✅ Tested with
 - Node.js v22.9.0 
 - Vite 6.3.5
