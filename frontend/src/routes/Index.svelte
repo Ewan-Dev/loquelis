@@ -251,7 +251,7 @@ header{
     height: 15em;
     }
     .description{
-    font-size: 2em;
+    font-size: 1.9em;
 }
 .description-hero{
     padding: 1em;
@@ -263,7 +263,7 @@ header{
 }
 .videos,
 .characters{
-    width: 10em !important;
+    width: 9em !important;
 }
 .flashcard-hero,
 .video-hero,
