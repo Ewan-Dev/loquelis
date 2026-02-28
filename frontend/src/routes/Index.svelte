@@ -90,88 +90,26 @@
   <script src="https://www.youtube.com/iframe_api"></script> <!-- For getting the current time on YT iframe embed -->
 </svelte:head>
 <main>
-<section class="page-1 page">
-    <div class="media-scroller">
-        <div class="media-list">
-            <span class="media-box music-media-box"><span class="emoji music-emoji">🎧</span> Music</span>
-            <span class="media-box videos-media-box"><span class="emoji videos-emoji">📹</span> Videos</span>
-            <span class="media-box flashcards-media-box"><span class="emoji flashcards-emoji">🗃️</span> Flashcards</span>
-            <span class="media-box ai-chats-media-box"><span class="emoji ai-chats-emoji">💬</span> AI Chats</span>      
-            <span class="media-box music-media-box"><span class="emoji music-emoji">🎧</span> Music</span>
-            <span class="media-box videos-media-box"><span class="emoji videos-emoji">📹</span> Videos</span>
-            <span class="media-box flashcards-media-box"><span class="emoji flashcards-emoji">🗃️</span> Flashcards</span>
-            <span class="media-box ai-chats-media-box"><span class="emoji ai-chats-emoji">💬</span> AI Chats</span>    
-        </div> 
+<header>
+    <img src="https://github.com/Ewan-Dev/loquelis/blob/main/frontend/static/loquela.png?raw=true" class="logo">
+    <p class="logo-text">Loquelis</p>
+</header>
+<section class="main-hero hero">
+    <div class="text-button">
+        <p class="main-hero-text languages-text">Languages</p>
+        <p class="main-hero-text unlocked-text">Unlocked</p>
+        <button class="main-hero-button">Get Started →</button>
     </div>
-    <section class="hero-1">
-        <h1 class="welcome">Welcome to Loquelis!</h1>
-        <p class="welcome-message">💬 Learn languages from live subtitles, videos, music, AI characters & flashcards</p>
-    </section>
-    <a href="./#/app/signup/"  class="get-started-btn shadow" >Let's get started! →</a>
+    <img src="https://github.com/Ewan-Dev/loquelis/blob/main/frontend/static/macbook.png?raw=true" class="macbook">
 </section>
-<section class="page-2 page" >
-    <h1>Let's get started with a language-learning favourite - Peppa Pig! 🐷</h1>
-    <span class="video-info-box info-box">
-        <p class="icon">💡</p>Click on a word for a definition based off context, part of speech and phonetic-annotation.
-    </span>
-     <span class="video-info-box info-box">
-        <p class="icon">📍</p>Play the video and watch the live subtitles flow through!
-    </span>
-    <section class="video-container">
-           <iframe id="player" src={`https://www.youtube.com/embed/Q_sqR4aLLu0?enablejsapi=1`} title={ "peppapig" } frameborder="0" allowfullscreen></iframe>
-            <Subtitles
-                currentLine={currentLine}
-                targetLanguage={"de"}
-                />
-    </section>
+<section class="description-hero hero">
+<p class="description">Learn with flashcards, AI chats, flashcards, live subtitles on videos and music.</p>
 </section>
-<hr>
-<section class="page-3 page">
-    <h2>Learn with user curated/ custom:</h2>
-    <div class="media-container">
-            <span class="media-box music-media-box" onclick={() => musicHeader.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })}><span class="emoji music-emoji">🎧</span> Music</span>
-            <span class="media-box videos-media-box" onclick={() => videoHeader.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })}><span class="emoji videos-emoji">📹</span> Videos</span>
-            <span class="media-box flashcards-media-box" onclick={() => flashcardHeader.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })}><span class="emoji flashcards-emoji">🗃️</span> Flashcards</span>
-            <span class="media-box ai-chats-media-box" onclick={() => chatAIHeader.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })}><span class="emoji ai-chats-emoji">💬</span> AI Chats</span>  
-    </div>    
+<section class="flashcard-hero hero">
+<p class="description">Create your own flashcard decks</p>
+<img src="/static/flashcards.png" class="flashcards">
 </section>
-<hr>
-<section class="page-4 page"  bind:this={musicHeader}>
-    <h1 class="media-header">🎧 Music</h1> 
-    <p class="media-p">Learn through user curated music options and immerse yourself in the culture of the region of your chosen language</p>
-    <div class="media-image-container">
-        <img src="https://upload.wikimedia.org/wikipedia/en/b/bc/Molchat_Doma_-_Etazhi.png" alt="Molchat Doma music" class="media-img">
-        <img src="https://upload.wikimedia.org/wikipedia/en/4/40/99_Luftballons_single_cover.jpg"  alt="99 Luftballons Music" class="media-img">
-        <img src="https://upload.wikimedia.org/wikipedia/en/f/fa/RammsteinRadioSingleCover.jpg" alt="Rammstein Music" class="media-img">
-        <img src="https://upload.wikimedia.org/wikipedia/en/2/20/Fortuna_Wheel.jpg" alt="Rammstein Music" class="media-img">
-    </div>
-    <hr  bind:this={videoHeader}>
-    <h1 class="media-header" >📹 Video</h1> 
-    <p class="media-p">Learn through user curated video options and finally switch from textbooks to shows, documentaries, news and YouTubers</p>
-    <div class="media-image-container">
-        <img src="https://i.ytimg.com/vi/WYqIlqp2_9c/sddefault.jpg" alt="coca cola documentary in german" class="vid-media-img media-img">
-        <img src="https://i.ytimg.com/vi/_fPXQnfCWqI/sddefault.jpg" class="vid-media-img media-img" alt="french news">
-        <img src="https://i.ytimg.com/vi/ZzfeHWgEVDs/sddefault.jpg" alt="vlog video" class="vid-media-img media-img">
-    </div>
-    
-    <hr  bind:this={flashcardHeader} >
-    <h1 class="media-header">🗃️ Flashcards</h1> 
-    <p class="media-p">Create your own decks from words saved from songs, videos and AI Chats</p>
-    <div class="media-image-container">
-        <img src="https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/food-deck.png" class="deck-media-img media-img" alt="deck">
-        <img src="https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/animals-deck.png" alt="deck" class="deck-media-img media-img">
-        <img src='https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/flashcards.png' alt="flashcards" class="deck-media-img media-img">
-    </div>    
-    
-    <hr>
-    <h1 class="media-header"  bind:this={chatAIHeader}>💬 AI Chat</h1> 
-    <p class="media-p">Create your own AI character to practise your language skills and decks with.</p>
-    <div class="media-image-container">
-        <img src="https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/ai-chat.png" alt="ai chat" class="ai-chat-img media-img">
-    </div>
-</section>
-<hr>
-<section class="page-5 page" >
+<section class="page-5 page " >
     <h1>Start your journey. <p class="blue">Today.</p></h1>
     <div class="sign-up-contact-container">
         <a href="./#/app/signup/" class="big-get-started-btn shadow">Get started! →</a>
@@ -180,17 +118,101 @@
 </section>
 </main>
 <style>
-    iframe{
-        width: 70%;
-        aspect-ratio: 16/ 9;
-        border-radius: 1em;
-        align-self: flex-start;
-        text-align: left;
-        margin: 0;
-        margin-right: 0.75em;
-        animation-name: fadeUp;
-        animation-duration: 1.25s;
-        animation-timing-function: ease-out;
+main{
+    gap:0;
+}
+header{
+    padding: 0.5em 0.25em;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    gap:0.25em;
+    border-bottom: #cccccc 1px solid;
+
+}
+.description-hero{
+    background-color: #F8F8F8;
+    max-width: 50em;
+    width: fit-content;
+    height: 15em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.hero{
+    max-width: 50em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2em;
+}
+.flashcards{
+    width: 19em;
+    height: auto;
+    margin: 1em;
+    margin-left: 0;
+}
+.unlocked-text{
+    font-style: italic;
+}
+.text-button{
+    margin-left: 2em ;
+    width: 0;
+}
+.flashcard-hero{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2em;
+    gap:1em;
+}
+.main-hero-button{
+    width: 7.5em;
+    margin: 0.75em 0 ;
+    background-color: #1B1B1B ;
+    color: #fff;
+    font-size: 1.15em;
+    border-radius: 2em;
+    box-shadow: inset 0 1px 1px #ffffff,
+    0 1px 2px #00000010,
+    0 2px 4px #00000015;    
+}
+.description{
+    font-size: 2.5em;
+    font-style: italic;
+    margin: 0;
+}
+.main-hero{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+        justify-content:space-between;
+    max-width: 50em;
+}
+.macbook{
+    width: 20em;
+    z-index: 0;
+}
+.main-hero-text{
+position: relative;
+font-size: 2.75em;
+margin: 0;
+width:fit-content;
+overflow: visible;
+z-index: 2;
+height: 1em;
+}
+.logo-text{
+    font-size: 1.25em;
+    margin: 0;
+    margin-bottom: 3px;
+    z-index: 2;
+}
+    .logo{
+        height: 2em ;
+        margin:0 0.5em;
     }
     h1,
     h2{
@@ -206,18 +228,9 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 2em;
-        width: 90%
-    }
-    hr{
-        height:2.5px;
-        border-radius: 1em;
-        width: 50%;
-        border-width:0;
-        color:gray;
-        background-color:rgb(209, 209, 209);
-        margin: 0em;
-        align-self: center;
+        gap: 0;
+        width: 100%
+    
     }
     p{
         margin: 0 1em;
@@ -227,14 +240,6 @@
         color: #ffffff;
     }
 
-    .media-container{
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 1em;
-        margin: 0;
-    }
     .page{
         width: 95%;
         height: 100%;
