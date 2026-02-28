@@ -114,12 +114,12 @@
 <img src=" https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/videos.png?raw=true" class="videos">
 </section>
 <section class="characters-hero hero">
-<p class="description characters-desc">Chat with AI characters</p>
+<p class="description characters-desc">Chat with custom AI characters</p>
 <img src=" https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/characters.png?raw=true" class="characters">
 </section>
-<section class="page-5 page " >
-    <h1>Start your journey. <p class="blue">Today.</p></h1>
-    <div class="sign-up-contact-container">
+<section class="auth-container" >
+    <p class="start-journey">Start your journey. <b>Today.</b></p>
+        <div class="sign-up-contact-container">
         <a href="./#/app/signup/" class="big-get-started-btn shadow">Get started! →</a>
         <a class="big-contact-btn shadow" href="./#/app/login/"> <span class="material-symbols-rounded" >login</span>Sign in</a>
     </div>
@@ -150,7 +150,11 @@ header{
 .arrow{
     font-size: 1em;
 }
-
+.start-journey{
+    font-size: 2.25em;
+    text-align: center;
+    margin-bottom: 0.25em;
+}
 .description{
     font-size: 2.5em;
     font-style: italic;
@@ -196,6 +200,14 @@ header{
 .text-button{
     margin-left: 2em ;
     width: 0;
+}
+.auth-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #f8f8f8;
+    padding: 1em;
 }
 .main-hero-button{
     width: 7.1em;
@@ -340,7 +352,6 @@ height: 1em;
     }
     .welcome {
         color: #ffffff; 
-        font-weight: 90%;
         font-size: 4em;
 
         text-align: center;
@@ -403,7 +414,6 @@ height: 1em;
         padding: 0;
         background-color: rgb(33, 32, 32);
         color: #ffffff;
-        font-weight: bold;
         border-radius: 2em;
         animation-name: fadeIn;
         animation-duration: 3s;
@@ -412,7 +422,6 @@ height: 1em;
     .get-started-btn:hover{
         background-color: rgb(83, 83, 83);
         color: #ffffff;
-        font-weight: bold;
         border-radius: 2em;
     }
     .flags{
@@ -593,7 +602,6 @@ height: 1em;
         font-size: 1em;
         background-color: #2e2e2e;
         color: #ffffff;
-        font-weight: bold;
         border-radius: 1em;
     }
        .big-contact-btn{
@@ -607,7 +615,6 @@ height: 1em;
         font-size: 1em;
         background-color: rgb(226, 226, 226);
         color: #202020;
-        font-weight: bold;
         border-radius: 1em;
     }
         .big-get-started-btn:hover{
