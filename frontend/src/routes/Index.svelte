@@ -98,7 +98,7 @@
     <div class="text-button">
         <p class="main-hero-text languages-text">Languages</p>
         <p class="main-hero-text unlocked-text">Unlocked</p>
-        <button class="main-hero-button">Get Started →</button>
+        <button class="main-hero-button">Get Started<span class="material-symbols-rounded arrow"><span class="material-symbols-outlined">arrow_forward</span></button>
     </div>
     <img src="https://github.com/Ewan-Dev/loquelis/blob/main/frontend/static/macbook.png?raw=true" class="macbook">
 </section>
@@ -110,7 +110,7 @@
 <img src=" https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/flashcards.png?raw=true" class="flashcards">
 </section>
 <section class="video-hero hero">
-<p class="description video-desc">Upload videos/music from YouTube</p>
+<p class="description videos-desc">Upload videos/music from YouTube</p>
 <img src=" https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/videos.png?raw=true" class="videos">
 </section>
 <section class="characters-hero hero">
@@ -147,7 +147,9 @@ header{
     justify-content: center;
     padding: 1em 2em;
 }
-
+.arrow{
+    font-size: 1em;
+}
 
 .description{
     font-size: 2.5em;
@@ -174,13 +176,15 @@ header{
     margin: 1em;
     margin-left: 0;
 }
-.flashcard-hero{
+.flashcard-hero,
+.video-hero,
+.characters-hero{
     display: flex;
     width: fit-content;
     max-width: 52em;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 0.5em 0;
     padding-right: 1em;
     gap:1em;
@@ -194,7 +198,7 @@ header{
     width: 0;
 }
 .main-hero-button{
-    width: 7.5em;
+    width: 7.1em;
     margin: 0.75em 0 ;
     background-color: #1B1B1B ;
     color: #fff;
@@ -203,6 +207,14 @@ header{
     box-shadow: inset 0 1px 1px #ffffff,
     0 1px 2px #00000010,
     0 2px 4px #00000015;    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.main-hero-button:hover{
+    width: 7.1em;
+    margin: 0.75em 0 ;
+    background-color: #2e2e2e ;
 }
 .main-hero{
     display: flex;
@@ -233,21 +245,35 @@ header{
     padding: 1em;
 }
 .flashcards{
-    width: 11em;
+    width: 11em !important;
     height: auto;
     margin: 0;
 }
-.flashcard-hero{
+.videos,
+.characters{
+    width: 10em !important;
+}
+.flashcard-hero,
+.video-hero,
+.characters-hero{
 
         gap:0;
 }
+.hero{
+    height: 12em;
+}
   }
-.macbook{
+.macbook,
+.videos,
+.characters{
     width: 20em;
     z-index: 0;
 }
-.flashcards-desc{
+.flashcards-desc,
+.videos-desc,
+.characters-desc{
     margin-left: 0.75em;
+    width: 50% ;
 }
 .main-hero-text{
 position: relative;
