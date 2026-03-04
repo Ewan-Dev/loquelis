@@ -64,8 +64,10 @@ async function sendAIMessage(inputContent, chatHistory) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-            prompt: "You are an AI chatbot roleplaying a character for a language learning app. Keep it chat-like and follow the character trait. Return just your response. No formatting. If a flashcard deck is submitted, relate your answers off that",
-            characterName: characterData.name,
+            prompt: "You are an AI chatbot roleplaying a character for a language learning app. Keep it chat-like and follow the character trait. Return just your response. No formatting. If a flashcard deck is submitted, relate your answers off that. if extraPrompt is supplied factor that in yout
+r responses",
+            extraPrompt: characterData.extra_prompt,
+characterName: characterData.name,
             characterLanguageISO6391: characterData.language,
             characterTrait: characterData.trait,
             characterOccupation: characterData.occupation,
