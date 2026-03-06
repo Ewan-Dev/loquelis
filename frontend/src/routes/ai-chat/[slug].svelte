@@ -533,11 +533,12 @@ function handleDeckSubmit(){
     }
     .messages-container{
         display: flex;
-        height: 100%;
+        height: 72%;
         background-color: transparent;
         flex-direction: column;
         gap:0.75em;
         margin: 1em;
+        margin-bottom: 2em;
         overflow: scroll;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
