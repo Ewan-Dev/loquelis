@@ -57,6 +57,8 @@
 
 async function sendAIMessage(inputContent, chatHistory) {
     let prompt = ""
+    console.log("cdata")
+    console.log(characterData)
     // ADD MESSAGE TO HISTORY
     chatHistory.push({sender: "User", content: inputContent}) // Add user response
         console.log(prompt)
@@ -547,7 +549,7 @@ function handleDeckSubmit(){
 
     .header-messages-container{
         width: 100%;
-        height: 80vh;
+        height: 100%;
         background-color: transparent;
         overflow: hidden;
     }
