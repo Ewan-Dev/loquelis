@@ -226,9 +226,9 @@ $inspect(statusMessage)
             <p class="deck-name-author">Uploaded by: <b>@{author}</b></p>
         {#if isUsers}
     <span class="deck-edit-buttons">
-            <button onclick={() => {editFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span></button>
-            <button onclick={() => {addFlashcardDialog.show()}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span></button>
-            <button onclick={() => {deleteFlashcardDialog.show(); deletingCard = (word);}} class="edit-btn delete"><span class="material-symbols-rounded edit">tab_close</span></button>
+            <button onclick={() => {editFlashcardDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span></button>
+            <button onclick={() => {addFlashcardDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span></button>
+            <button onclick={() => {deleteFlashcardDialog.show(); deletingCard = (word);statusMessage = "";}} class="edit-btn delete"><span class="material-symbols-rounded edit">tab_close</span></button>
                         <button onclick={() => {deleteDeckDialog.show()}} class="edit-btn delete"><span class="material-symbols-rounded edit">delete</span></button>
     </span>
             {/if}
