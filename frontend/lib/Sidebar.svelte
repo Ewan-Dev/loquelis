@@ -79,7 +79,7 @@
         font-size: 1.15em;
     }
     .sidebar{
-        height: 100%;
+        height: 100vh;
         padding: 0.25em;
         background-color: #f2f2f2;
         width: 10em;

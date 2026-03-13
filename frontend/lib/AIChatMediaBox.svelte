@@ -47,10 +47,7 @@
         border-radius: 0.25em;
     }
     .ai-chat-box {
-        box-shadow: inset 0 1px 2px #ffffff,
-                0 1px 2px #00000010,
-                0 2px 4px #00000015;
-        border: none;
+
         padding: 1em;
         width: 97%;
         height: 3.25em;
