@@ -378,6 +378,6 @@
     }
   }
       .main-page{
-        margin: auto 0.25em;
+        margin: 0 0.25em;
     }
 </style>

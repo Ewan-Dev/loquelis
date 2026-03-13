@@ -81,7 +81,7 @@
     }
   }
       .main-page{
-        margin: auto 0.25em;
+        margin: 0 0.25em;
     }
           h1{
       margin: 0 0.35em 0.5em;

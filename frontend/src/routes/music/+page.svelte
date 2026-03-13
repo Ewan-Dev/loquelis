@@ -137,6 +137,7 @@
         display: flex;
         gap: 1em;
         align-items: flex-start;
+        justify-content: flex-start;
             margin-right: 1em;
     }
     .main-content{
@@ -168,6 +169,6 @@
     }
   }
       .main-page{
-        margin: auto 0.25em;
+        margin: 0 0.25em;
     }
 </style>
