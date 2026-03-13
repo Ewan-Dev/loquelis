@@ -66,6 +66,7 @@
         gap: 1em;
         align-items: flex-start;
         background-color: #fff;
+        height: 100vh;
     }
     .main-content {
         flex: 1; /* Allow main content to take available space */
@@ -82,6 +83,7 @@
   }
       .main-page{
         margin: 0 0.25em;
+        height: 100vh;
     }
           h1{
       margin: 0 0.35em 0.5em;

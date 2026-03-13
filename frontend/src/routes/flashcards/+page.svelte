@@ -277,5 +277,6 @@
   }
       .main-page{
         margin: 0 0.25em;
+        height: 100vh;
     }
 </style>

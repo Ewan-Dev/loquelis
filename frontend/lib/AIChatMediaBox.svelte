@@ -22,7 +22,10 @@
         </section>
 <style>
     section{
-        background-color: #f9f9f9;
+        background-color: #f4f4f4;
+            box-shadow: inset 0 1px 2px #ffffff90,
+                0 1px 2px #00000030,
+                0 2px 4px #00000015;
     }
     img{
         width: 3.5em;
