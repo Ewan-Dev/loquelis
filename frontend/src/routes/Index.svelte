@@ -98,7 +98,7 @@
     <div class="text-button">
         <p class="main-hero-text languages-text">Languages</p>
         <p class="main-hero-text unlocked-text">Unlocked</p>
-        <button class="main-hero-button">Get Started<span class="material-symbols-rounded arrow"><span class="material-symbols-outlined">arrow_forward</span></button>
+        <button class="main-hero-button" onclick={() => {window.location.replace("https://loquelis.netlify.app/#/app/signup/")}}>Get Started<span class="material-symbols-rounded arrow"><span class="material-symbols-outlined">arrow_forward</span></button>
     </div>
     <img src="https://github.com/Ewan-Dev/loquelis/blob/main/frontend/static/macbook.png?raw=true" class="macbook">
 </section>

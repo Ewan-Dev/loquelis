@@ -38,7 +38,7 @@
   }
   let username = $state("")
   let usernameInputValue = $state("")
-  let { statusMessage, statusType} = $state("")
+
   let uid = $state("")
   let dialog
   let dialogAuthNotice
@@ -67,11 +67,7 @@ else{
 }
  })
 
-$effect( async () => {
-  console.log(currentLocation)
-  await fetchUserSesson()
-     handleDialog()
-})
+
 
 function handleDialog(){
        if (!username && uid) {
@@ -82,74 +78,7 @@ function handleDialog(){
 }
 
     // Fetch user session, get UID, then fetch from profiles table to get the username
-    async function fetchUserSesson(){
-        const { data, error } = await supabase.auth.getSession()
-        const sessionData = data // Store session data
-        if (error) { //Id error fetching user
-            console.error('Error fetching session:', error)
-        } 
-        else if(sessionData) { // If data exists
-            uid = sessionData?.session?.user?.id // Get UID from session
-            // Use the UID to fetch username
-            const { data, error} = await supabase
-                .from("profiles")
-                .select("username")
-                .eq("user_id", uid)
-                .single()
-                if (data) {
-                  console.log(data)
-                  username = data.username
-                  console.log("User: ", username)
-                }
 
-        }
-    }
-
-    async function addUsername(user){
-      if(user){
-        const { error } = await supabase
-        .from("profiles") 
-        .update({username: user}) 
-        .eq("user_id", uid)
-      if (error){
-        console.error(error.message)
-        statusMessage = ""
-        statusType = ""
-        if( error.message.includes("duplicate") && error.message.includes("username")) // Not the best way to check but Supabase as of 26.07.2025 returns a string for error and no JSON
-        {
-          statusMessage = ""
-        statusType = ""
-          statusMessage = "Account with username already exists"
-           statusType = "error"
-      }
-      else{
-        statusMessage = ""
-        statusType = ""
-          statusMessage = error.message
-          statusType = "error"
-      }
-      if( error.message === `Column "username" cannot be modified once set`){ 
-        statusMessage = ""
-        statusType = ""
-        statusMessage = "Username already set!"
-        statusType = "warn"
-      }
-    } 
-      else{
-        statusMessage = ""
-        statusType = ""
-        statusMessage = "success"
-        statusType = "success"
-        username = user
-      }
-      }
-      else{
-          statusMessage = ""
-        statusType = ""
-          statusMessage = "No username typed"
-          statusType = "warn"
-      }
-  }
 
 </script>
 
@@ -159,19 +88,7 @@ function handleDialog(){
 
 <main>
     <!-- Set username dialog -->
-    <dialog bind:this={dialog}>
-      <form onsubmit={(event) => {event.preventDefault(); addUsername(usernameInputValue);}}>
-        <label class="username-header">👤 Set a username:</label>
-        <span class="input-container">
-          <p class="at-symbol">@</p><input placeholder="username" class="username-input" bind:value={usernameInputValue}/>
-        </span>
-        <input type="Submit">
-        <button class="close-button-username" onclick={handleDialog()}>Close</button>
-        {#if statusMessage}
-            <InlineStatus message={statusMessage} type={statusType} />
-        {/if}
-        </form>
-    </dialog>
+
 
   <!-- Auth notice dialog-->
   <dialog open class="auth-notice" bind:this={dialogAuthNotice}>

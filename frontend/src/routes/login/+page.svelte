@@ -5,7 +5,7 @@
 
     let email = $state(""), password =  $state(""), error =  $state(""), data =  $state("")
     let statusError = $state("")
-    let result =  $state("")
+    let result =  $state()
 
     $inspect(() => {
         console.error(statusError)
@@ -23,23 +23,10 @@
         console.log("Login successful", data)
         statusError = ""
         launchConfetti()
-        addUsertoTable(authData.user.email)
 
     }
     }
-    
-        async function addUsertoTable(email){
-        const { error } = await supabase
-            .from("profiles")
-            .insert({email})
-        if (error && error.message) {
-            console.error(error.message)
-        }
-        else if (!error) {
-                statusError = ""
-                console.log("User added to profiles table")
-            }
-    }
+
 
     function launchConfetti() {
         confetti({

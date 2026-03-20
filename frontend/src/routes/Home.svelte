@@ -24,7 +24,11 @@
     <h1 class="page-header">Home</h1>
         <!-- Main content section for styles to be applied -->
     <section class="main-content">
-        <h2 class="home-page-main-section-head">Recent videos</h2>
+    <section class="loq-box">
+    <img src="../static/loq.gif" class="loq">
+        <p>Hello! I'm Loq. Watch some videos to get started!</p>
+    </section>
+        <h1 class="home-page-main-section-head">Recent videos</h1>
         <div class="media-list">
         {#each recentVideos as video}
                   <MediaBox 
@@ -68,5 +72,19 @@
   }
       .main-page{
         margin: auto 0.25em;
+    }
+    .loq{
+        width: 2em;
+        height: 2em;
+    }
+    .loq-box{
+        display: flex;
+        flex-direction: row;
+        justify-self: center;
+        align-items: center;
+        gap:0.25em;
+        padding: 0.25em 1em;
+        width: fit-content;
+        border-radius: 1em;
     }
 </style>
