@@ -25,7 +25,7 @@
         <!-- Main content section for styles to be applied -->
     <section class="main-content">
     <section class="loq-box">
-    <img src="../static/loq.gif" class="loq">
+    <img src="https://github.com/Ewan-Dev/loquelis/blob/main/frontend/static/loq.gif?raw=true" class="loq">
         <p>Hello! I'm Loq. Watch some videos to get started!</p>
     </section>
         <h1 class="home-page-main-section-head">Recent videos</h1>
