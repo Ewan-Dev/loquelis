@@ -10,7 +10,7 @@
 <aside class="sidebar" class:show={sidebarVisible}>
     <div class="sidebar-header">
         <img src="https://raw.githubusercontent.com/Ewan-Dev/ewan.is-a.dev/refs/heads/main/frontend/static/loquela.png" class="logo" alt="loquela logo">
-        <button class="close-sidebar-icon icon" onclick={toggleSidebar}>X</button> <!-- Close button for the sidebar -->
+        <button class="close-sidebar-icon icon" onclick={toggleSidebar}><span class="material-symbols-rounded">close</span></button> <!-- Close button for the sidebar -->
     </div>
     <nav class="sidebar-nav">
         <a href="./#/app/home" class:selected={currentPage === '/home'}> <!-- 'selected' is set to true if 'currentPage' is equal to set path -->      
@@ -128,9 +128,18 @@
         background-color: #fff;
         font-size: 1.5em;
     }
+    .material-symbols-rounded{
+        margin: 0;
+        margin-top: 0.075em;
+        padding: 0;
+    }
     .close-sidebar-icon{
         visibility: hidden;
-        background-color: transparent;
+        background-color: #ffffff;
+        border-radius: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     /* Show hamburger menu on smaller screens */
