@@ -78,6 +78,7 @@ characterName: characterData.name,
         })      
         })      
 
+    messageInput = ""
     // If reponse fails
     if (!response.ok) {
         console.error("AI API error:", response.statusText)
