@@ -168,6 +168,7 @@ else{
     }
     .main-subtitles{
         width:100%;
+        margin: 0;
     }
     .throbber{
         width: 3em;
