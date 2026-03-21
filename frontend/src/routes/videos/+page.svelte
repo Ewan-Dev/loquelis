@@ -183,6 +183,7 @@ function getCategoryEmoji(category){
   }
   .main-page{
     background-color: transparent;
+
   }
    main{
         display: flex;
@@ -220,7 +221,7 @@ function getCategoryEmoji(category){
     }
   }
       .main-page{
-        margin: auto 0.25em;
+        margin: 0 0.25em;
               background-color: transparent;
     }
     .category-section{

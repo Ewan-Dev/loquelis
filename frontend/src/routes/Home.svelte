@@ -51,6 +51,7 @@
         gap: 1em;
         align-items: flex-start;
                 margin-right: 1em;
+        
     }
     .main-content{
         flex-direction: column;
@@ -71,7 +72,7 @@
     }
   }
       .main-page{
-        margin: auto 0.25em;
+        margin: 0 0.25em;
     }
     .loq{
         width: 2em;
