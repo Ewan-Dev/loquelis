@@ -155,42 +155,53 @@ async function addToRecents(music){
   <script src="https://www.youtube.com/iframe_api"></script> <!-- For getting the current time on YT iframe embed -->
 </svelte:head>
 <main class="route">
-  <Sidebar currentPage="/music"/> 
-  <section class="main-page">
-      <h1 class="page-header">Music</h1>
-      <!-- Main content section for styles to be applied -->
-      <section class="main-content">
-        <span class="heading">
-          <MediaHeader
-            song={name}
-            artist={artist}
-          />
-          <AuthorTag author={author} />
-          </span>
-          
-          <iframe id="player" src={`${link}?enablejsapi=1`} title={ name } frameborder="0" allowfullscreen></iframe>
-          <Subtitles
-              currentLine={currentLine}
-              targetLanguage={language}
-            />
-          
-          
+  <Sidebar currentPage="/videos" />
+  <section class="header">
+    <h1 class="page-header">Videos</h1>
+    <section class="heading-content">
+      <span class="heading">
+        <span class="video-artist">
+          <h1 class="song truncate">{name}</h1>
+          <h1 class="artist truncate">{artist}</h1>
+        </span>
+        <AuthorTag author={author} />
+      </span>
+    </section>
+
+    <section class="main-page">
+      <iframe
+        id="player"
+        src={`${link}?enablejsapi=1`}
+        title={name}
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+
+      {#if link === "https://youtu.be/zabswqP6xEM"}
+        <p>Oops. Loquelis is struggling to load the media - it may be invalid or unavailable.</p>
+      {/if}
+
+      <section class="subtitle-container">
+        <Subtitles currentLine={currentLine} targetLanguage={language} />
       </section>
+    </section>
   </section>
 </main>
 
 
 
-
 <style>
-  iframe {
+   iframe {
       border-radius: 0.5em;
       margin: 0;
     aspect-ratio: 16 / 9;
-    width: 80% !important;
+    width: 70% !important;
   }
       h1{
       margin: 0 0.35em 0.5em;
+  }
+  .header{
+    padding: 0;
   }
   section {
       display: flex;
@@ -203,6 +214,28 @@ async function addToRecents(music){
       display: flex;
       gap: 1em;
       align-items: flex-start;
+
+  }
+
+    .video-artist {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items:flex-start;
+    gap: 0.15em;
+}
+    .song{
+        font-weight: bold;
+        width: 70%;
+    }
+    .artist{
+        font-style: italic;
+        font-weight: normal !important;
+    }
+  .subtitle-container{
+    margin: 0 0.5em;
+    padding: 0;
+    background-color: transparent;
   }
   @media (max-width: 1200px){
     iframe{
@@ -212,21 +245,59 @@ async function addToRecents(music){
   .heading {
     display: flex;
     flex-direction: column ;
-    gap: 0.5em;
+    gap: 0.25em;
+    width: 100%;
+    border-radius: 0;
   }
-      @media (max-width: 500px){
+      @media (max-width: 600px){
     main{
       display: flex;
       flex-direction: column !important;
       align-items: flex-start;
       margin: 0 !important;
     }
-  .main-content{
+  .heading-content{
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: #e3e3e3;
+    border-radius: 0 !important;
+  }
+  .song,
+  .artist{
+    font-size: 1.15em !important;
+    height: 1.5em;
+    overflow: hidden;
+  }
+  .page-header{
+    display: none !important;
   }
 }
       .main-page{
         margin: auto 0.25em;
         padding: 0;
+        gap:0;
+        background-color: #f6f6f6;
+        border-radius: 1em;
     }
+    .song,
+  .artist{
+    font-size: 1.75em;
+  }
+      .heading-content{
+    width: 100%;
+    background-color: #f9f9f9;
+    border-radius: 1em;
+    padding: 0.5em 0.5em;
+  }
+  .page-header{
+    display: block;
+  }
+  .truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 </style>
