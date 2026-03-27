@@ -16,9 +16,8 @@
 </section>
 <style>
     section{
-        max-height: 8em;
-        height: fit-content;
-        width: 12em;
+        height: 6em;
+        width: 20em;
         padding: 0.5em;
                 box-shadow: inset 0 1px 2px #ffffff30,
                 0 1px 2px #00000030,
@@ -28,6 +27,7 @@
         display: flex;
         flex-direction: row;
         justify-content:space-between;
+        align-content: center;
         gap:0.25em;
         overflow: hidden;
     }
@@ -44,6 +44,13 @@
         padding: 0;
         height: fit-content;
         font-size: 1.15em;
+    }
+    .name{
+        width: 100%;
+        height: 1.5em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     a {
         height: auto;
