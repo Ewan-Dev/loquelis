@@ -9,13 +9,6 @@
     export let rating = null;
     export let link = null;
     export let type = null; // § Type of media, e.g., "video" or "music"
-
-    if (name.length > 45) {
-        name = name.slice(0, 37) + '...'
-    }
-    if (artist.length > 23) {
-        artist = artist.slice(0, 20) + '...'
-    }
 </script>
 
 <div class={type}>
@@ -23,8 +16,8 @@
     <span>
         <MediaTag type="level" message={level}/>
     </span>
-    <a href={ link }><b>{ name }</b></a>
-    <a>{ artist }</a>
+    <a href={ link } class="name"><b>{ name }</b></a>
+    <a class="artist">{ artist }</a>
 </div>
 
 <style>
@@ -65,6 +58,22 @@
     span {
         display: flex;
         gap: 0.2em;
+    }
+    .name{
+        width: 95%;
+        height: 2.75em;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .artist{
+        width: 95%;
+        height: 1.5em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     
 </style>

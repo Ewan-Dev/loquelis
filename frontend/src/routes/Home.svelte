@@ -11,7 +11,7 @@
     const {data, error} = await supabase
     .from("profiles")
     .select('recent_videos')
-    recentVideos = data[0].recent_videos
+    recentVideos = (data[0].recent_videos).reverse()
 
         console.log(recentVideos)
         })
