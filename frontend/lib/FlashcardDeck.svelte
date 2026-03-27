@@ -4,8 +4,9 @@
     import confetti from "canvas-confetti";
   import { supabase } from "./supabaseClient";
   import InlineStatus from "./InlineStatus.svelte";
-    const { content,originalDeck, backContent = [], deckName, author = "", id, isUsers } = $props()
+    const { content,originalDeck, deckName, author = "", id, isUsers } = $props()
     let cardNumber = $state(0)
+    let backContent = $state([])
     let unsure = $state([])
     let known = $state([])
     let { word, definition, partOfSpeech, phoneticAnnotation } = $state("")
@@ -25,6 +26,11 @@
     let addFlashcardDialog = $state(HTMLDialogElement)
     let deleteFlashcardDialog = $state(HTMLDialogElement)
     let deleteDeckDialog = $state(HTMLDialogElement)
+    let frontCardDeckDialog = $state(HTMLDialogElement)
+    let showFrontCardDefinition = $state(false)
+    let showFrontCardTerm = $state(true)
+    let showFrontCardPhoneticAnnotation = $state(false)
+    let showFrontCardPartOfSpeech = $state(false)
     let statusMessage = $state("")
     let modifyDeckState = $state("")
     let waitingForSB = $state(false)
@@ -34,6 +40,7 @@ $inspect(statusMessage)
     $effect(() => {
         percentKnown = Math.round((known.length / (unsure.length + known.length)) * 100)
     })
+
     onMount(() => {
         console.log("DECK")
         console.log(content)
@@ -53,6 +60,19 @@ $inspect(statusMessage)
                 showFront()
             }
         })
+                backContent = []
+        if (!showFrontCardDefinition){
+            backContent.push("definition")
+        }
+        if (!showFrontCardPartOfSpeech){
+            backContent.push("part-of-speech")
+        }
+        if (!showFrontCardTerm){
+            backContent.push("word")
+        }
+        if (!showFrontCardPhoneticAnnotation){
+            backContent.push("phonetic-annotation")
+        }
     })
 
     function showFront(){
@@ -217,7 +237,21 @@ $inspect(statusMessage)
         }
 
         $inspect(content.length)
-    
+    function handleFrontCardChange(){
+                backContent = []
+        if (!showFrontCardDefinition){
+            backContent.push("definition")
+        }
+        if (!showFrontCardPartOfSpeech){
+            backContent.push("part-of-speech")
+        }
+        if (!showFrontCardTerm){
+            backContent.push("word")
+        }
+        if (!showFrontCardPhoneticAnnotation){
+            backContent.push("phonetic-annotation")
+        }
+    }
 </script>
 <main>
     {#if author && deckName}
@@ -228,6 +262,7 @@ $inspect(statusMessage)
     <span class="deck-edit-buttons">
             <button onclick={() => {editFlashcardDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span></button>
             <button onclick={() => {addFlashcardDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span></button>
+            <button onclick={() => {frontCardDeckDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">select_check_box</span></button>
             <button onclick={() => {deleteFlashcardDialog.show(); deletingCard = (word);statusMessage = "";}} class="edit-btn delete"><span class="material-symbols-rounded edit">tab_close</span></button>
                         <button onclick={() => {deleteDeckDialog.show()}} class="edit-btn delete"><span class="material-symbols-rounded edit">delete</span></button>
     </span>
@@ -352,6 +387,31 @@ $inspect(statusMessage)
     <InlineStatus type="error" message="Error changing card." width="100%"/>
 {/if}
 </dialog>
+
+<dialog bind:this={frontCardDeckDialog}>
+    <h2>Adjust front card</h2>
+    <section class="checkbox-list">
+    <label>Term:</label>
+    <input type="checkbox" name="term" bind:checked={showFrontCardTerm} class="checkbox">
+    <label>Phonetic annotation/romanisation:</label>
+    <input type="checkbox" name="term" bind:checked={showFrontCardPhoneticAnnotation} class="checkbox">
+    <label>Definition:</label>
+    <input type="checkbox" name="term" bind:checked={showFrontCardDefinition} class="checkbox">
+    <label>Part of speech:</label>
+    <input type="checkbox" name="term" bind:checked={showFrontCardPartOfSpeech} class="checkbox">
+</section>
+        {#if waitingForSB}
+    <img class="throbber" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif">
+    {/if}
+    <button class="update-btn dialog-btn" onclick={() => {handleFrontCardChange(); showBack(); showFront();}}>Submit</button>
+    <button class="cancel-btn dialog-btn" onclick={() => {frontCardDeckDialog.close()}}>Cancel</button>
+    {#if statusMessage == "success"}
+    <InlineStatus type="success" message="Success!" width="100%"/>
+{/if}
+{#if statusMessage == "error"}
+    <InlineStatus type="error" message="Error changing card." width="100%"/>
+{/if}
+</dialog>
 <style>
 main{
     width: fit-content
@@ -383,6 +443,9 @@ textarea
     overflow: scroll;
     resize: none;
 }
+.checkbox{
+    width: fit-content;
+}
 dialog{
     background-color: #f8f8f8;
     border: 0;
@@ -390,6 +453,7 @@ dialog{
             box-shadow: inset 0 1px 2px #ffffff90,
                 0 1px 2px #00000030,
                 0 2px 4px #00000015;
+    z-index: 5;
 }
 .dialog-inputs{
     display: flex;
@@ -478,6 +542,11 @@ progress {
     margin-top: 0em;
     justify-content: space-between;
     align-items: center;
+}
+.checkbox-list{
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
 }
 .card-count{
     border-width: 2px;
@@ -615,6 +684,7 @@ span{
 }
 dialog{
     padding-bottom: 0;
+        z-index: 7 !important;
 }
 .dialog-btn{
     position: relative;

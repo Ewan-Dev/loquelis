@@ -130,7 +130,7 @@
     }
     .material-symbols-rounded{
         margin: 0;
-        margin-top: 0.075em;
+        margin-top: 0.075gem;
         padding: 0;
     }
     .close-sidebar-icon{

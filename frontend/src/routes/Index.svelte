@@ -118,7 +118,7 @@
 <img src=" https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/characters.png?raw=true" class="characters">
 </section>
 <section class="auth-container" >
-    <p class="start-journey">Start your journey. <b>Today.</b></p>
+    <p class="start-journey">Start your journey. <i>Today.</i></p>
         <div class="sign-up-contact-container">
         <a href="./#/app/signup/" class="big-get-started-btn shadow">Get started! →</a>
         <a class="big-contact-btn shadow" href="./#/app/login/"> <span class="material-symbols-rounded" >login</span>Sign in</a>
@@ -600,9 +600,9 @@ height: 1em;
         justify-content: center;
         padding: 0;
         font-size: 1em;
-        background-color: #2e2e2e;
+        background-color: #0d0d0d;
         color: #ffffff;
-        border-radius: 1em;
+        border-radius: 0.75em;
     }
        .big-contact-btn{
         height: 3em;
@@ -615,7 +615,7 @@ height: 1em;
         font-size: 1em;
         background-color: rgb(226, 226, 226);
         color: #202020;
-        border-radius: 1em;
+        border-radius: 0.75em;
     }
         .big-get-started-btn:hover{
             background-color: #1c1c1c;
@@ -635,6 +635,7 @@ height: 1em;
         flex-direction: column;
         gap: 0.25em;
         margin-bottom: 1em;
+        margin-top: 0.5em;
     }
     .page-4{
         display: flex;
