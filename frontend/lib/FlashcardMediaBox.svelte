@@ -32,7 +32,7 @@
         overflow: hidden;
     }
     section:hover{
-        padding: 0.5em;
+        padding: git 0.5em;
                 box-shadow: inset 0 1px 2px #ffffff30,
                 0 1px 2px #00000030,
                 0 2px 4px #00000035;
@@ -45,9 +45,10 @@
         height: fit-content;
         font-size: 1.15em;
     }
-    .name{
+    .name,
+    .author{
         width: 100%;
-        height: 1.5em;
+        height: fit-content;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
