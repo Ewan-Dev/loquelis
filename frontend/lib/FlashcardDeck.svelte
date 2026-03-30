@@ -4,9 +4,10 @@
     import confetti from "canvas-confetti";
   import { supabase } from "./supabaseClient";
   import InlineStatus from "./InlineStatus.svelte";
+  import { tick } from "svelte";
     const { content,originalDeck, deckName, author = "", id, isUsers } = $props()
     let cardNumber = $state(0)
-    let backContent = $state([])
+    let backContent =  []
     let unsure = $state([])
     let known = $state([])
     let { word, definition, partOfSpeech, phoneticAnnotation } = $state("")
@@ -41,7 +42,7 @@ $inspect(statusMessage)
         percentKnown = Math.round((known.length / (unsure.length + known.length)) * 100)
     })
 
-    onMount(() => {
+    onMount(async () => {
         console.log("DECK")
         console.log(content)
         $inspect(cardNumber)
@@ -57,25 +58,26 @@ $inspect(statusMessage)
                 newDefinition = (definition)
                 newPartOfSpeech = (partOfSpeech)
                 newPhoneticAnnotation = phoneticAnnotation
-                showFront()
             }
+        tick().then(() => showFront())
         })
-                backContent = []
-        if (!showFrontCardDefinition){
-            backContent.push("definition")
-        }
-        if (!showFrontCardPartOfSpeech){
-            backContent.push("part-of-speech")
-        }
-        if (!showFrontCardTerm){
-            backContent.push("word")
-        }
-        if (!showFrontCardPhoneticAnnotation){
-            backContent.push("phonetic-annotation")
+         const { data, error } = await supabase
+            .from('flashcard_decks')
+            .select("*")
+            .eq('id', id)
+        if (data){
+            backContent = []
+            let backContentObject = Object.values(data[0].back_content)
+            for (const content of backContentObject){
+                console.log(content)
+                backContent.push(content)
+            }
+            
         }
     })
 
     function showFront(){
+        showBack()
             // Hide element until card is flipped
             backContent.forEach((className) => { // For every class to hide
                 const element = document.getElementsByClassName(className) //Grab element by that classname
@@ -105,6 +107,7 @@ $inspect(statusMessage)
             unsure.push(content[cardNumber]) // Add current card to unsure array
              cardNumber++ // Move to next card
         }
+        showFront();
     }
     function markKnown(){
         if (content[cardNumber]){ // If there is a card at the current index
@@ -114,10 +117,11 @@ $inspect(statusMessage)
         if( percentKnown === 100){ // If all cards are known
             launchConfetti() // Launch confetti
         }
+        showFront();
     }
 
     // Function to handle continuing with the flashcards that user did not know
-    function handleContinue(){
+    async function handleContinue(){
        cardNumber = 0 // Reset card number to 0
         unsure = [] // Clear unsure array
         // Remove known terms from content
@@ -125,6 +129,9 @@ $inspect(statusMessage)
             content.splice(content.indexOf(term), 1) // Remove known terms from content
         })
         known = [] // Clear known array
+        console.log(backContent)
+        await tick() // ← wait for Svelte to re-render
+        showFront();
     }
      function launchConfetti() {
         confetti({
@@ -237,8 +244,9 @@ $inspect(statusMessage)
         }
 
         $inspect(content.length)
-    function handleFrontCardChange(){
-                backContent = []
+    async function handleFrontCardChange(){
+        backContent = []
+        statusMessage = ""
         if (!showFrontCardDefinition){
             backContent.push("definition")
         }
@@ -251,6 +259,18 @@ $inspect(statusMessage)
         if (!showFrontCardPhoneticAnnotation){
             backContent.push("phonetic-annotation")
         }
+            const { error } = await supabase
+            .from('flashcard_decks')
+            .update({ back_content: backContent })
+            .eq('id', id)
+        showFront()
+            if (error){
+                console.error(error)
+                statusMessage = "error"
+            }
+            else{
+                statusMessage = "success"
+            }
     }
 </script>
 <main>
@@ -287,9 +307,9 @@ $inspect(statusMessage)
         </div>
         {/if}
         <span class="buttons">
-            <button class="dont-know flashcard-button" onclick={handleUnknown}><span class="material-symbols-rounded">do_not_disturb</span>Unsure</button>
+            <button class="dont-know flashcard-button" onclick={() => {handleUnknown(); showFront();}}><span class="material-symbols-rounded">do_not_disturb</span>Unsure</button>
             <button class="flip flashcard-button" onclick={showBack}><span class="material-symbols-rounded">autorenew</span>Flip</button>
-            <button class="know flashcard-button" onclick={markKnown}><span class="material-symbols-rounded">check_circle</span>Know</button>
+            <button class="know flashcard-button" onclick={() => {markKnown(); showFront();}}><span class="material-symbols-rounded">check_circle</span>Know</button>
         </span>
     {/if}
     {#if content.length == 0}
@@ -406,7 +426,7 @@ $inspect(statusMessage)
     <button class="update-btn dialog-btn" onclick={() => {handleFrontCardChange(); showBack(); showFront();}}>Submit</button>
     <button class="cancel-btn dialog-btn" onclick={() => {frontCardDeckDialog.close()}}>Cancel</button>
     {#if statusMessage == "success"}
-    <InlineStatus type="success" message="Success!" width="100%"/>
+    <InlineStatus type="success" message="Success! Reload to see full changes" width="100%"/>
 {/if}
 {#if statusMessage == "error"}
     <InlineStatus type="error" message="Error changing card." width="100%"/>
@@ -445,6 +465,10 @@ textarea
 }
 .checkbox{
     width: fit-content;
+    overflow: hidden;
+    background-color: transparent;
+    box-shadow: none;
+    border: 0;
 }
 dialog{
     background-color: #f8f8f8;
@@ -637,6 +661,7 @@ span{
     height: 2.5em;
     width: 95%;
     margin-bottom: 0.5em;
+
 }
 .update-btn{
                     background-color: #4A70A9;
@@ -648,6 +673,7 @@ span{
         display: flex;
         justify-content: center;
         align-items: center;
+            margin-top: 1em;
 
 }
 .dialog-btn:hover{
@@ -655,6 +681,9 @@ span{
 }
 .update-btn:hover{
                     background-color: #33578e;
+}
+.hidden{
+    display: none;
 }
 .small-t-area{
     height: 1.25em;
