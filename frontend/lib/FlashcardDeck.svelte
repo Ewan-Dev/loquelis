@@ -28,6 +28,7 @@
     let deleteFlashcardDialog = $state(HTMLDialogElement)
     let deleteDeckDialog = $state(HTMLDialogElement)
     let frontCardDeckDialog = $state(HTMLDialogElement)
+    let exportDeckDialog = $state(HTMLDialogElement)
     let showFrontCardDefinition = $state(false)
     let showFrontCardTerm = $state(true)
     let showFrontCardPhoneticAnnotation = $state(false)
@@ -36,6 +37,7 @@
     let modifyDeckState = $state("")
     let waitingForSB = $state(false)
     let deletingCard = $state(word)
+    let csv = $state("")
 $inspect(statusMessage)
 
     $effect(() => {
@@ -272,6 +274,28 @@ $inspect(statusMessage)
                 statusMessage = "success"
             }
     }
+
+    function exportDeck(){
+        csv = "word, definition, partOfSpeech, phoneticAnnotation \n"
+        for (let i = 0; i < originalDeck.length; i++){
+            const card = JSON.parse(originalDeck[i])
+            const word = card.word
+            const definition = card.definition
+            const partOfSpeech = card.partOfSpeech
+            const phoneticAnnotation = card.phoneticAnnotation
+            const line = `${word}, ${definition}, ${partOfSpeech}, ${phoneticAnnotation}`
+            if (originalDeck.length -1 == i){
+                csv += line
+
+            }
+            else{
+            csv += line + '\n'
+            }
+    
+        }
+        console.log(csv)
+
+    }
 </script>
 <main>
     {#if author && deckName}
@@ -283,8 +307,9 @@ $inspect(statusMessage)
             <button onclick={() => {editFlashcardDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span></button>
             <button onclick={() => {addFlashcardDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span></button>
             <button onclick={() => {frontCardDeckDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">select_check_box</span></button>
+<button onclick={() => {exportDeckDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">file_export</span></button>
             <button onclick={() => {deleteFlashcardDialog.show(); deletingCard = (word);statusMessage = "";}} class="edit-btn delete"><span class="material-symbols-rounded edit">tab_close</span></button>
-                        <button onclick={() => {deleteDeckDialog.show()}} class="edit-btn delete"><span class="material-symbols-rounded edit">delete</span></button>
+            <button onclick={() => {deleteDeckDialog.show()}} class="edit-btn delete"><span class="material-symbols-rounded edit">delete</span></button>
     </span>
             {/if}
         </div>
@@ -427,6 +452,27 @@ $inspect(statusMessage)
     <button class="cancel-btn dialog-btn" onclick={() => {frontCardDeckDialog.close()}}>Cancel</button>
     {#if statusMessage == "success"}
     <InlineStatus type="success" message="Success! Reload to see full changes" width="100%"/>
+{/if}
+{#if statusMessage == "error"}
+    <InlineStatus type="error" message="Error changing card." width="100%"/>
+{/if}
+</dialog>
+
+<dialog bind:this={exportDeckDialog}>
+    <h2>Export deck as CSV</h2>
+    <p>Import to Anki, Quizlet etc.</p>
+    {#if csv}
+    <textarea class="export-ta">
+        {csv}
+    </textarea>
+    <section class="mini-notice">
+        Copy and paste this above!
+    </section>
+    {/if}
+    <button class="update-btn dialog-btn" onclick={exportDeck}>Generate CSV</button>
+    <button class="cancel-btn dialog-btn" onclick={() => {exportDeckDialog.close()}}>Cancel</button>
+    {#if statusMessage == "success"}
+    <InlineStatus type="success" message="Card added! Reload to see changes!" width="100%"/>
 {/if}
 {#if statusMessage == "error"}
     <InlineStatus type="error" message="Error changing card." width="100%"/>
@@ -602,6 +648,17 @@ progress {
     align-items: center;
     justify-content: center;
 }
+.export-ta{
+    font-size: 0.5em;
+    height: 10em;
+    border-radius: 1em;
+    scrollbar-width: 0;
+    overflow: auto;
+}
+.export-ta::-webkit-scrollbar {
+    display: none;
+}
+
 .known-percentage { 
     font-size: 1.5em;
     font-weight: bold;
@@ -622,6 +679,14 @@ progress {
 .deck-name-heading,
 .deck-name-author{
     margin:0;
+}
+.mini-notice{
+    font-size: 0.75em;
+    padding: 0.2em 0.2em;
+    background-color: #ededed;
+    border-radius: 5px;
+    width: 90%;
+    margin: 0;
 }
 .title-author-container{
     margin: 0.25em 0 0.5em;
@@ -673,7 +738,7 @@ span{
         display: flex;
         justify-content: center;
         align-items: center;
-            margin-top: 1em;
+            margin-top: 0.5em;
 
 }
 .dialog-btn:hover{
