@@ -158,6 +158,7 @@ async function addToRecents(music){
   <Sidebar currentPage="/videos" />
   <section class="header">
     <h1 class="page-header">Videos</h1>
+    <section class="main-page">
     <section class="heading-content">
       <span class="heading">
         <span class="video-artist">
@@ -168,7 +169,7 @@ async function addToRecents(music){
       </span>
     </section>
 
-    <section class="main-page">
+    <section class="main-content">
       <iframe
         id="player"
         src={`${link}?enablejsapi=1`}
@@ -181,10 +182,9 @@ async function addToRecents(music){
         <p>Oops. Loquelis is struggling to load the media - it may be invalid or unavailable.</p>
       {/if}
 
-      <section class="subtitle-container">
         <Subtitles currentLine={currentLine} targetLanguage={language} />
-      </section>
     </section>
+  </section>
   </section>
 </main>
 
