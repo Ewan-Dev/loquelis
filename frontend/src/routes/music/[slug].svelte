@@ -191,7 +191,7 @@ async function addToRecents(music){
 
 
 <style>
-   iframe {
+  iframe {
       border-radius: 0.5em;
       margin: 0;
     aspect-ratio: 16 / 9;
@@ -238,9 +238,19 @@ async function addToRecents(music){
     background-color: transparent;
   }
   @media (max-width: 1200px){
-    iframe{
-      width: 100% !important;
-    }
+  iframe {
+    width: 100% !important;
+    margin: 0;
+  }
+  .main-content {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+  }
+  .main-page{
+    margin: 0;
+    padding: 0;
+  }
   }
   .heading {
     display: flex;
@@ -248,8 +258,13 @@ async function addToRecents(music){
     gap: 0.25em;
     width: 100%;
     border-radius: 0;
+    padding: 0 0.35em;
   }
       @media (max-width: 600px){
+
+        section {
+    padding: 0;
+  }
     main{
       display: flex;
       flex-direction: column !important;
@@ -275,7 +290,8 @@ async function addToRecents(music){
   }
 }
       .main-page{
-        margin: auto 0.25em;
+        width: 100vw;
+        margin: 0;
         padding: 0;
         gap:0;
         background-color: #f6f6f6;
@@ -284,6 +300,7 @@ async function addToRecents(music){
     .song,
   .artist{
     font-size: 1.75em;
+    margin: 0;
   }
       .heading-content{
     width: 100%;
@@ -293,11 +310,15 @@ async function addToRecents(music){
   }
   .page-header{
     display: block;
+    margin: 0;
+    margin-top: 0.5em;
   }
   .truncate {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.main-content{
+  padding: 0.25em;
+}
 </style>
