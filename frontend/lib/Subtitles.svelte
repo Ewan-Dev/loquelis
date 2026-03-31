@@ -165,7 +165,7 @@ else{
         width: 100%;
     }
     p.current-line:hover{
-        background-color: #e2e7ff;
+        background-color: #e4e4e4;
         cursor: pointer;
     }
     .main-subtitles{

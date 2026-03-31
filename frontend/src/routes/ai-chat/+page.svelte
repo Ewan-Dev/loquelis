@@ -144,7 +144,8 @@
     <h1 class="page-header">AI Chat</h1>
         <!-- Main content section for styles to be applied -->
     <section class="main-content">
-     <button class="create-ai-character" onclick={() => dialog.showModal()}><span class="material-symbols-rounded">person_add</span>Create AI Character</button>
+    <section class="notice">Create your own AI character with custom jobs, traits, language and even practice vocab!</section>
+     <button class="create-ai-character" onclick={() => dialog.showModal()}><span class="material-symbols-rounded">person_add</span>Create your own AI character!</button>
     <div class="chats">
         {#if !availableCharacters[0]}
                 <p class="not-found">:/ Oops! No flashcards found; try uploading your own or try again later.</p>
@@ -259,6 +260,10 @@
         0 2px 4px #00000010;
         border: none;
     }
+    .page-header{
+        margin: 0;
+        margin: 0.5em 0  0 0.35em;
+    }
     button,
     .submit-btn{
         font-size: 1em;
@@ -284,7 +289,7 @@
         display: flex;
         flex-direction: column;
         width: 90%;
-        gap:1em;
+        gap:0.5em;
     }
     .create-ai-character{
         background-color: #4A70A9;
@@ -322,7 +327,15 @@
     }
 
 
-    
+    .notice{
+        padding: 0.2em .25em;
+        border-radius: 1em;
+        text-align: center;
+        margin: 0;
+        border: 2px solid #eaeaea;
+        width:98%;
+        font-size: 0.95em;
+    }
     
     .material-symbols-rounded{
         font-size: 1.25em;
