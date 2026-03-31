@@ -4,7 +4,7 @@
 <section class="ai-chat-box">
     <div class="pfp-name-occupation-container">
         {#if image}
-            <img src={image} alt={firstName} />
+            <img src={image} alt={firstName} class="pfp"/>
          {/if}
         <div class="text">
             <a href={`/#/app/ai-chat/${id}`}>
@@ -100,6 +100,9 @@
         display: flex;
         align-items: center;
         gap: 0.5em;
+    }
+    .pfp{
+        border: 1px rgb(222, 222, 222) solid;
     }
     .flag-tags-container {
         display: flex;
