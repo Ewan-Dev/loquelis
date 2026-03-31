@@ -92,6 +92,39 @@ Success!
 {...}
 C1
 ```
+13. Deploy function below for AI API (I use Netlify)
+
+As taken from Groq docs:
+```
+import Groq from "groq-sdk";
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+export default async function handler(request) {
+  try {
+
+    const message = await request.text(); 
+
+    const completion = await groq.chat.completions.create({
+      messages: [{ role: "user", content: message || "Not working ;/" }],
+      model: "llama-3.3-70b-versatile",
+    });
+
+    // Extract the text content
+    const aiText = completion.choices[0]?.message?.content || "";
+
+    // Return raw text directly
+    return new Response(JSON.stringify({ reply: aiText }),{
+      status: 200,
+      headers: { "Content-Type": "text/plain" },
+    });
+
+  } catch (err) {
+    return new Response(err.message, { status: 500 });
+  }
+}
+
+```
 
 ### Note about AI APIs
 If you want to use your own AI API adjust the Netlify chat.js function to use your own API. Make sure your site is deployed on Netlify for it to work.
