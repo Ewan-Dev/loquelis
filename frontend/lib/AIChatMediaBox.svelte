@@ -7,9 +7,14 @@
             <img src={image} alt={firstName} class="pfp"/>
          {/if}
         <div class="text">
+        <div class="name-span">
             <a href={`/#/app/ai-chat/${id}`}>
                 <h2>{firstName}</h2>
-            </a>
+            </a>        {#if id == 1860}
+
+                    <span class="torq"><span class="material-symbols-rounded">forum</span>talk to me!</span>
+                    {/if}
+                    </div>
             <p class="occupation">{occupation}</p>
         </div>
         </div>
@@ -19,6 +24,7 @@
                 <p class="trait-tag">{trait}</p>
             </span>
         </div>
+
         </section>
 <style>
     section{
@@ -43,11 +49,35 @@
     a{
         text-decoration: none;
         color: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+    .torq{
+        margin-top: 1em;
+        height: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding:0.2em 0.4em !important;
+        gap:0.25em;
+         background: linear-gradient(90deg,rgb(40, 65, 194) 0%, rgb(111, 87, 199) 50%, rgb(211, 83, 237) 100%);
+                padding-bottom: 0.3em;
+                border-radius: 1em;
+        color:#ffffff
+    }
+        .torq:hover{
+font-weight: bold;
+         background: linear-gradient(90deg,rgb(40, 65, 194) 0%, rgb(111, 87, 199) 50%, rgb(211, 83, 237) 100%);
+                padding-bottom: 0.3em;
+                border-radius: 1em;
+        color:#ffffff
+        }
     .lang-flag {
         width: 1.5em;
         height: 1.5em;
         border-radius: 0.25em;
+
     }
     .ai-chat-box {
 
@@ -68,12 +98,22 @@
         0 1px 2px #00000030,
         0 2px 4px #00000035;
     }
+
+    .material-symbols-rounded{
+        font-size: 1em;
+        margin-top: 0.1em;
+    }
         .text{
         display: flex;
         flex-direction: column;
         text-align: left;
         height: fit-content;
         gap: 0.25em;
+    }
+    .name-span{
+        display: flex;
+        align-items: center;
+        gap:0.5em;
     }
     .traits {
         display: flex;
@@ -100,9 +140,6 @@
         display: flex;
         align-items: center;
         gap: 0.5em;
-    }
-    .pfp{
-        border: 1px rgb(222, 222, 222) solid;
     }
     .flag-tags-container {
         display: flex;
