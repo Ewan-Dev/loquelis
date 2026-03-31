@@ -198,6 +198,7 @@
     }
 
     .material-symbols-rounded{
+
         font-size: 0.95em;
     }
     .flashcard-functions{
@@ -240,6 +241,7 @@
     select{
         background-color: #ffffff;
         margin: 0;
+        border: 0; height: 1em;
     }
 
 .definition {
@@ -275,5 +277,9 @@
     align-items: center;
     justify-self: center;
     border-radius: 50%;
+    padding: .15em 0.35em 0;
+}
+.close-btn:hover{
+    background-color: #ebebeb;
 }
 </style>
