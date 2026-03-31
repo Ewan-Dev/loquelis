@@ -24,7 +24,7 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-            prompt: "Translate this word based on context. NEVER RETURN ANY STRINGS CONTAINING COMMAS AS THIS WILL BE CONVERTED TO CSV.Return raw JSON only (no tags or extra characters, markdown) with string keys: `word`(original), `partOfSpeech`, `definition`, and `phoneticAnnotation` (include only when needed, e.g., non-Latin scripts; include all possible readings in context such as furigana for Japanese).",
+            prompt: "Translate this word based on context. Return raw JSON only (no tags or extra characters, markdown) with string keys: `word`(original), `partOfSpeech`, `definition`, and `phoneticAnnotation` (include only when needed, e.g., non-Latin scripts; include all possible readings in context such as furigana for Japanese).",
             word: word,
             context: contextString,
             originalWordLanguageISO6391: targetLanguage,

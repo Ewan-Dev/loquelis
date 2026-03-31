@@ -285,19 +285,21 @@ $effect(() => {
 
     async function exportDeck(){
         csv = "word, definition, partOfSpeech, phoneticAnnotation \n"
+        
         for (let i = 0; i < originalDeck.length; i++){
             const card = JSON.parse(originalDeck[i])
-            const word = card.word
-            const definition = card.definition
-            const partOfSpeech = card.partOfSpeech
-            const phoneticAnnotation = card.phoneticAnnotation
-            const line = `${word}, ${definition}, ${partOfSpeech}, ${phoneticAnnotation}`
+            // keep quotations as some csv fields have commas already
+            const word =  `"${(card.word).replace(/"/g, '""')}"`
+            const definition = `"${(card.definition).replace(/"/g, '""')}"`
+            const partOfSpeech = `"${(card.partOfSpeech).replace(/"/g, '""')}"`
+            const phoneticAnnotation = `"${(card.phoneticAnnotation).replace(/"/g, '""')}"`
+            const line = `${word},${definition},${partOfSpeech},${phoneticAnnotation}`
             if (originalDeck.length -1 == i){
                 csv += line
 
             }
             else{
-            csv += line + '\n'
+            csv += line+ '\n'
             }
     
         }
