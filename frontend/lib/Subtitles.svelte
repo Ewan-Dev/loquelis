@@ -151,6 +151,8 @@ else{
     .current-line {
         font-size: 2.5em;
         font-weight: bold;
+        margin: 0 ;
+        padding: 0;
     }
     span{
         display: flex;
@@ -163,12 +165,14 @@ else{
         width: 100%;
     }
     p.current-line:hover{
-        background-color: #d2d2d2;
+        background-color: #e2e7ff;
         cursor: pointer;
     }
     .main-subtitles{
         width:100%;
         margin: 0;
+        display: flex;
+        gap:0.25em;
     }
     .throbber{
         width: 3em;
