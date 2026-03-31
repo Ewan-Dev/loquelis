@@ -32,7 +32,8 @@
         })      
         })      
         const data = await response.json()
-        const responseJSON = JSON.parse(data.reply)
+        console.log(data)
+        const responseJSON =  JSON.parse(data.reply)
         console.log(responseJSON)
         isDefinitionFetched = true
         term = responseJSON.word
@@ -116,16 +117,13 @@ else{
     .show-translations-btn{
         display: none;
         border: none;
-        box-shadow: inset 0 1px 2px #ffffff30,
-                0 1px 2px #00000030,
-                0 2px 4px #00000015;
+background-color: #f0f0f0;
+border-radius: 1em;
+font-size: 1em;
     }
     .show-translations-btn:hover{
         display: none;
         border: none;
-        box-shadow: inset 0 1px 2px #ffffff30,
-                0 1px 2px #00000030,
-                0 2px 4px #00000035;
     }
     .full-translate{
         width: 100%;
