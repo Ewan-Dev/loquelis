@@ -11,6 +11,7 @@
     let characterData = $state(Object) //Stores character data from Supabase
     let messageInput = $state("")
     let flashcardDecks = $state([])
+    let availableLanguages = $state([])
     let chatHistory = $state([])
     let username = $state("")
     let chatAnalysisAI = $state("")
@@ -21,8 +22,12 @@
     let isDefinitionFetched = true
     let isWaitingForAnalysis = $state(false)
     let chatArray = []
+    let loqLang = $state("")
+
     onMount(async () => {
         await fetchUserSesson()
+
+        await fetchLanguages()
     })
     $effect(async () => {
         const { data, error } = await supabase
@@ -37,7 +42,19 @@
             characterData = data
         }
     })
-
+     async function fetchLanguages(){
+        const {data, error} = await supabase
+            .from("languages")
+            .select("*")
+        if(data){
+            availableLanguages = data
+            console.log(availableLanguages)
+            return data
+        }
+        if (error){
+            throw error
+    }
+}
     // Fetch user session, get UID, then fetch from profiles table to get the username
     async function fetchUserSesson() {
         const { data, error } = await supabase.auth.getSession()
@@ -69,7 +86,7 @@ async function sendAIMessage(inputContent, chatHistory) {
             prompt: "You are an AI chatbot roleplaying a character for a language learning app. Keep it chat-like and follow the character trait. Return just your response. No formatting. If a flashcard deck is submitted, relate your answers off that. if extraPrompt is supplied factor that in your responses",
             extraPrompt: characterData.extra_prompt,
 characterName: characterData.name,
-            characterLanguageISO6391: characterData.language,
+            characterLanguageISO6391: characterData.language ? characterData.language: loqLang ? loqLang : "English",
             characterTrait: characterData.trait,
             characterOccupation: characterData.occupation,
             latestUserResponse: inputContent,
@@ -204,7 +221,17 @@ function handleDeckSubmit(){
                     <p>Loading...</p>
                     {/if}
             </span>
+             {#if characterData.country == 'un'}
+            <span class="ai-chat-btns">
             <button class="test-deck-btn" onclick={() => {fetchFlashcardDecks();}}><span class="material-symbols-rounded get-tested-on-deck">cards_star</span></button>
+            <select bind:value={loqLang} >
+            <option value="">Select a language to speak to Loq!</option>
+            {#each availableLanguages as language}
+                <option value={language.name}>{language.emoji} {language.name}</option>
+                {/each}
+            </select>
+            </span>
+            {/if}
             <div class="messages-container" bind:this={messagesContainer}>
                 {#each chatHistory as message}
                     {#if message.sender === "AI"}
@@ -284,6 +311,11 @@ function handleDeckSubmit(){
           h1{
       margin: 0 0.35em 0.5em;
   }
+  select{
+    margin: 0;
+    border-radius: 20px  0 0 20px;
+    background-color: #f0f0f0;
+  }
   button{
     z-index: 1;
   }
@@ -308,6 +340,11 @@ function handleDeckSubmit(){
         margin: 1em;
         margin-bottom: 0.5em;
         height: fit-content;
+    }
+    .ai-chat-btns{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
     }
     .analysis-image{
         width: 4em;
@@ -515,8 +552,10 @@ function handleDeckSubmit(){
         display: flex;
         align-items: center;
         justify-content: center;
+        height: 2em;
+        width: 2em;
         background-color: rgb(224, 224, 224);
-        border-radius: 0 0 0.5em;
+        border-radius: 0 0 0.75em;
         box-shadow:
                 0 1px 2px #00000010,
                 0 2px 4px #00000015;
