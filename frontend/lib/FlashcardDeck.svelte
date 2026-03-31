@@ -29,11 +29,13 @@
     let deleteDeckDialog = $state(HTMLDialogElement)
     let frontCardDeckDialog = $state(HTMLDialogElement)
     let exportDeckDialog = $state(HTMLDialogElement)
+    let deckCSV = $state(HTMLTextAreaElement)
     let showFrontCardDefinition = $state(false)
     let showFrontCardTerm = $state(true)
     let showFrontCardPhoneticAnnotation = $state(false)
     let showFrontCardPartOfSpeech = $state(false)
     let statusMessage = $state("")
+    let resetStatusMessage = $state(false)
     let modifyDeckState = $state("")
     let waitingForSB = $state(false)
     let deletingCard = $state(word)
@@ -43,7 +45,13 @@ $inspect(statusMessage)
     $effect(() => {
         percentKnown = Math.round((known.length / (unsure.length + known.length)) * 100)
     })
+$effect(() => {
+    if (resetStatusMessage){
+        statusMessage = ""
+    }
+    resetStatusMessage = false
 
+})
     onMount(async () => {
         console.log("DECK")
         console.log(content)
@@ -275,7 +283,7 @@ $inspect(statusMessage)
             }
     }
 
-    function exportDeck(){
+    async function exportDeck(){
         csv = "word, definition, partOfSpeech, phoneticAnnotation \n"
         for (let i = 0; i < originalDeck.length; i++){
             const card = JSON.parse(originalDeck[i])
@@ -293,9 +301,55 @@ $inspect(statusMessage)
             }
     
         }
+       statusMessage = ""
+        await tick()
+        statusMessage = "success"
+
         console.log(csv)
 
     }
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text)
+    statusMessage = ""
+await tick()
+statusMessage = "copied"
+
+  } catch (err) {
+    console.error('Failed to copy: ', err);
+    statusMessage = ""
+await tick()
+statusMessage = "error"
+
+  }
+}
+function copyCSV(){
+    let csvTextArea = csv
+    console.log(csvTextArea)
+    copyToClipboard(csvTextArea)
+}
+
+async function downloadCSV(text){
+    try{
+    const blob = new Blob([text], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a');
+    link.href = url
+    link.download = `${deckName}.csv`
+    link.click()
+    URL.revokeObjectURL(url)
+        statusMessage = ""
+await tick()
+statusMessage = "downloaded"
+    }
+    catch(error){
+                statusMessage = ""
+await tick()
+statusMessage = "error"
+    }
+
+
+}
 </script>
 <main>
     {#if author && deckName}
@@ -304,12 +358,12 @@ $inspect(statusMessage)
             <p class="deck-name-author">Uploaded by: <b>@{author}</b></p>
         {#if isUsers}
     <span class="deck-edit-buttons">
-            <button onclick={() => {editFlashcardDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span></button>
-            <button onclick={() => {addFlashcardDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span></button>
-            <button onclick={() => {frontCardDeckDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">select_check_box</span></button>
-<button onclick={() => {exportDeckDialog.show(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">file_export</span></button>
-            <button onclick={() => {deleteFlashcardDialog.show(); deletingCard = (word);statusMessage = "";}} class="edit-btn delete"><span class="material-symbols-rounded edit">tab_close</span></button>
-            <button onclick={() => {deleteDeckDialog.show()}} class="edit-btn delete"><span class="material-symbols-rounded edit">delete</span></button>
+            <button onclick={() => {editFlashcardDialog.showModal(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">edit</span></button>
+            <button onclick={() => {addFlashcardDialog.showModal(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">add_circle</span></button>
+            <button onclick={() => {frontCardDeckDialog.showModal(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">select_check_box</span></button>
+<button onclick={() => {exportDeckDialog.showModal(); statusMessage = "";}} class="edit-btn"><span class="material-symbols-rounded edit">file_export</span></button>
+            <button onclick={() => {deleteFlashcardDialog.showModal(); deletingCard = (word);statusMessage = "";}} class="edit-btn delete"><span class="material-symbols-rounded edit">tab_close</span></button>
+            <button onclick={() => {deleteDeckDialog.showModal()}} class="edit-btn delete"><span class="material-symbols-rounded edit">delete</span></button>
     </span>
             {/if}
         </div>
@@ -459,24 +513,43 @@ $inspect(statusMessage)
 </dialog>
 
 <dialog bind:this={exportDeckDialog}>
-    <h2>Export deck as CSV</h2>
-    <p>Import to Anki, Quizlet etc.</p>
+<section class="dialog-container">
+    <h2>Export deck as CSV.</h2>
+    <p>Import to Anki, Quizlet etc. Copy and paste this below!</p>
     {#if csv}
+    <section class="csv-btns">
+    <button class="csv-btn" onclick={copyCSV()}>
+    <span class="material-symbols-rounded">content_copy</span>
+        Copy
+    </button>
+        <button class="csv-btn" onclick={()=>{downloadCSV(csv);}}>
+        <span class="material-symbols-rounded">download</span>
+        Download
+    </button>
+    </section>    
     <textarea class="export-ta">
         {csv}
     </textarea>
-    <section class="mini-notice">
-        Copy and paste this above!
-    </section>
     {/if}
-    <button class="update-btn dialog-btn" onclick={exportDeck}>Generate CSV</button>
+    <section class="button-container">
+    <button class="update-btn dialog-btn" onclick={() => {  exportDeck();} }>Generate CSV</button>
     <button class="cancel-btn dialog-btn" onclick={() => {exportDeckDialog.close()}}>Cancel</button>
+    </section>
     {#if statusMessage == "success"}
-    <InlineStatus type="success" message="Card added! Reload to see changes!" width="100%"/>
+    <InlineStatus type="success" message="Generated!" width="100%"/>
 {/if}
+
+    {#if statusMessage == "copied"}
+    <InlineStatus type="success" message="Copied to clipboard!" width="100%"/>
+{/if}
+    {#if statusMessage == "downloaded"}
+    <InlineStatus type="success" message="Downloaded!" width="100%"/>
+{/if}
+
 {#if statusMessage == "error"}
     <InlineStatus type="error" message="Error changing card." width="100%"/>
 {/if}
+</section>
 </dialog>
 <style>
 main{
@@ -520,10 +593,6 @@ dialog{
     background-color: #f8f8f8;
     border: 0;
     border-radius: 1em;
-            box-shadow: inset 0 1px 2px #ffffff90,
-                0 1px 2px #00000030,
-                0 2px 4px #00000015;
-    z-index: 5;
 }
 .dialog-inputs{
     display: flex;
@@ -544,6 +613,23 @@ button{
                 0 2px 4px #00000015;
     border: none;
 }
+.dialog-container{
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    background-color: inherit;
+}
+.button-container{
+    margin: 0.5em 0 0 0;
+    background-color: inherit;
+    overflow: visible;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 100%;
+}
 progress {
     width: 100%;
     height: 2em;
@@ -562,6 +648,14 @@ progress {
 .flashcard-button{
     z-index: 5;
 }
+.csv-btns{
+    overflow: visible;
+    background-color: inherit;
+    display: flex;
+    gap:0.25em;
+    flex-wrap: wrap;
+    margin: 0.5em 0;
+}
 .flashcard {
     border: 1px solid #ccc;
     padding: 1em;
@@ -579,8 +673,16 @@ progress {
     font-size: 2.5em;
     font-weight: bold;
 }
+.cancel-btn{
+    background-color: #e7e7e7;
+}
 .definition {
     color: #555;
+}
+.update-btn,
+.cancel-btn{
+    width: 100% !important;
+    margin: 0;
 }
 .phonetic-annotation {
     font-style: italic;
@@ -605,6 +707,10 @@ progress {
 .material-symbols-rounded{
     font-size: 1.5em;
     margin: 0;
+}
+.csv-btn{
+    height: 2.5em;
+    width: 7.5em;
 }
 .card-count-container{
     width: 20em;
@@ -649,7 +755,7 @@ progress {
     justify-content: center;
 }
 .export-ta{
-    font-size: 0.5em;
+    font-size: 1em;
     height: 10em;
     border-radius: 1em;
     scrollbar-width: 0;
@@ -738,7 +844,6 @@ span{
         display: flex;
         justify-content: center;
         align-items: center;
-            margin-top: 0.5em;
 
 }
 .dialog-btn:hover{
@@ -777,8 +882,16 @@ span{
 
 }
 dialog{
-    padding-bottom: 0;
-        z-index: 7 !important;
+    padding-bottom: 0.25em;
+        width: 50%;
+        height: fit-content;
+        max-height: 30em;
+    
+}
+dialog::backdrop{
+    background-color:rgba(128, 128, 128, 0.3);
+    backdrop-filter: blur(8px); 
+  -webkit-backdrop-filter: blur(8px);
 }
 .dialog-btn{
     position: relative;
