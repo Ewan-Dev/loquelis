@@ -332,7 +332,7 @@
         border-radius: 1em;
         text-align: center;
         margin: 0;
-        border: 2px solid #eaeaea;
+        border: 1.5px solid #eaeaea;
         width:98%;
         font-size: 0.95em;
     }

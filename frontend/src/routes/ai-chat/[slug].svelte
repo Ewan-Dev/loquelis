@@ -3,7 +3,7 @@
     import { supabase } from "../../../lib/supabaseClient"
 
     import Sidebar from "../../../lib/Sidebar.svelte"
-    import { onMount } from "svelte";
+    import { onMount, tick } from "svelte";
     import Definition from "../../../lib/Definition.svelte";
 
     let nativeLanguage = 'en'
@@ -72,7 +72,18 @@
         }
     
 
+       function scrollToBottom() {
+    messagesContainer.scrollTo({
+        top: messagesContainer.scrollHeight,
+        behavior: "smooth"
+    })
+}
+
+        
+
 async function sendAIMessage(inputContent, chatHistory) {
+    scrollToBottom()
+ messageInput = ""
     let prompt = ""
     console.log("cdata")
     console.log(characterData)
@@ -83,10 +94,10 @@ async function sendAIMessage(inputContent, chatHistory) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-            prompt: "You are an AI chatbot roleplaying a character for a language learning app. Keep it chat-like and follow the character trait. Return just your response. No formatting. If a flashcard deck is submitted, relate your answers off that. if extraPrompt is supplied factor that in your responses",
+            prompt: "You are an AI chatbot roleplaying a character for a language learning app. Keep it chat-like and follow the character trait. Return just your response in language of field `characterLanguageISO6391`. No formatting. If a flashcard deck is submitted, relate your answers off that. if extraPrompt is supplied factor that in your responses",
             extraPrompt: characterData.extra_prompt,
 characterName: characterData.name,
-            characterLanguageISO6391: characterData.language ? characterData.language: loqLang ? loqLang : "English",
+            characterLanguageISO6391: (characterData.language ? characterData.language: loqLang) || "English",
             characterTrait: characterData.trait,
             characterOccupation: characterData.occupation,
             latestUserResponse: inputContent,
@@ -95,13 +106,13 @@ characterName: characterData.name,
         })      
         })      
 
-    messageInput = ""
     // If reponse fails
     if (!response.ok) {
         console.error("AI API error:", response.statusText)
     }
     else{
         console.log(response)
+         scrollToBottom()
     }
 
     const aiResponseString = await response.json()
@@ -110,7 +121,8 @@ characterName: characterData.name,
     chatHistory.push({sender: "AI", content: aiResponseString.reply})// Add AI response
 
     console.log("AI Response:", aiResponseString)
-
+    await tick()
+    scrollToBottom()
 }
 async function getAIAnalysis() {
     isWaitingForAnalysis = true
@@ -232,6 +244,7 @@ function handleDeckSubmit(){
             </select>
             </span>
             {/if}
+            </section>
             <div class="messages-container" bind:this={messagesContainer}>
                 {#each chatHistory as message}
                     {#if message.sender === "AI"}
@@ -246,14 +259,13 @@ function handleDeckSubmit(){
                     {/if}
                 {/each}
             </div>
-        </section>
         <div class="input-deck-label-container">
             {#if deckIndex || deckIndex === 0} <!-- Gets value when deck is submitted -->
                 <span class="deck-label">Deck: <b>{flashcardDecks[deckIndex].name}</b></span>
             {/if}
             <span class="send-container">
                 <input class="send-message-input" bind:value={messageInput}>
-                <button class="send-message-btn" onclick={() => sendAIMessage(messageInput, chatHistory)}><span class="material-symbols-rounded">send</span></button>
+                <button class="send-message-btn" onclick={() =>{ scrollToBottom(); sendAIMessage(messageInput, chatHistory);}}><span class="material-symbols-rounded">send</span></button>
             </span>          
         </div>
         </div>
@@ -313,6 +325,7 @@ function handleDeckSubmit(){
   }
   select{
     margin: 0;
+    height: 1.5em;
     border-radius: 20px  0 0 20px;
     background-color: #f0f0f0;
   }
@@ -342,9 +355,12 @@ function handleDeckSubmit(){
         height: fit-content;
     }
     .ai-chat-btns{
+        margin:0;
         display: flex;
+        height: 1.5em;
         justify-content: space-between;
         flex-direction: row;
+        background-color: transparent !important;
     }
     .analysis-image{
         width: 4em;
@@ -377,17 +393,18 @@ function handleDeckSubmit(){
         flex-direction: column;
     }
     .chat-container{
-        width: 100%;
-        height: 90%;
+        width: fit-content;
+height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: start;
         align-items: flex-start;
         background-color: #fafafa;
         border-radius: 1em;
         box-shadow: inset 0 1px 2px #ffffff,
                 0 1px 2px #00000010,
                 0 2px 4px #00000015;
+                gap:0;
     }
     .deck-select{
         width: 100%;
@@ -556,7 +573,9 @@ function handleDeckSubmit(){
         width: 2em;
         background-color: rgb(224, 224, 224);
         border-radius: 0 0 0.75em;
+        margin-bottom: 1em;
         box-shadow:
+        
                 0 1px 2px #00000010,
                 0 2px 4px #00000015;
     }
@@ -574,11 +593,16 @@ function handleDeckSubmit(){
     .messages-container{
         display: flex;
         height: 72%;
+        width: 100%;
+        padding: 0 1em;
+          padding-top: 50px;      
+        margin-top: -50px;  
         background-color: transparent;
         flex-direction: column;
         gap:0.75em;
-        margin: 1em;
-        margin-bottom: 2em;
+        box-sizing: border-box;
+        padding: 0.5em 0 ;
+        margin: 0 !important;
         overflow: scroll;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
@@ -590,9 +614,9 @@ function handleDeckSubmit(){
 
     .header-messages-container{
         width: 100%;
-        height: 100%;
+        height: fit-content;
         background-color: transparent;
-        overflow: hidden;
+        overflow: visible;
     }
     .user-sent{
         background-color: #5978f4;
@@ -753,7 +777,7 @@ function handleDeckSubmit(){
     }
     .chat-container{
         width: 90%;
-        height: 70vh;
+        height: 100vh;
     }
 
   }

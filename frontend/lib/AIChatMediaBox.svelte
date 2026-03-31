@@ -32,6 +32,7 @@
             box-shadow: inset 0 1px 2px #ffffff90,
                 0 1px 2px #00000030,
                 0 2px 4px #00000015;
+                width: 100%;
     }
     img{
         width: 3.5em;
