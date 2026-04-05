@@ -226,8 +226,14 @@ function handleDeckSubmit(){
         <section class="header-messages-container">
             <span class="chat-header">
                 <span class="pfp-name-container">
-                    <img class="character-header-image" src={characterData.image} alt={`Image of charater ${characterData.name}`}>
-                    <h3>{characterData.name}</h3>     
+            
+                   
+            {#if slug != 1860}
+            <img class="character-header-image" src={`https://hatscripts.github.io/circle-flags/flags/${characterData.country}.svg?raw=true`} alt={`Image of charater ${characterData.name}`}>
+         {/if}
+         {#if slug == 1860}
+         <img class="character-header-image" src={`https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/loq-pfp.png`} alt={"loq"} />
+         {/if} <h3>{characterData.name}</h3>     
                     <p>{characterData.occupation}</p>
                          <p class="trait-tag">{characterData.trait}</p>            
                 </span>
@@ -491,8 +497,8 @@ height: 100vh;
 
     }
     .character-header-image{
-        width: 4em;
-        height:4em;
+        width: 3em;
+        height:3em;
         margin: 0;
     }
     .chat-header{
