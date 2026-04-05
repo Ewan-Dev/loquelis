@@ -1,10 +1,10 @@
 <script>
-    const { id, image, firstName, trait , occupation, lang} = $props();
+    const { id, image, firstName, trait , occupation, lang, cefr} = $props();
 </script>
 <section class="ai-chat-box">
     <div class="pfp-name-occupation-container">
         {#if image}
-            <img src={image} alt={firstName} class="pfp"/>
+            <img src={`https://hatscripts.github.io/circle-flags/flags/${lang}.svg?raw=true`} alt={lang} class="pfp"/>
          {/if}
         <div class="text">
         <div class="name-span">
@@ -19,7 +19,9 @@
         </div>
         </div>
         <div class="flag-tags-container">
-            <img class="lang-flag" src={`https://hatscripts.github.io/circle-flags/flags/${lang}.svg`} alt={lang} />
+                    <span class="cefr">
+                {cefr}
+            </span>
             <span class="traits">
                 <p class="trait-tag">{trait}</p>
             </span>
@@ -27,6 +29,22 @@
 
         </section>
 <style>
+.cefr{
+    width: 1.5em;
+    height: 2em;
+    font-size: 1em;
+    position: relative
+    ;
+    top:-0.25em;
+    padding: 0;
+    background-color: #8be0ac;
+    color: #35956d;
+    font-weight: bold;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
     section{
         background-color: #ffffff;
             box-shadow: inset 0 1px 2px #ffffff90,
@@ -35,7 +53,7 @@
                 width: 100%;
     }
     img{
-        width: 3.5em;
+        width: 3em;
         border-radius: 25em;
         margin:  0 0.2em;
     }

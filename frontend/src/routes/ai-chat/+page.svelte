@@ -144,14 +144,14 @@
     <h1 class="page-header">AI Chat</h1>
         <!-- Main content section for styles to be applied -->
     <section class="main-content">
-    <section class="notice">Create your own AI character with custom jobs, traits, language and even practice vocab!</section>
+    <section class="notice">Create your own AI character with custom jobs, traits, language and even practise vocab!</section>
      <button class="create-ai-character" onclick={() => dialog.showModal()}><span class="material-symbols-rounded">person_add</span>Create your own AI character!</button>
     <div class="chats">
         {#if !availableCharacters[0]}
                 <p class="not-found">:/ Oops! No flashcards found; try uploading your own or try again later.</p>
             {/if}
         {#each availableCharacters as character}
-                 <AIChatMediaBox id={character.id} image={character.image} firstName={character.name} trait={character.trait} lang={character.country} occupation={character.occupation} />
+                 <AIChatMediaBox id={character.id} image={character.image} firstName={character.name} trait={character.trait} lang={character.country} occupation={character.occupation} cefr={character.cefr}/>
         {/each}
     
     </div>  
@@ -290,6 +290,10 @@
         flex-direction: column;
         width: 90%;
         gap:0.5em;
+    }
+    .cefr{
+        width: 1em;
+        height: 1em;
     }
     .create-ai-character{
         background-color: #4A70A9;
