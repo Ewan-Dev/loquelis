@@ -23,6 +23,7 @@
     let isWaitingForAnalysis = $state(false)
     let chatArray = []
     let loqLang = $state("")
+    let cefrLevels = ["A1", "A2", "B1", "B2", "C1", "C2"]
 
     onMount(async () => {
         await fetchUserSesson()
@@ -100,6 +101,7 @@ characterName: characterData.name,
             characterLanguageISO6391: (characterData.language ? characterData.language: loqLang) || "English",
             characterTrait: characterData.trait,
             characterOccupation: characterData.occupation,
+            characterResponseCEFRlevel: characterData.cefr,
             latestUserResponse: inputContent,
             chatHistory: chatHistory.map(msg => { return {user : msg.sender, message: msg.content}}),
             flashcardDecks: flashcardDecks[deckIndex],
@@ -134,6 +136,7 @@ async function getAIAnalysis() {
         body: JSON.stringify({ 
             prompt: "You are an AI for a language learning app. The user and AI are having a conversation. Return no tags, no markup, just raw JSON with keys `analysis` — A strict critique in English aimed at helping the user improve. Also if the flashcardDeck is truthy then tell the user how well he used the cards in the flashcard deck - and also return `mistakes` — An array of objects. Each mistakes object must include `original_sentence` and `corrected_sentence`",
             flashcardDeck: flashcardDecks,
+            userCEFRLevel: characterData.cefr,
             chatLanguageISO6391: characterData.language,
             chatHistory: chatHistory.map(msg => { return {user : msg.sender, message: msg.content}}),
             flashcardDecks: flashcardDecks[deckIndex],

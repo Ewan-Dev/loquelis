@@ -8,7 +8,7 @@
   import { preventDefault } from "svelte/legacy";
 
     const { occupation = "Knight", image = "https://image.pollinations.ai/prompt/Generate%20a%20pixar-style%20image%20of%20a%20knight%20called%20Hansel%20with%20traits%20of%20brave,%20adventurous%20who%20is%20dressed%20in%20traditional%20attire%20of%20German", firstName = "Hansel", trait = "Friendly", lang = "de" } = $props()
-    let { characterName, characterTrait, characterOccupation } = $state("")
+    let { characterName, characterTrait, characterOccupation, characterCEFR } = $state("")
     let characterLang = $state([])
     let availableLanguages = $state([])
     let dialog = $state(null)
@@ -19,6 +19,7 @@
     let mediumLang = $state([])
     let mediumLangFurther = $state([])
     let { characterCreateStatus, characterCreateMessage } = $state("")
+        let cefrLevels = ["A1", "A2", "B1", "B2", "C1", "C2"]
 
     onMount(async () => {
         await fetchLanguages()
@@ -66,7 +67,7 @@
     }
 
 
-    async function createAICharacter(name, trait, occupation, language, country) {
+    async function createAICharacter(name, trait, occupation, language, country, cefr) {
         // Reset and clear
         characterCreateStatus = ""
         characterCreateMessage = ""
@@ -74,7 +75,7 @@
         const { error } = await supabase
             .from('ai_characters')
             .insert([
-                { name, trait, occupation, language, country, image: `https://image.pollinations.ai/prompt/Generate a pixar-style image of a ${occupation} called ${name} with trait of ${trait} who is dressed in traditional attire of ${language}.` }
+                { name, trait, occupation, language, country, cefr }
             ])
         if (!error){
             characterCreateStatus = "success"
@@ -162,7 +163,7 @@
     <dialog bind:this={dialog}>
         <div class="dialog-container">
                 <h2 class="dialog-header">Create AI Character</h2>
-                <form onsubmit={(event) => { event.preventDefault(); createAICharacter(characterName, characterTrait, characterOccupation, mediumLang, countryCode);}}>
+                <form onsubmit={(event) => { event.preventDefault(); createAICharacter(characterName, characterTrait, characterOccupation, mediumLang, countryCode, characterCEFR);}}>
                         <label>🪪 Character name:</label>
                         <input class="name" required bind:value={characterName}>      
                     <span class="label-input-container">
@@ -207,6 +208,15 @@
                             <option value={trait}>{trait}</option>
                         {/each}
                         {/if}
+                    </select>
+                    </span>
+                                        <span class="label-input-container">
+                    <label> 💪 CEFR:</label>
+                    <select class="traits" bind:value={characterCEFR} required>
+                        <option value="">--Select trait--</option>
+                        {#each cefrLevels as level}                 
+                            <option value={level}>{level}</option>
+                        {/each}
                     </select>
                     </span>
                     <InlineStatus type={characterCreateStatus} message={characterCreateMessage} />

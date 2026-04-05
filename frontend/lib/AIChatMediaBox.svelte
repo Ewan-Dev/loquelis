@@ -3,8 +3,11 @@
 </script>
 <section class="ai-chat-box">
     <div class="pfp-name-occupation-container">
-        {#if image}
+        {#if id != 1860}
             <img src={`https://hatscripts.github.io/circle-flags/flags/${lang}.svg?raw=true`} alt={lang} class="pfp"/>
+         {/if}
+         {#if id == 1860}
+         <img src={`https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/loq-pfp.png`} alt={lang} class="pfp"/>
          {/if}
         <div class="text">
         <div class="name-span">
