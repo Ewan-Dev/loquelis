@@ -234,26 +234,28 @@ function handleDeckSubmit(){
          {#if slug == 1860}
          <img class="character-header-image" src={`https://raw.githubusercontent.com/Ewan-Dev/loquelis/refs/heads/main/frontend/static/loq-pfp.png`} alt={"loq"} />
          {/if} <h3>{characterData.name}</h3>     
-                    <p>{characterData.occupation}</p>
+                  <p>{characterData.occupation}</p>
                          <p class="trait-tag">{characterData.trait}</p>            
+                          <p class="cefr-tag">{characterData.cefr}</p>   
                 </span>
-                    <button class="ai-analysis-btn" onclick={async () => await getAIAnalysis()}> Get AI analysis of chat</button>
-                    {#if isWaitingForAnalysis}
-                    <p>Loading...</p>
-                    {/if}
+                    <button class="ai-analysis-btn material-symbols-rounded" onclick={async () => await getAIAnalysis()}> 
+                        
+                        {#if isWaitingForAnalysis}
+                    <img class="throbber" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif">
+                    {/if} {#if !isWaitingForAnalysis}troubleshoot{/if}</button>
             </span>
-             {#if characterData.country == 'un'}
             <span class="ai-chat-btns">
-            <button class="test-deck-btn" onclick={() => {fetchFlashcardDecks();}}><span class="material-symbols-rounded get-tested-on-deck">cards_star</span></button>
+                       <button class="test-deck-btn" onclick={() => {dialogBox.showModal(); fetchFlashcardDecks();}}>Get tested on a deck</button>
+
+             {#if characterData.country == 'un'}
             <select bind:value={loqLang} >
             <option value="">Select a language to speak to Loq!</option>
             {#each availableLanguages as language}
                 <option value={language.name}>{language.emoji} {language.name}</option>
                 {/each}
             </select>
-            </span>
             {/if}
-            </section>
+            </span>
             <div class="messages-container" bind:this={messagesContainer}>
                 {#each chatHistory as message}
                     {#if message.sender === "AI"}
@@ -268,15 +270,19 @@ function handleDeckSubmit(){
                     {/if}
                 {/each}
             </div>
-        <div class="input-deck-label-container">
-            {#if deckIndex || deckIndex === 0} <!-- Gets value when deck is submitted -->
-                <span class="deck-label">Deck: <b>{flashcardDecks[deckIndex].name}</b></span>
-            {/if}
-            <span class="send-container">
-                <input class="send-message-input" bind:value={messageInput}>
-                <button class="send-message-btn" onclick={() =>{ scrollToBottom(); sendAIMessage(messageInput, chatHistory);}}><span class="material-symbols-rounded">send</span></button>
-            </span>          
-        </div>
+        </section>
+            <div class="input-deck-label-container">
+                {#if deckIndex || deckIndex === 0} <!-- Gets value when deck is submitted -->
+                    <span class="deck-label">Deck: <b>{flashcardDecks[deckIndex].name}</b></span>
+                {/if}
+
+                <span class="send-container">
+                <span class="send-elements">
+                    <input class="send-message-input" bind:value={messageInput}>
+                    <button class="send-message-btn" onclick={() =>{ scrollToBottom(); sendAIMessage(messageInput, chatHistory);}}><span class="material-symbols-rounded">arrow_upward</span></button>
+                </span>    
+                </span>      
+            </div>
         </div>
     {/if}
     <div class="definition">
@@ -349,10 +355,12 @@ function handleDeckSubmit(){
         height: 100%;
         background-color: #ffffff;
         padding: 0;
+        overflow: visible;
     }
     .main-page{
          background-color: inherit;
          width: 100%;
+         padding-bottom: 1em;
     }
     .analysis-character-container{
         display: flex;
@@ -371,6 +379,10 @@ function handleDeckSubmit(){
         flex-direction: row;
         background-color: transparent !important;
     }
+    .throbber{
+        width: 0.75em;
+
+    }
     .analysis-image{
         width: 4em;
         height: 4em;
@@ -385,6 +397,8 @@ function handleDeckSubmit(){
         padding: 0 0.25em;
         box-sizing: border-box;
         gap:0.25em;
+        height: 3em;
+        width: 100%;
         justify-content: center;
         align-items: center;
         background-color: #eaeaea;
@@ -394,6 +408,32 @@ function handleDeckSubmit(){
     .page-header{
         margin-top: .45em
     }
+    .cefr-tag{
+    width: 1.5em;
+    height: 1.5em;
+    font-size: 1em;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-color: #8be0ac;
+    color: #35956d;
+    font-weight: bold;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.send-elements{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 0.25em;
+    height: 2em;
+    width: 100%;
+    border-radius: 100px;
+
+}
     .stats-container{
         width: 100%;
         padding: 0em 1em 1.75em 1em;
@@ -403,24 +443,23 @@ function handleDeckSubmit(){
     }
     .chat-container{
         width: fit-content;
-height: 100vh;
+height: 90vh;
+
         display: flex;
         flex-direction: column;
-        justify-content: start;
+        justify-content: space-between;
         align-items: flex-start;
         background-color: #fafafa;
-        border-radius: 1em;
-        box-shadow: inset 0 1px 2px #ffffff,
-                0 1px 2px #00000010,
-                0 2px 4px #00000015;
+        border-radius: 0;
                 gap:0;
     }
     .deck-select{
         width: 100%;
+        background-color: #ffffff10;
     }
     .send-message-btn{
-        width: 2.75em;
-        height: 2.75em;
+        height: 90%;
+        aspect-ratio: 1/1;
         margin: 0;
         padding: 0;
         display: flex;
@@ -430,18 +469,13 @@ height: 100vh;
         color: #ffffff;
         font-weight: bold;
         float: left;
-        border-radius: 1em;
+        border-radius: 100px;
         border: none;
-        box-shadow: inset 0 1px 2px #ffffff,
-                0 1px 2px #00000010,
-                0 2px 4px #00000015;
+        box-shadow: none;
     }
 
         .send-message-btn:hover{
         background-color: #4664da;
-        box-shadow: inset 0 1px 2px #ffffff,
-                0 1px 2px #00000030,
-                0 2px 4px #00000035;
     }
 
     p{
@@ -481,10 +515,9 @@ height: 100vh;
         flex-direction: row;
         justify-content: flex-start;
         gap: 1em;
-        height: 70%;
         width: 100%;
         background-color: inherit;
-        overflow: hidden;
+        overflow: visible;
     }
     img {
         border-radius: 100px;
@@ -514,9 +547,6 @@ height: 100vh;
         justify-content: space-between;
         align-items: center;
         gap:0.25em;
-        box-shadow: inset 0 1px 2px #ffffff,
-                0 1px 2px #00000010,
-                0 2px 4px #00000015;
     }
     h3{
         height: fit-content;
@@ -527,12 +557,14 @@ height: 100vh;
     dialog{ 
         padding: 0.75em 0.75em;
         border-radius: 0.5em;
+                background-color: #f4f4f4;
         border: 0;
                         box-shadow: inset 0 1px 2px #ffffff80,
                 0 1px 2px #00000010,
                 0 2px 4px #00000015;
     }
     .dialog-container{
+
         display: flex;
         flex-direction: column;
         gap:0.5em;
@@ -544,16 +576,15 @@ height: 100vh;
     .send-message-input{
         height: fit-content;
         font-size: 2em;
-        border-radius: 0.45em;
+        border-radius: 5em;
+        background-color: transparent;
         z-index: 1;
         width: 90%;
-        padding: 0 0.3em;
+        padding: 0;
+        padding-right: 0.1em;
         margin:  0.3em 0.1em 0.3em 0.15em;
         border:none;
         box-sizing: content-box;
-        box-shadow: inset 0 1px 2px #ffffff,
-                0 1px 2px #00000010,
-                0 2px 4px #00000015;
     }
     .message{
         max-width: 18em;
@@ -568,9 +599,6 @@ height: 100vh;
         gap: 0em 0.1em;
         justify-content:flex-start;
         align-items: flex-start;
-                box-shadow: inset 0 1px 2px #ffffff,
-                0 1px 2px #00000010,
-                0 2px 4px #00000015;
     }
     .test-deck-btn{
         padding: 0.3em;
@@ -579,7 +607,7 @@ height: 100vh;
         align-items: center;
         justify-content: center;
         height: 2em;
-        width: 2em;
+        width: 10em;
         background-color: rgb(224, 224, 224);
         border-radius: 0 0 0.75em;
         margin-bottom: 1em;
@@ -601,9 +629,9 @@ height: 100vh;
     }
     .messages-container{
         display: flex;
-        height: 72%;
+        border-radius: 0;
         width: 100%;
-        padding: 0 1em;
+        padding: 0 1em !important;
           padding-top: 50px;      
         margin-top: -50px;  
         background-color: transparent;
@@ -623,7 +651,7 @@ height: 100vh;
 
     .header-messages-container{
         width: 100%;
-        height: fit-content;
+        height: 90vh !important;
         background-color: transparent;
         overflow: visible;
     }
@@ -637,8 +665,8 @@ height: 100vh;
     .pfp-name-container{
         display: flex;
         flex-direction: row;
-        align-items: center;
-        justify-content: center;
+        align-items: center !important;
+        justify-content: center !important;
         gap:0.5em;
     }
     .deck-buttons-container{
@@ -648,10 +676,17 @@ height: 100vh;
         gap:0.2em;
     }
     .ai-analysis-btn{
+        font-size: 1.25em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: #fff;
+        width: 1.25em;
+        height: 1.25em;
         border: none;
-        border-radius: 5px;
-        padding: 0.25em 0.5em;
+        padding: 0;
+        border-radius: 100px;
+        padding:0;
         background: linear-gradient(90deg, #2d5eff, #5e46fa, #c971ff);
         box-shadow: inset 0 1px 2px #ffffff80,
                 0 1px 2px #00000010,
@@ -670,7 +705,8 @@ height: 100vh;
         color: #fff;
         font-weight: bold;
         height: fit-content;
-        font-size: 1em;
+        font-size: 0.8em;
+        margin: 0;
     }
     .original_sentence,
     .corrected_sentence,
@@ -785,14 +821,16 @@ height: 100vh;
         margin: 0;
     }
     .chat-container{
-        width: 90%;
-        height: 100vh;
+        width: 95%;
+        height: 90vh;
+        overflow: visible;
     }
 
   }
       .main-page{
         margin: 0 0.25em;
         width: 100%;
+        overflow: visible;
     }
     .definition{
         margin-right: 2em;
