@@ -25,12 +25,17 @@
         height: fit-content;
         width: 10em;
         background-color: #fff;
-        box-shadow: inset 0 1px 2px #ffffff30,
-                0 1px 2px #00000030,
-                0 2px 4px #00000015;
-        border: none;
         padding: 0.3em;
         border-radius: 1em;
+        margin: 0.5em 0;
+    }
+    div:hover{
+        box-sizing:content-box;
+        border: #e6e6e6 3px solid;
+        position: relative;
+        left: -3px;
+        margin: 5px 0;
+
     }
     div.video{
         width: 15em;

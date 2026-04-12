@@ -51,19 +51,25 @@
         gap: 1em;
         align-items: flex-start;
                 margin-right: 1em;
+                height: 100vh;
         
     }
     .main-content{
         flex-direction: column;
         width: 90%;
+        overflow: scroll;
     }
     .home-page-main-section-head{
         margin-bottom: 0.5em;
     }
     .media-list{
         display: flex;
-        flex-wrap: wrap;
+     flex-direction: row-reverse;
         gap:1em;
+        height: fit-content;
+        padding-bottom: 1em;
+        overflow: scroll;
+
     }
         @media (max-width: 500px){
     main{
@@ -86,6 +92,7 @@
         gap:0.25em;
         padding: 0.25em 1em;
         width: fit-content;
+        height: fit-content;
         border-radius: 1em;
     }
 </style>
