@@ -20,11 +20,12 @@
   let language = $state("")
   let subtitles = $state([])
   let currentLine = $state()
+  let uid = $state("")
   let link = $state("https://youtu.be/zabswqP6xEM")
   let currentTime = $state("")
 
   // Whenever page reloads this runs
-  $effect(() => {
+  $effect(async () => {
     const currentSlug = $location.split('/').pop() // Gets slug from current path
     if (currentSlug != slug){ // If slug if different to page to last before reload
       slug = currentSlug // Update slug
@@ -38,6 +39,14 @@
       window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady // Once iframe loads onYouTubeIframeAPIReady() 
     }
     })
+            const { data, error } =  await supabase.auth.getSession()
+    const sessionData = data // Store session data
+    if (error) { //Id error fetching user
+        console.error('Error fetching session:', error)
+    } 
+    else if(sessionData) { // If data exists
+        uid = sessionData?.session?.user?.id // Get UID from session
+    }
 })
 
   onMount(() => {
@@ -150,6 +159,8 @@ async function addToRecents(music){
   }
 
 }
+
+
 </script>
 <svelte:head>
   <script src="https://www.youtube.com/iframe_api"></script> <!-- For getting the current time on YT iframe embed -->

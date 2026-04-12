@@ -3,17 +3,26 @@
     import { supabase } from "../../lib/supabaseClient";
     import { onMount } from "svelte";
     import MediaBox from "../../lib/MediaBox.svelte";
-    let recentVideos = []
+    let recentVideos = $state([])
+    let recentMusic = $state([])
     onMount(async () => {
         const { data: { user } } = await supabase.auth.getUser()
         console.log(user)
 
     const {data, error} = await supabase
     .from("profiles")
-    .select('recent_videos')
+    .select('*')
     recentVideos = (data[0].recent_videos).reverse()
 
         console.log(recentVideos)
+
+
+    const {musicData, musicError} = await supabase
+    .from("profiles")
+    .select('*')
+    recentMusic = (data[0].recent_music).reverse()
+
+        console.log(recentMusic)
         })
 
 </script>
@@ -41,6 +50,19 @@
         type="video"/>
         {/each}
         </div>
+                <h1 class="home-page-main-section-head">Recent music</h1>
+        <div class="media-list">
+        {#each recentMusic as song}
+                  <MediaBox 
+        name={song.name} 
+        artist={song.artist} 
+        cover={song.cover} 
+        level={song.level} 
+        rating={song.rating}
+        link={`#/app/music/${song.id}`} 
+        type="song"/>
+        {/each}
+        </div>
     </section>
     </section>
 </main>
@@ -60,12 +82,13 @@
         overflow: scroll;
     }
     .home-page-main-section-head{
-        margin-bottom: 0.5em;
+        margin-bottom: 0;
     }
     .media-list{
         display: flex;
      flex-direction: row-reverse;
         gap:1em;
+        width: fit-content;
         height: fit-content;
         padding-bottom: 1em;
         overflow: scroll;
