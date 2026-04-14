@@ -27,14 +27,17 @@
         background-color: #fff;
         padding: 0.3em;
         border-radius: 1em;
-        margin: 0.5em 0;
+        margin: 0.5em;
+    }
+    div:first-child{
+        margin-left: 0;
     }
     div:hover{
         box-sizing:content-box;
         border: #e6e6e6 3px solid;
         position: relative;
         left: -3px;
-        margin: 5px 0;
+        margin-right: calc(0.5em - 5.5px) !important;
 
     }
     div.video{

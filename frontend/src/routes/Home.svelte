@@ -79,19 +79,23 @@
     .main-content{
         flex-direction: column;
         width: 90%;
-        overflow: scroll;
+        overflow: hidden;
     }
     .home-page-main-section-head{
         margin-bottom: 0;
     }
     .media-list{
         display: flex;
-     flex-direction: row-reverse;
-        gap:1em;
-        width: fit-content;
-        height: fit-content;
+        align-items: center;
+        gap:0em;
+        width: 100%;
+        height: 18em;
+        padding:0;
+        padding-top: 0.5em;
+        padding-left:0.2em;
         padding-bottom: 1em;
-        overflow: scroll;
+        overflow-y: visible;
+        overflow-x: scroll !important;
 
     }
         @media (max-width: 500px){
