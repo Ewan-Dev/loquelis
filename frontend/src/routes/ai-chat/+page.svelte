@@ -298,8 +298,9 @@
     .main-content{
         display: flex;
         flex-direction: column;
-        width: 90%;
+        width: 95%;
         gap:0.5em;
+        overflow: hidden;
     }
     .cefr{
         width: 1em;
@@ -355,11 +356,19 @@
         font-size: 1.25em;
     }
     .chats{
+
         display: flex;
         flex-direction: column;
         gap: 1em;
-        width: 100%;
+        width: 100%; 
+        height: 40em;
+
+        padding: 0;
+        padding-left: 0.2em;
+        overflow: scroll;
+        
     }
+
     .label-input-container{
         text-align: center;
         display: flex;

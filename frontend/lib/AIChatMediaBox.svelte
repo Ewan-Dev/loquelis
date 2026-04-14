@@ -33,26 +33,24 @@
         </section>
 <style>
 .cefr{
-    width: 1.5em;
     height: 2em;
+    aspect-ratio: 1/1;
     font-size: 1em;
     position: relative
     ;
     top:-0.25em;
-    padding: 0;
-    background-color: #8be0ac;
-    color: #35956d;
+    padding: 1px;
+    background-color: #a8f0c4;
+    color: #65b694;
     font-weight: bold;
     border-radius: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
+    right: -1px;
 }
     section{
         background-color: #ffffff;
-            box-shadow: inset 0 1px 2px #ffffff90,
-                0 1px 2px #00000030,
-                0 2px 4px #00000015;
                 width: 100%;
     }
     img{
@@ -78,6 +76,7 @@
     .torq{
         margin-top: 1em;
         height: 1em;
+        right: 0px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -102,10 +101,11 @@ font-weight: bold;
 
     }
     .ai-chat-box {
-
+        flex-shrink: 0;
         padding: 1em;
         width: 97%;
-        height: 3.25em;
+        margin: 0;
+        height: 3em;
         padding: 0.5em 0.25em;
         text-align: center;
         display: flex;
@@ -113,12 +113,11 @@ font-weight: bold;
         justify-content: space-between;
         align-items: top;
         gap: 0.5em;
+        overflow: hidden;
         border-radius: 1em;
     }
     .ai-chat-box:hover {
-        box-shadow: inset 0 1px 2px #ffffff90,
-        0 1px 2px #00000030,
-        0 2px 4px #00000035;
+     box-shadow:rgb(230, 230, 230) 0px 0px 0px 1.5px;
     }
 
     .material-symbols-rounded{
@@ -146,13 +145,20 @@ font-weight: bold;
         margin-right: 0.2em;
     }
     .trait-tag {
-        background-color: #8FABD4;
+        background-color: #a5c9ff;
+        color: #5b84c1;
         padding: 0.15em 0.5em;
+        position: relative;
+        left:3.5px;
+        top: -1px;
         border-radius: 1em;
-        color: #fff;
         font-weight: bold;
-        height: fit-content;
+        height: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 0.75em;
+        margin: 0;
     }
     .occupation{
         font-size: 1em;

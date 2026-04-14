@@ -30,7 +30,7 @@
         margin: 0.5em;
     }
     div:first-child{
-        margin-left: 0;
+        margin-left: 0.2em;
     }
     div:hover{
         box-sizing:content-box;
